@@ -4,8 +4,7 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Curso introductorio · Fundamentos de datos e IA · Unicorn Academy</title>
-<meta name="description" content="Curso gratuito introductorio sobre fundamentos de datos e IA para profesionales. 5 secciones, 22 lecciones."/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -18,230 +17,202 @@ html,body{background:#fff;color:var(--fg);font-family:'Inter',sans-serif;-webkit
 
 /* HEADER */
 .header{background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1.5px solid var(--rule);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
-.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink);text-decoration:none}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink)}
 .brand-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0}
 .header-meta{font-size:11px;color:var(--quiet);font-weight:500;letter-spacing:0.04em}
 
+.main{max-width:900px;margin:0 auto;padding:40px 32px 80px}
+
 /* HERO */
-.hero{padding:80px 32px 60px;background:linear-gradient(180deg,#FAFAF8 0%,#fff 100%);border-bottom:1.5px solid var(--rule)}
-.hero-inner{max-width:900px;margin:0 auto;text-align:center}
-.hero-eyebrow{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:18px;display:inline-flex;align-items:center;gap:10px;padding:6px 14px;background:var(--purple-soft);border:1.5px solid var(--purple-light);border-radius:100px}
-.hero-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--purple)}
-.hero-title{font-size:52px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;margin-bottom:18px;line-height:1.05}
-.hero-title em{font-style:italic;color:var(--purple)}
-.hero-desc{font-size:18px;color:var(--muted);max-width:620px;margin:0 auto 32px;line-height:1.6}
-.hero-pills{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:32px}
-.pill{font-size:12px;padding:6px 14px;border-radius:100px;border:1.5px solid var(--rule);color:var(--muted);background:#fff;font-weight:500}
-.pill.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22);color:var(--purple)}
-.hero-cta{display:inline-block;padding:14px 32px;background:var(--purple);color:#fff;border-radius:12px;font-size:15px;font-weight:600;text-decoration:none;transition:all 0.2s var(--easing);box-shadow:0 4px 12px rgba(86,60,119,0.18)}
-.hero-cta:hover{background:var(--purple-deep);transform:translateY(-2px);box-shadow:0 6px 18px rgba(86,60,119,0.28)}
+.hero{margin-bottom:32px}
+.hero-label{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.hero-label::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.hero-title{font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:8px;line-height:1.1}
+.hero-desc{font-size:16px;color:var(--muted);max-width:600px;line-height:1.65;margin-bottom:20px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12px;padding:5px 12px;border-radius:100px;border:1.5px solid var(--rule);color:var(--muted);background:#fff}
+.pill.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22);color:var(--purple);font-weight:500}
 
-/* MAIN */
-.main{max-width:900px;margin:0 auto;padding:60px 32px 80px}
+/* TOTALS */
+.totals{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden;margin-bottom:28px}
+.total-item{padding:16px 12px;text-align:center;border-right:1px solid var(--rule);background:var(--paper)}
+.total-item:last-child{border-right:none}
+.total-num{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1}
+.total-label{font-size:11px;color:var(--muted);margin-top:4px}
 
-.section-label{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.section-label::before{content:'';width:16px;height:1.5px;background:var(--purple)}
-.section-title{font-size:28px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:30px;line-height:1.1}
+/* SECTIONS */
+.sec{border:1.5px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:10px;transition:box-shadow 0.2s}
+.sec:hover{box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+.sec-head{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;background:var(--paper);cursor:pointer;user-select:none}
+.sec-head:hover{background:#f3f4f6}
+.sec-num{width:36px;height:36px;border-radius:10px;background:var(--purple-soft);border:1.5px solid var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--purple);flex-shrink:0}
+.sec-body{flex:1}
+.sec-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:5px}
+.sec-obj{font-size:12px;color:var(--purple);font-style:italic}
+.sec-meta{font-size:11px;color:var(--quiet);margin-left:auto;white-space:nowrap;padding-top:2px;font-weight:500}
+.sec-chevron{font-size:12px;color:var(--quiet);transition:transform 0.2s;flex-shrink:0;margin-top:4px}
+.sec-chevron.open{transform:rotate(180deg)}
 
-/* SECTION CARDS */
-.sections-grid{display:flex;flex-direction:column;gap:14px;margin-bottom:60px}
-.sec-card{display:flex;align-items:flex-start;gap:20px;padding:24px 26px;border:1.5px solid var(--rule);border-radius:16px;background:#fff;text-decoration:none;color:inherit;transition:all 0.2s var(--easing)}
-.sec-card:hover{border-color:var(--purple-light);box-shadow:0 6px 20px rgba(86,60,119,0.08);transform:translateY(-2px)}
-.sec-card-num{width:52px;height:52px;border-radius:14px;background:var(--purple-soft);border:1.5px solid var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;color:var(--purple);flex-shrink:0;letter-spacing:-0.01em}
-.sec-card-body{flex:1}
-.sec-card-title{font-size:18px;font-weight:700;color:var(--ink);margin-bottom:5px;letter-spacing:-0.01em}
-.sec-card-desc{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:12px}
-.sec-card-lessons{display:flex;flex-wrap:wrap;gap:6px}
-.lesson-chip{font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule);font-weight:500}
-.sec-card-arrow{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--purple);transition:all 0.2s var(--easing);align-self:center}
-.sec-card:hover .sec-card-arrow{background:var(--purple);color:#fff;transform:translateX(4px)}
-
-/* WHAT YOU LEARN */
-.benefits{background:var(--paper);border:1.5px solid var(--rule);border-radius:20px;padding:36px;margin-bottom:60px}
-.benefits-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:24px}
-.benefit{display:flex;flex-direction:column;gap:8px}
-.benefit-icon{font-size:24px;margin-bottom:4px}
-.benefit-title{font-size:14px;font-weight:700;color:var(--ink)}
-.benefit-desc{font-size:13px;color:var(--muted);line-height:1.5}
-
-/* FOOTER CTA */
-.footer-cta{background:linear-gradient(135deg,var(--purple) 0%,var(--purple-deep) 100%);color:#fff;border-radius:20px;padding:48px;text-align:center}
-.footer-cta-title{font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-bottom:10px;line-height:1.2}
-.footer-cta-desc{font-size:15px;opacity:0.85;margin-bottom:24px;max-width:480px;margin-left:auto;margin-right:auto;line-height:1.5}
-.footer-cta-btn{display:inline-block;padding:13px 28px;background:#fff;color:var(--purple-deep);border-radius:12px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.2s var(--easing)}
-.footer-cta-btn:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,0.2)}
-
-/* FOOTER */
-footer{padding:32px;text-align:center;font-size:12px;color:var(--quiet);border-top:1.5px solid var(--rule)}
+/* LECCIONES */
+.lecciones{display:none;border-top:1.5px solid var(--rule)}
+.lecciones.open{display:grid;grid-template-columns:repeat(5,1fr)}
+.lecciones.open.cols6{grid-template-columns:repeat(6,1fr)}
+.lecciones.open.cols1{grid-template-columns:1fr}
+.lec{padding:14px 14px;border-right:1px solid var(--rule);transition:background 0.15s}
+.lec:last-child{border-right:none}
+.lec:hover{background:var(--paper)}
+.lec-num{font-size:10px;color:var(--quiet);margin-bottom:4px;font-weight:600;letter-spacing:0.04em}
+.lec-title{font-size:12px;color:var(--ink);line-height:1.4;font-weight:600;margin-bottom:3px}
+.lec-desc{font-size:11px;color:var(--muted);line-height:1.35}
 
 @media(max-width:640px){
-  .header,.hero,.main{padding-left:20px;padding-right:20px}
-  .hero{padding-top:48px;padding-bottom:40px}
-  .hero-title{font-size:34px}
-  .hero-desc{font-size:16px}
-  .section-title{font-size:22px}
-  .sec-card{padding:18px 20px;gap:14px}
-  .sec-card-num{width:44px;height:44px;font-size:15px}
-  .sec-card-title{font-size:16px}
-  .benefits{padding:24px}
-  .benefits-grid{grid-template-columns:1fr;gap:16px}
-  .footer-cta{padding:32px 24px}
-  .footer-cta-title{font-size:20px}
+  .header,.main{padding-left:20px;padding-right:20px}
+  .hero-title{font-size:24px}
+  .totals{grid-template-columns:repeat(2,1fr)}
+  .lecciones.open,.lecciones.open.cols6{grid-template-columns:1fr 1fr}
+  .lec{border-bottom:1px solid var(--rule)}
 }
 </style>
 </head>
 <body>
 
 <header class="header">
-  <a href="../curso-gratis/" class="brand"><div class="brand-dot"></div>Unicorn Academy</a>
-  <span class="header-meta">CURSO INTRODUCTORIO</span>
+  <div class="brand"><div class="brand-dot"></div>Unicorn Academy</div>
+  <span class="header-meta">CURSO INTRODUCTORIO · ESTRUCTURA</span>
 </header>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">Curso gratuito · Sin codigo · Para profesionales</div>
-    <h1 class="hero-title">Fundamentos de<br><em>datos e IA</em></h1>
-    <p class="hero-desc">El mapa completo para entender el mundo de los datos antes de comprometerte con algo mas largo. Sin tecnicismos. Con criterio de negocio.</p>
-    <div class="hero-pills">
-      <span class="pill feat">5 secciones</span>
-      <span class="pill feat">22 lecciones</span>
-      <span class="pill">Sin requisitos previos</span>
-      <span class="pill">100% online</span>
-    </div>
-    <a href="#secciones" class="hero-cta">Empezar el curso →</a>
-  </div>
-</section>
 
 <main class="main">
 
-  <!-- SECCIONES -->
-  <div id="secciones">
-    <div class="section-label">Contenido del curso</div>
-    <h2 class="section-title">5 secciones para entender el sector</h2>
-    
-    <div class="sections-grid">
-      
-      <a href="seccion-1/" class="sec-card">
-        <div class="sec-card-num">S1</div>
-        <div class="sec-card-body">
-          <div class="sec-card-title">El mundo de los datos</div>
-          <div class="sec-card-desc">La historia, el negocio y el dinero detras del sector. Narrativo, sin tecnicismos.</div>
-          <div class="sec-card-lessons">
-            <span class="lesson-chip">Como surgieron</span>
-            <span class="lesson-chip">Por que esta en auge</span>
-            <span class="lesson-chip">El dinero que mueve</span>
-            <span class="lesson-chip">Impacto estrategico</span>
-            <span class="lesson-chip">Casos reales</span>
-          </div>
-        </div>
-        <div class="sec-card-arrow">→</div>
-      </a>
-
-      <a href="seccion-2/" class="sec-card">
-        <div class="sec-card-num">S2</div>
-        <div class="sec-card-body">
-          <div class="sec-card-title">El ecosistema</div>
-          <div class="sec-card-desc">Mapa mental del sector. IA, big data, analytics, roles y vocabulario esencial.</div>
-          <div class="sec-card-lessons">
-            <span class="lesson-chip">IA, big data y analytics</span>
-            <span class="lesson-chip">El mapa del sector</span>
-            <span class="lesson-chip">Niveles del analista</span>
-            <span class="lesson-chip">Glosario esencial</span>
-            <span class="lesson-chip">Como se rentabiliza</span>
-          </div>
-        </div>
-        <div class="sec-card-arrow">→</div>
-      </a>
-
-      <a href="seccion-3/" class="sec-card">
-        <div class="sec-card-num">S3</div>
-        <div class="sec-card-body">
-          <div class="sec-card-title">El rol del Analista 360</div>
-          <div class="sec-card-desc">El perfil especifico. Capacidades, herramientas, madurez, calidad de datos y proyectos.</div>
-          <div class="sec-card-lessons">
-            <span class="lesson-chip">Que es el Analista 360</span>
-            <span class="lesson-chip">Ecosistema de herramientas</span>
-            <span class="lesson-chip">Madurez y tipos de analitica</span>
-            <span class="lesson-chip">Calidad de los datos</span>
-            <span class="lesson-chip">Proyectos que entrega</span>
-          </div>
-        </div>
-        <div class="sec-card-arrow">→</div>
-      </a>
-
-      <a href="seccion-4/" class="sec-card">
-        <div class="sec-card-num">S4</div>
-        <div class="sec-card-body">
-          <div class="sec-card-title">El ecosistema de herramientas</div>
-          <div class="sec-card-desc">Tabla comparativa de todas las herramientas del Analista 360. Cuando usar cada una.</div>
-          <div class="sec-card-lessons">
-            <span class="lesson-chip">Hojas y consultas</span>
-            <span class="lesson-chip">Visualizacion</span>
-            <span class="lesson-chip">Programacion</span>
-            <span class="lesson-chip">Bases de datos</span>
-            <span class="lesson-chip">IA copiloto</span>
-            <span class="lesson-chip">Automatizacion</span>
-          </div>
-        </div>
-        <div class="sec-card-arrow">→</div>
-      </a>
-
-      <a href="seccion-5/" class="sec-card">
-        <div class="sec-card-num">S5</div>
-        <div class="sec-card-body">
-          <div class="sec-card-title">Tu carrera en datos</div>
-          <div class="sec-card-desc">Oportunidades reales, sectores que contratan, habilidades blandas, barreras y como conseguir trabajo.</div>
-          <div class="sec-card-lessons">
-            <span class="lesson-chip">Por que estudiar datos hoy</span>
-            <span class="lesson-chip">Sectores que contratan</span>
-            <span class="lesson-chip">Habilidades blandas</span>
-            <span class="lesson-chip">Barreras reales</span>
-            <span class="lesson-chip">Roadmap 8 meses</span>
-            <span class="lesson-chip">Como conseguir trabajo</span>
-          </div>
-        </div>
-        <div class="sec-card-arrow">→</div>
-      </a>
-
+  <!-- HERO -->
+  <div class="hero">
+    <h1 class="hero-title">Curso introductorio<br>Fundamentos de datos e IA</h1>
+    <p class="hero-desc">Para profesionales que quieren entender el mundo de los datos antes de comprometerse con algo mas largo. Sin codigo. Sin tecnicismos.</p>
+    <div class="hero-pills">
+      <span class="pill">5 secciones</span>
+      <span class="pill">22 lecciones</span>
     </div>
   </div>
 
-  <!-- BENEFITS -->
-  <div class="benefits">
-    <div class="section-label">Lo que vas a lograr</div>
-    <h2 style="font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-0.01em;line-height:1.2">Al terminar el curso vas a tener<br>el mapa completo del sector.</h2>
-    <div class="benefits-grid">
-      <div class="benefit">
-        <div class="benefit-icon">🎯</div>
-        <div class="benefit-title">Criterio de negocio</div>
-        <div class="benefit-desc">Sabras que pregunta hacerle al dato antes de tocar cualquier herramienta.</div>
+  <!-- TOTALS -->
+  <div class="totals">
+    <div class="total-item"><div class="total-num">5</div><div class="total-label">secciones</div></div>
+    <div class="total-item"><div class="total-num">22</div><div class="total-label">lecciones</div></div>
+  </div>
+
+  <!-- S1 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S1</div>
+      <div class="sec-body">
+        <div class="sec-title">El mundo de los datos</div>
+        <div class="sec-desc">La historia, el negocio y el dinero detras. Narrativo, sin tecnicismos. Vende el sector antes de ensenar nada.</div>
+        <div class="sec-obj">El alumno sale convencido de que esto importa y de que es para el.</div>
       </div>
-      <div class="benefit">
-        <div class="benefit-icon">🛠️</div>
-        <div class="benefit-title">Mapa de herramientas</div>
-        <div class="benefit-desc">Vas a saber para que sirve cada herramienta y cuando usar una vs otra.</div>
-      </div>
-      <div class="benefit">
-        <div class="benefit-icon">🚀</div>
-        <div class="benefit-title">Plan concreto</div>
-        <div class="benefit-desc">Vas a tener un roadmap claro de 8 meses y como conseguir tu primer rol.</div>
-      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">1.1</div><div class="lec-title">Por que estamos aca + como surgieron los datos</div><div class="lec-desc">El gancho. Que cambio y de donde vienen los datos.</div></div>
+      <div class="lec"><div class="lec-num">1.2</div><div class="lec-title">Por que el sector esta en auge</div><div class="lec-desc">Los factores que convirtieron datos en industria global.</div></div>
+      <div class="lec"><div class="lec-num">1.3</div><div class="lec-title">El dinero que mueve</div><div class="lec-desc">Mercado completo: ~920.000M USD entre datos, analytics, IA y automatizacion.</div></div>
+      <div class="lec"><div class="lec-num">1.4</div><div class="lec-title">El impacto estrategico</div><div class="lec-desc">Como los datos cambian decisiones en las empresas.</div></div>
+      <div class="lec"><div class="lec-num">1.5</div><div class="lec-title">Casos reales</div><div class="lec-desc">Empresas hispanohablantes que se transformaron con datos.</div></div>
     </div>
   </div>
 
-  <!-- CTA FINAL -->
-  <div class="footer-cta">
-    <div class="footer-cta-title">Empeza por la primera seccion</div>
-    <p class="footer-cta-desc">No hace falta orden estricto, pero te recomendamos verlo de la S1 a la S5 para construir bien el mapa mental.</p>
-    <a href="seccion-1/" class="footer-cta-btn">Ir a la Seccion 1 →</a>
+  <!-- S2 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S2</div>
+      <div class="sec-body">
+        <div class="sec-title">El ecosistema</div>
+        <div class="sec-desc">Mapa mental del sector. IA, big data, analytics, roles y vocabulario esencial.</div>
+        <div class="sec-obj">El alumno puede participar en conversaciones del sector y sabe donde encaja dentro del ecosistema.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">2.1</div><div class="lec-title">IA, big data y analytics</div><div class="lec-desc">Que es cada rama, diferencias y donde se superponen.</div></div>
+      <div class="lec"><div class="lec-num">2.2</div><div class="lec-title">El mapa del sector</div><div class="lec-desc">20 roles interactivos en 4 categorias: upskilling, tecnico, IA y estrategia.</div></div>
+      <div class="lec"><div class="lec-num">2.3</div><div class="lec-title">Niveles del analista</div><div class="lec-desc">N1 Ordenar, N2 Analizar, N3 Decidir, N4 Estrategia.</div></div>
+      <div class="lec"><div class="lec-num">2.4</div><div class="lec-title">El glosario esencial</div><div class="lec-desc">Dataset, modelo, API, LLM, pipeline, ETL, cloud. Sin jerga.</div></div>
+      <div class="lec"><div class="lec-num">2.5</div><div class="lec-title">Como se rentabiliza</div><div class="lec-desc">4 formas concretas de monetizar habilidades en datos con ejemplos.</div></div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S3</div>
+      <div class="sec-body">
+        <div class="sec-title">El rol del Analista 360</div>
+        <div class="sec-desc">El perfil especifico. Capacidades, herramientas, madurez empresarial, calidad de datos y proyectos que entrega.</div>
+        <div class="sec-obj">El alumno entiende exactamente que hace este perfil y como podria serlo.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">3.1</div><div class="lec-title">Que es el Analista 360</div><div class="lec-desc">Criterio de negocio, ejecucion con IA y comunicacion ejecutiva.</div></div>
+      <div class="lec"><div class="lec-num">3.2</div><div class="lec-title">El ecosistema de herramientas</div><div class="lec-desc">6 categorias con logos: analisis, visualizacion, programacion, BD, IA, automatizacion.</div></div>
+      <div class="lec"><div class="lec-num">3.3</div><div class="lec-title">Madurez y tipos de analitica</div><div class="lec-desc">Los 4 tipos (descriptiva, diagnostica, predictiva, prescriptiva) y los 5 niveles de madurez empresarial.</div></div>
+      <div class="lec"><div class="lec-num">3.4</div><div class="lec-title">Calidad de los datos</div><div class="lec-desc">6 problemas comunes y el proceso del analista con IA.</div></div>
+      <div class="lec"><div class="lec-num">3.5</div><div class="lec-title">Proyectos que entrega</div><div class="lec-desc">9 proyectos del analista con sectores y ejemplos reales.</div></div>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S4</div>
+      <div class="sec-body">
+        <div class="sec-title">El ecosistema de herramientas</div>
+        <div class="sec-desc">Tabla comparativa de todas las herramientas del Analista 360 con licencia, acceso, instalacion y cuando usar cada una. Demos en vivo en el video.</div>
+        <div class="sec-obj">El alumno puede elegir que herramienta usar segun el contexto y sabe cual aprender primero.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec" style="grid-column:1/-1"><div class="lec-num">4.1</div><div class="lec-title">Todas las herramientas en una vista</div><div class="lec-desc">Tabla comparativa con 18 herramientas en 6 categorias: hojas y consultas (Excel, Sheets, SQL), visualizacion (Power BI, Tableau, Looker), programacion (Python, R), bases de datos (PostgreSQL, MySQL, BigQuery, Snowflake), IA copiloto (ChatGPT, Claude, Copilot) y automatizacion (n8n, Make, Zapier). Demos en vivo en el video.</div></div>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S5</div>
+      <div class="sec-body">
+        <div class="sec-title">Tu carrera en datos</div>
+        <div class="sec-desc">Oportunidades reales, sectores que contratan, habilidades blandas, barreras, roadmap concreto y como conseguir trabajo.</div>
+        <div class="sec-obj">El alumno sabe exactamente que hacer manana y como venderse en el mercado.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">5.1</div><div class="lec-title">Por que estudiar datos hoy</div><div class="lec-desc">Datos WEF 2025, McKinsey, Forrester e IDC con fuentes verificadas.</div></div>
+      <div class="lec"><div class="lec-num">5.2</div><div class="lec-title">Sectores que contratan</div><div class="lec-desc">3 tiers segun intensidad de demanda de datos.</div></div>
+      <div class="lec"><div class="lec-num">5.3</div><div class="lec-title">Habilidades blandas</div><div class="lec-desc">6 habilidades con ejemplos: pensamiento analitico, storytelling, comunicacion, venta, critico, contexto.</div></div>
+      <div class="lec"><div class="lec-num">5.4</div><div class="lec-title">Las barreras reales</div><div class="lec-desc">"No soy bueno en mate", "no tengo tiempo", "demasiadas herramientas", "no tengo la edad".</div></div>
+      <div class="lec"><div class="lec-num">5.5</div><div class="lec-title">Tu roadmap de 8 meses</div><div class="lec-desc">Fundamentos, visualizacion, SQL, Python, IA copiloto, visibilidad.</div></div>
+      <div class="lec"><div class="lec-num">5.6</div><div class="lec-title">Como conseguir trabajo</div><div class="lec-desc">5 palancas: propuesta de valor, CV, LinkedIn, portafolio, activar el mercado.</div></div>
+    </div>
   </div>
 
 </main>
 
-<footer>
-  © Unicorn Academy · Curso introductorio gratuito
-</footer>
-
+<script>
+function toggle(header) {
+  const lecciones = header.nextElementSibling;
+  const chevron = header.querySelector('.sec-chevron');
+  const isOpen = lecciones.classList.contains('open');
+  lecciones.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+  // Detectar cantidad de lecciones para ajustar columnas
+  if (!isOpen) {
+    const count = lecciones.querySelectorAll('.lec').length;
+    if (count === 6) lecciones.classList.add('cols6');
+    else if (count === 1) lecciones.classList.add('cols1');
+  }
+}
+</script>
 </body>
 </html>
