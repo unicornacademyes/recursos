@@ -1,71 +1,218 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recursos · Unicorn Academy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=DM+Sans:wght@400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --purple-deep: #1A1035; --purple-mid: #4A3580; --purple-accent: #7B5EA7;
-      --purple-light: #EDE8F5; --text-dark: #1A1035; --text-muted: #6B6480;
-      --border: #E2DCF0; --white: #FFFFFF; --bg: #F7F5FC;
-    }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text-dark); min-height: 100vh; }
-    header { background: var(--purple-deep); padding: 2.5rem 2rem 2rem; position: relative; overflow: hidden; }
-    header::before { content: ''; position: absolute; top: -80px; right: -80px; width: 320px; height: 320px; background: var(--purple-mid); border-radius: 50%; opacity: 0.25; }
-    header::after { content: ''; position: absolute; bottom: -100px; left: 10%; width: 200px; height: 200px; background: var(--purple-accent); border-radius: 50%; opacity: 0.15; }
-    .header-inner { max-width: 860px; margin: 0 auto; position: relative; }
-    .brand-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1rem; display: block; }
-    .brand-tag span { color: rgba(255,255,255,0.65); }
-    h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: #fff; line-height: 1.2; margin-bottom: 0.5rem; }
-    h1 em { font-style: italic; color: #C5B8E8; }
-    .header-sub { font-size: 14px; color: rgba(255,255,255,0.45); }
-    main { max-width: 860px; margin: 0 auto; padding: 2.5rem 2rem 4rem; }
-    .section-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--purple-accent); margin-bottom: 1rem; margin-top: 2.5rem; display: block; }
-    .section-label:first-child { margin-top: 0; }
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
-    .resource-card { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 1.4rem 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 10px; transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s; }
-    .resource-card:hover { border-color: var(--purple-accent); box-shadow: 0 4px 20px rgba(123,94,167,0.12); transform: translateY(-2px); }
-    .resource-card:hover .card-arrow { color: var(--purple-accent); }
-    .card-top { display: flex; align-items: center; justify-content: space-between; }
-    .card-icon { width: 38px; height: 38px; background: var(--purple-light); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; }
-    .card-arrow { font-size: 18px; color: var(--border); transition: color 0.15s; }
-    .card-tag { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-accent); background: var(--purple-light); padding: 3px 8px; border-radius: 4px; display: inline-block; }
-    .card-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; line-height: 1.3; }
-    .card-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-    .card-soon { background: transparent; border: 1.5px dashed var(--border); border-radius: 14px; padding: 1.4rem 1.5rem; display: flex; align-items: center; gap: 10px; color: var(--text-muted); font-size: 13px; }
-    footer { text-align: center; padding: 1.5rem 2rem; font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); background: var(--purple-deep); }
-    footer span { color: rgba(255,255,255,0.5); }
-  </style>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Curso introductorio · Fundamentos de datos e IA · Unicorn Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0A0A0A;--fg:#111827;--muted:#6b7280;--quiet:#9ca3af;
+  --rule:#e5e7eb;--paper:#f9fafb;
+  --purple:#563C77;--purple-soft:#F5F1FA;--purple-light:#D4B8F5;--purple-deep:#3D2B54;
+  --easing:cubic-bezier(.22,.61,.36,1);
+}
+html,body{background:#fff;color:var(--fg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
+
+/* HEADER */
+.header{background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1.5px solid var(--rule);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink)}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.header-meta{font-size:11px;color:var(--quiet);font-weight:500;letter-spacing:0.04em}
+
+.main{max-width:900px;margin:0 auto;padding:40px 32px 80px}
+
+/* HERO */
+.hero{margin-bottom:32px}
+.hero-label{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.hero-label::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.hero-title{font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:8px;line-height:1.1}
+.hero-desc{font-size:16px;color:var(--muted);max-width:600px;line-height:1.65;margin-bottom:20px}
+.hero-pills{display:flex;gap:8px;flex-wrap:wrap}
+.pill{font-size:12px;padding:5px 12px;border-radius:100px;border:1.5px solid var(--rule);color:var(--muted);background:#fff}
+.pill.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22);color:var(--purple);font-weight:500}
+
+/* TOTALS */
+.totals{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden;margin-bottom:28px}
+.total-item{padding:16px 12px;text-align:center;border-right:1px solid var(--rule);background:var(--paper)}
+.total-item:last-child{border-right:none}
+.total-num{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1}
+.total-label{font-size:11px;color:var(--muted);margin-top:4px}
+
+/* SECTIONS */
+.sec{border:1.5px solid var(--rule);border-radius:16px;overflow:hidden;margin-bottom:10px;transition:box-shadow 0.2s}
+.sec:hover{box-shadow:0 4px 20px rgba(0,0,0,0.06)}
+.sec-head{display:flex;align-items:flex-start;gap:14px;padding:16px 20px;background:var(--paper);cursor:pointer;user-select:none}
+.sec-head:hover{background:#f3f4f6}
+.sec-num{width:36px;height:36px;border-radius:10px;background:var(--purple-soft);border:1.5px solid var(--purple-light);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--purple);flex-shrink:0}
+.sec-body{flex:1}
+.sec-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:5px}
+.sec-obj{font-size:12px;color:var(--purple);font-style:italic}
+.sec-meta{font-size:11px;color:var(--quiet);margin-left:auto;white-space:nowrap;padding-top:2px;font-weight:500}
+.sec-chevron{font-size:12px;color:var(--quiet);transition:transform 0.2s;flex-shrink:0;margin-top:4px}
+.sec-chevron.open{transform:rotate(180deg)}
+
+/* LECCIONES */
+.lecciones{display:none;border-top:1.5px solid var(--rule)}
+.lecciones.open{display:grid;grid-template-columns:repeat(5,1fr)}
+.lecciones.open.cols6{grid-template-columns:repeat(6,1fr)}
+.lecciones.open.cols1{grid-template-columns:1fr}
+.lec{padding:14px 14px;border-right:1px solid var(--rule);transition:background 0.15s}
+.lec:last-child{border-right:none}
+.lec:hover{background:var(--paper)}
+.lec-num{font-size:10px;color:var(--quiet);margin-bottom:4px;font-weight:600;letter-spacing:0.04em}
+.lec-title{font-size:12px;color:var(--ink);line-height:1.4;font-weight:600;margin-bottom:3px}
+.lec-desc{font-size:11px;color:var(--muted);line-height:1.35}
+
+@media(max-width:640px){
+  .header,.main{padding-left:20px;padding-right:20px}
+  .hero-title{font-size:24px}
+  .totals{grid-template-columns:repeat(2,1fr)}
+  .lecciones.open,.lecciones.open.cols6{grid-template-columns:1fr 1fr}
+  .lec{border-bottom:1px solid var(--rule)}
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="header-inner">
-      <span class="brand-tag">▶ Unicorn Academy · <span>Bootcamp de IA & Data Analytics</span></span>
-      <h1>Recursos <em>gratuitos</em></h1>
-      <p class="header-sub">Materiales para entender el mundo de los datos antes de dar el salto.</p>
+
+<header class="header">
+  <div class="brand"><div class="brand-dot"></div>Unicorn Academy</div>
+  <span class="header-meta">CURSO INTRODUCTORIO · ESTRUCTURA</span>
+</header>
+
+<main class="main">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h1 class="hero-title">Curso introductorio<br>Fundamentos de datos e IA</h1>
+    <p class="hero-desc">Para profesionales que quieren entender el mundo de los datos antes de comprometerse con algo mas largo. Sin codigo. Sin tecnicismos.</p>
+    <div class="hero-pills">
+      <span class="pill">5 secciones</span>
+      <span class="pill">22 lecciones</span>
     </div>
-  </header>
-  <main>
-    <span class="section-label">Formación</span>
-    <div class="card-grid">
-      <a class="resource-card" href="/curso-introductorio/">
-        <div class="card-top">
-          <div class="card-icon">🎓</div>
-          <span class="card-arrow">→</span>
-        </div>
-        <span class="card-tag">curso · 5 secciones</span>
-        <p class="card-name">Fundamentos de datos e IA</p>
-        <p class="card-desc">22 lecciones para profesionales que quieren entender el sector. Sin código, sin tecnicismos.</p>
-      </a>
-      <div class="card-soon">
-        <span style="font-size:16px">+</span>
-        Próximamente más recursos 
+  </div>
+
+  <!-- TOTALS -->
+  <div class="totals">
+    <div class="total-item"><div class="total-num">5</div><div class="total-label">secciones</div></div>
+    <div class="total-item"><div class="total-num">22</div><div class="total-label">lecciones</div></div>
+  </div>
+
+  <!-- S1 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S1</div>
+      <div class="sec-body">
+        <div class="sec-title">El mundo de los datos</div>
+        <div class="sec-desc">La historia, el negocio y el dinero detras. Narrativo, sin tecnicismos. Vende el sector antes de ensenar nada.</div>
+        <div class="sec-obj">El alumno sale convencido de que esto importa y de que es para el.</div>
       </div>
+      <span class="sec-chevron">▼</span>
     </div>
-  </main>
-  <footer>recursos.unicornacademy.es · <span>Unicorn Academy © 2025</span></footer>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">1.1</div><div class="lec-title">Por que estamos aca + como surgieron los datos</div><div class="lec-desc">El gancho. Que cambio y de donde vienen los datos.</div></div>
+      <div class="lec"><div class="lec-num">1.2</div><div class="lec-title">Por que el sector esta en auge</div><div class="lec-desc">Los factores que convirtieron datos en industria global.</div></div>
+      <div class="lec"><div class="lec-num">1.3</div><div class="lec-title">El dinero que mueve</div><div class="lec-desc">Mercado completo: ~920.000M USD entre datos, analytics, IA y automatizacion.</div></div>
+      <div class="lec"><div class="lec-num">1.4</div><div class="lec-title">El impacto estrategico</div><div class="lec-desc">Como los datos cambian decisiones en las empresas.</div></div>
+      <div class="lec"><div class="lec-num">1.5</div><div class="lec-title">Casos reales</div><div class="lec-desc">Empresas hispanohablantes que se transformaron con datos.</div></div>
+    </div>
+  </div>
+
+  <!-- S2 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S2</div>
+      <div class="sec-body">
+        <div class="sec-title">El ecosistema</div>
+        <div class="sec-desc">Mapa mental del sector. IA, big data, analytics, roles y vocabulario esencial.</div>
+        <div class="sec-obj">El alumno puede participar en conversaciones del sector y sabe donde encaja dentro del ecosistema.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">2.1</div><div class="lec-title">IA, big data y analytics</div><div class="lec-desc">Que es cada rama, diferencias y donde se superponen.</div></div>
+      <div class="lec"><div class="lec-num">2.2</div><div class="lec-title">El mapa del sector</div><div class="lec-desc">20 roles interactivos en 4 categorias: upskilling, tecnico, IA y estrategia.</div></div>
+      <div class="lec"><div class="lec-num">2.3</div><div class="lec-title">Niveles del analista</div><div class="lec-desc">N1 Ordenar, N2 Analizar, N3 Decidir, N4 Estrategia.</div></div>
+      <div class="lec"><div class="lec-num">2.4</div><div class="lec-title">El glosario esencial</div><div class="lec-desc">Dataset, modelo, API, LLM, pipeline, ETL, cloud. Sin jerga.</div></div>
+      <div class="lec"><div class="lec-num">2.5</div><div class="lec-title">Como se rentabiliza</div><div class="lec-desc">4 formas concretas de monetizar habilidades en datos con ejemplos.</div></div>
+    </div>
+  </div>
+
+  <!-- S3 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S3</div>
+      <div class="sec-body">
+        <div class="sec-title">El rol del Analista 360</div>
+        <div class="sec-desc">El perfil especifico. Capacidades, herramientas, madurez empresarial, calidad de datos y proyectos que entrega.</div>
+        <div class="sec-obj">El alumno entiende exactamente que hace este perfil y como podria serlo.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">3.1</div><div class="lec-title">Que es el Analista 360</div><div class="lec-desc">Criterio de negocio, ejecucion con IA y comunicacion ejecutiva.</div></div>
+      <div class="lec"><div class="lec-num">3.2</div><div class="lec-title">El ecosistema de herramientas</div><div class="lec-desc">6 categorias con logos: analisis, visualizacion, programacion, BD, IA, automatizacion.</div></div>
+      <div class="lec"><div class="lec-num">3.3</div><div class="lec-title">Madurez y tipos de analitica</div><div class="lec-desc">Los 4 tipos (descriptiva, diagnostica, predictiva, prescriptiva) y los 5 niveles de madurez empresarial.</div></div>
+      <div class="lec"><div class="lec-num">3.4</div><div class="lec-title">Calidad de los datos</div><div class="lec-desc">6 problemas comunes y el proceso del analista con IA.</div></div>
+      <div class="lec"><div class="lec-num">3.5</div><div class="lec-title">Proyectos que entrega</div><div class="lec-desc">9 proyectos del analista con sectores y ejemplos reales.</div></div>
+    </div>
+  </div>
+
+  <!-- S4 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S4</div>
+      <div class="sec-body">
+        <div class="sec-title">El ecosistema de herramientas</div>
+        <div class="sec-desc">Tabla comparativa de todas las herramientas del Analista 360 con licencia, acceso, instalacion y cuando usar cada una. Demos en vivo en el video.</div>
+        <div class="sec-obj">El alumno puede elegir que herramienta usar segun el contexto y sabe cual aprender primero.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec" style="grid-column:1/-1"><div class="lec-num">4.1</div><div class="lec-title">Todas las herramientas en una vista</div><div class="lec-desc">Tabla comparativa con 18 herramientas en 6 categorias: hojas y consultas (Excel, Sheets, SQL), visualizacion (Power BI, Tableau, Looker), programacion (Python, R), bases de datos (PostgreSQL, MySQL, BigQuery, Snowflake), IA copiloto (ChatGPT, Claude, Copilot) y automatizacion (n8n, Make, Zapier). Demos en vivo en el video.</div></div>
+    </div>
+  </div>
+
+  <!-- S5 -->
+  <div class="sec">
+    <div class="sec-head" onclick="toggle(this)">
+      <div class="sec-num">S5</div>
+      <div class="sec-body">
+        <div class="sec-title">Tu carrera en datos</div>
+        <div class="sec-desc">Oportunidades reales, sectores que contratan, habilidades blandas, barreras, roadmap concreto y como conseguir trabajo.</div>
+        <div class="sec-obj">El alumno sabe exactamente que hacer manana y como venderse en el mercado.</div>
+      </div>
+      <span class="sec-chevron">▼</span>
+    </div>
+    <div class="lecciones">
+      <div class="lec"><div class="lec-num">5.1</div><div class="lec-title">Por que estudiar datos hoy</div><div class="lec-desc">Datos WEF 2025, McKinsey, Forrester e IDC con fuentes verificadas.</div></div>
+      <div class="lec"><div class="lec-num">5.2</div><div class="lec-title">Sectores que contratan</div><div class="lec-desc">3 tiers segun intensidad de demanda de datos.</div></div>
+      <div class="lec"><div class="lec-num">5.3</div><div class="lec-title">Habilidades blandas</div><div class="lec-desc">6 habilidades con ejemplos: pensamiento analitico, storytelling, comunicacion, venta, critico, contexto.</div></div>
+      <div class="lec"><div class="lec-num">5.4</div><div class="lec-title">Las barreras reales</div><div class="lec-desc">"No soy bueno en mate", "no tengo tiempo", "demasiadas herramientas", "no tengo la edad".</div></div>
+      <div class="lec"><div class="lec-num">5.5</div><div class="lec-title">Tu roadmap de 8 meses</div><div class="lec-desc">Fundamentos, visualizacion, SQL, Python, IA copiloto, visibilidad.</div></div>
+      <div class="lec"><div class="lec-num">5.6</div><div class="lec-title">Como conseguir trabajo</div><div class="lec-desc">5 palancas: propuesta de valor, CV, LinkedIn, portafolio, activar el mercado.</div></div>
+    </div>
+  </div>
+
+</main>
+
+<script>
+function toggle(header) {
+  const lecciones = header.nextElementSibling;
+  const chevron = header.querySelector('.sec-chevron');
+  const isOpen = lecciones.classList.contains('open');
+  lecciones.classList.toggle('open', !isOpen);
+  chevron.classList.toggle('open', !isOpen);
+  // Detectar cantidad de lecciones para ajustar columnas
+  if (!isOpen) {
+    const count = lecciones.querySelectorAll('.lec').length;
+    if (count === 6) lecciones.classList.add('cols6');
+    else if (count === 1) lecciones.classList.add('cols1');
+  }
+}
+</script>
 </body>
 </html>
