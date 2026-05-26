@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>S2 · El ecosistema · Unicorn Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0A0A0A;--fg:#111827;--muted:#6b7280;--quiet:#9ca3af;
+  --rule:#e5e7eb;--paper:#f9fafb;
+  --purple:#563C77;--purple-soft:#F5F1FA;--purple-light:#D4B8F5;--purple-deep:#3D2B54;
+  --easing:cubic-bezier(.22,.61,.36,1);
+}
+html,body{background:#fff;color:var(--fg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
+.header{background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1.5px solid var(--rule);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink)}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.sec-badge{font-size:11px;color:var(--quiet);letter-spacing:0.05em;font-weight:500}
+.sec-header{max-width:860px;margin:0 auto;padding:28px 32px 0}
+.sec-tag{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.sec-title{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:6px}
+.sec-desc{font-size:15px;color:var(--muted);max-width:560px;line-height:1.6}
+.tabs-wrap{max-width:860px;margin:0 auto;padding:20px 32px 0}
+.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--rule);overflow-x:auto}
+.tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:all 0.15s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif;flex-shrink:0}
+.tab:hover{color:var(--purple)}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple);font-weight:600}
+.tab-num{font-size:10px;font-weight:700;color:var(--purple-light);margin-right:5px;letter-spacing:0.03em}
+.tab.active .tab-num{color:var(--purple)}
+.content-wrap{max-width:860px;margin:0 auto;padding:36px 32px 80px}
+.lesson{display:none}
+.lesson.show{display:block;animation:fadeIn 0.25s var(--easing) both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.lesson-eyebrow{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.lesson-eyebrow::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.lesson-time{font-size:10px;color:var(--quiet);font-weight:400;margin-left:2px}
+.lesson-title{font-size:34px;font-weight:800;color:var(--ink);line-height:1.08;letter-spacing:-0.02em;margin-bottom:20px}
+.lesson-title em{font-style:italic;color:var(--purple)}
+.body-text{font-size:17px;line-height:1.75;color:var(--muted);margin:14px 0;max-width:660px}
+.body-text b{color:var(--ink);font-weight:600}
+.quote-block{border-left:4px solid var(--purple);background:var(--purple-soft);padding:18px 22px;border-radius:0 10px 10px 0;margin:20px 0}
+.quote-block p{font-size:18px;font-weight:600;color:var(--purple-deep);line-height:1.45}
+.callout{display:flex;align-items:flex-start;gap:13px;background:var(--paper);border:1.5px solid var(--rule);border-radius:12px;padding:18px 20px;margin:20px 0}
+.callout-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.callout p{font-size:15px;color:var(--fg);line-height:1.65}
+.callout p b{color:var(--ink);font-weight:700}
+.bullets{display:flex;flex-direction:column;gap:12px;margin:22px 0}
+.bullet-row{display:flex;align-items:flex-start;gap:12px;font-size:16px;color:var(--fg);line-height:1.55}
+.bullet-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:8px}
+.bullet-row b{color:var(--ink);font-weight:700}
+
+/* MAPA VISUAL */
+.mapa-sector{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:22px 0}
+.mapa-card{border:1.5px solid var(--rule);border-radius:14px;padding:20px 18px;background:#fff;transition:border-color 0.2s,transform 0.2s}
+.mapa-card:hover{border-color:var(--purple-light);transform:translateY(-2px)}
+.mapa-card.center{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.mapa-icon{font-size:28px;margin-bottom:10px}
+.mapa-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.mapa-card.center .mapa-title{color:var(--purple-deep)}
+.mapa-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.mapa-card.center .mapa-desc{color:var(--purple)}
+.mapa-ejemplos{font-size:11px;color:var(--quiet);margin-top:8px;font-style:italic}
+
+/* DIFERENCIAS GRID */
+.diff-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0}
+.diff-card{border:1.5px solid var(--rule);border-radius:14px;padding:18px 16px;background:#fff}
+.diff-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.diff-label{font-size:10px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:8px}
+.diff-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.diff-card.feat .diff-title{color:var(--purple-deep)}
+.diff-item{font-size:13px;color:var(--muted);padding:5px 0;border-bottom:1px solid var(--rule);line-height:1.4}
+.diff-item:last-child{border-bottom:none}
+.diff-card.feat .diff-item{color:var(--purple);border-color:rgba(86,60,119,0.12)}
+
+/* NIVELES DATA LITERACY */
+.literacy-wrap{margin:22px 0}
+.literacy-header{display:grid;grid-template-columns:140px 1fr 1fr 1fr 1fr;gap:0;border:1.5px solid var(--rule);border-radius:14px 14px 0 0;overflow:hidden;background:var(--paper)}
+.lit-h{padding:12px 14px;font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.04em;text-transform:uppercase;border-right:1px solid var(--rule)}
+.lit-h:last-child{border-right:none}
+.lit-h.nivel{background:var(--purple-soft)}
+.literacy-row{display:grid;grid-template-columns:140px 1fr 1fr 1fr 1fr;gap:0;border:1.5px solid var(--rule);border-top:none}
+.literacy-row:last-child{border-radius:0 0 14px 14px;overflow:hidden}
+.lit-cell{padding:12px 14px;font-size:13px;color:var(--fg);border-right:1px solid var(--rule);line-height:1.45;vertical-align:top}
+.lit-cell:last-child{border-right:none}
+.lit-cell.label{font-weight:700;color:var(--ink);background:var(--paper);font-size:12px}
+.lit-cell.conv{background:#fff}
+.lit-cell.lit{background:#fff}
+.lit-cell.flu{background:#fff}
+.nivel-tag{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:100px;margin-bottom:6px}
+.tag-conv{background:#fef3c7;color:#92400e;border:1px solid #fde68a}
+.tag-lit{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.tag-flu{background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)}
+
+/* ROLES */
+.roles{display:flex;flex-direction:column;gap:10px;margin:22px 0}
+.rol-card{border:1.5px solid var(--rule);border-radius:14px;padding:18px 20px;background:#fff;transition:border-color 0.2s}
+.rol-card:hover{border-color:var(--purple-light)}
+.rol-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.rol-header{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.rol-icon{font-size:22px}
+.rol-title{font-size:16px;font-weight:700;color:var(--ink);flex:1}
+.rol-card.feat .rol-title{color:var(--purple-deep)}
+.rol-badge{font-size:10px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:1px solid var(--purple-light);padding:2px 9px;border-radius:100px;letter-spacing:0.03em;margin-left:auto}
+.rol-card.feat .rol-badge{background:rgba(86,60,119,0.15);border-color:var(--purple)}
+.rol-desc{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:6px}
+.rol-card.feat .rol-desc{color:var(--purple)}
+.rol-tools{font-size:12px;color:var(--quiet);font-style:italic}
+
+/* GLOSARIO */
+.glosario{display:flex;flex-direction:column;gap:10px;margin:22px 0}
+.gloss-card{border:1.5px solid var(--rule);border-radius:14px;padding:18px 20px;background:#fff;transition:border-color 0.2s}
+.gloss-card:hover{border-color:var(--purple-light)}
+.gloss-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.gloss-header{display:flex;align-items:baseline;gap:12px;margin-bottom:8px;flex-wrap:wrap}
+.gloss-term{font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-0.01em}
+.gloss-card.feat .gloss-term{color:var(--purple-deep)}
+.gloss-badge{font-size:10px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:1px solid var(--purple-light);padding:2px 8px;border-radius:100px;letter-spacing:0.03em}
+.gloss-card.feat .gloss-badge{background:rgba(86,60,119,0.15);border-color:var(--purple)}
+.gloss-def{font-size:14px;color:var(--muted);line-height:1.6}
+.gloss-card.feat .gloss-def{color:var(--purple)}
+.gloss-ej{font-size:13px;color:var(--fg);margin-top:8px;padding:10px 14px;background:rgba(255,255,255,0.7);border-radius:8px;border:1px solid var(--rule);font-style:italic;line-height:1.5}
+
+/* LESSON NAV */
+.lesson-nav{display:flex;align-items:center;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1.5px solid var(--rule)}
+.btn-lesson{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:100px;border:1.5px solid var(--rule);background:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--fg);cursor:pointer;transition:all 0.15s}
+.btn-lesson:hover{border-color:var(--purple);color:var(--purple)}
+.btn-lesson.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-lesson.primary:hover{background:var(--purple);border-color:var(--purple)}
+.btn-lesson:disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
+.lesson-pos{font-size:12px;color:var(--quiet);font-weight:500}
+
+@media(max-width:640px){
+  .header,.tabs-wrap,.sec-header,.content-wrap{padding-left:20px;padding-right:20px}
+  .lesson-title{font-size:26px}
+  .mapa-sector,.diff-grid{grid-template-columns:1fr}
+  .literacy-header,.literacy-row{grid-template-columns:100px 1fr 1fr 1fr}
+}
+</style>
+<style>.sec-between-nav{background:#f9fafb;border-top:1.5px solid #e5e7eb;padding:24px 32px;margin-top:0}.sec-between-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1.5px solid #e5e7eb;background:#fff;font-family:Inter,sans-serif;font-size:13px;font-weight:500;color:#374151;text-decoration:none;transition:all 0.15s}.nav-btn:hover{border-color:#563C77;color:#563C77}.nav-btn-primary{background:#0A0A0A;color:#fff;border-color:#0A0A0A}.nav-btn-primary:hover{background:#563C77;border-color:#563C77}</style></head>
+<body>
+
+<header class="header">
+  <div class="brand"><div class="brand-dot"></div>Unicorn Academy</div>
+  <span class="sec-badge">SECCION 2 · EL ECOSISTEMA</span>
+</header>
+
+<div class="sec-header">
+  <div class="sec-tag">Seccion 2</div>
+  <div class="sec-title">El ecosistema</div>
+  <div class="sec-desc">Mapa mental del sector. IA, big data, analytics, niveles de data literacy, roles y vocabulario esencial. Al terminar sabras exactamente donde vive cada cosa.</div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="goLesson(0)"><span class="tab-num">2.1</span>IA, big data y analytics</button>
+    <button class="tab"        onclick="goLesson(1)"><span class="tab-num">2.2</span>El mapa del sector</button>
+    <button class="tab"        onclick="goLesson(2)"><span class="tab-num">2.3</span>Niveles del analista</button>
+    <button class="tab"        onclick="goLesson(3)"><span class="tab-num">2.4</span>El glosario esencial</button>
+    <button class="tab"        onclick="goLesson(4)"><span class="tab-num">2.5</span>Como se rentabiliza</button>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+<div class="lesson show" id="l0">
+    <div class="lesson-eyebrow">Leccion 2.1 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">IA, big data y analytics.<br><em>No son lo mismo.</em></h2>
+    <p class="body-text">Estos tres terminos aparecen juntos constantemente pero describen cosas distintas. Entender la diferencia te permite hablar con precision en cualquier conversacion del sector.</p>
+    <div class="diff-grid">
+      <div class="diff-card feat">
+        <div class="diff-label">Big Data</div>
+        <div class="diff-title">El volumen que lo cambio todo</div>
+        <div class="diff-item">Datos masivos que no caben en un Excel</div>
+        <div class="diff-item">Definido por las 3V: Volumen, Variedad, Velocidad</div>
+        <div class="diff-item">Requiere infraestructura especial para almacenar y procesar</div>
+        <div class="diff-item">No es un producto ni una herramienta. Es un fenomeno.</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-label">Analytics</div>
+        <div class="diff-title">El proceso de extraer valor</div>
+        <div class="diff-item">Convertir datos en informacion util</div>
+        <div class="diff-item">Responde preguntas de negocio concretas</div>
+        <div class="diff-item">Va de descriptivo a prescriptivo segun la complejidad</div>
+        <div class="diff-item">Es el trabajo central del analista de datos</div>
+      </div>
+      <div class="diff-card">
+        <div class="diff-label">Inteligencia Artificial</div>
+        <div class="diff-title">El motor que aprende solo</div>
+        <div class="diff-item">Sistemas que aprenden patrones de los datos</div>
+        <div class="diff-item">Incluye machine learning, deep learning y LLMs</div>
+        <div class="diff-item">Automatiza decisiones y genera predicciones</div>
+        <div class="diff-item">Necesita datos de calidad para funcionar bien</div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p>Una forma de verlo: <b>Big Data es el ingrediente. Analytics es la cocina. La IA es el chef que aprende a cocinar solo.</b> El analista es quien decide que plato preparar y para quien.</p>
+    </div>
+    <p class="body-text">Dentro de la IA hay ramas que vale la pena conocer por nombre:</p>
+    <div class="roles">
+      <div class="rol-card">
+        <div class="rol-header"><span class="rol-icon">🧠</span><span class="rol-title">Machine Learning</span><span class="rol-badge">DENTRO DE IA</span></div>
+        <p class="rol-desc">Algoritmos que aprenden de datos historicos sin ser programados explicitamente. El modelo descubre patrones solo. Ejemplo: predecir que clientes van a abandonar un servicio.</p>
+      </div>
+      <div class="rol-card feat">
+        <div class="rol-header"><span class="rol-icon">💬</span><span class="rol-title">LLM · Large Language Model</span><span class="rol-badge">DETRAS DE CHATGPT</span></div>
+        <p class="rol-desc">Modelos entrenados con enormes cantidades de texto que pueden leer, escribir, resumir y generar contenido en lenguaje natural. ChatGPT, Claude y Gemini son LLMs.</p>
+      </div>
+      <div class="rol-card">
+        <div class="rol-header"><span class="rol-icon">🔮</span><span class="rol-title">Deep Learning</span><span class="rol-badge">DENTRO DE ML</span></div>
+        <p class="rol-desc">Redes neuronales artificiales que imitan el cerebro humano. Base de reconocimiento de imagenes, voz y los modelos de lenguaje mas avanzados.</p>
+      </div>
+    </div>
+  </div>
+
+<div class="lesson" id="l1">
+    <div class="lesson-eyebrow">Leccion 2.2 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">El mapa del sector.<br><em>Todo conecta.</em></h2>
+    <p class="body-text">Antes de aprender cualquier herramienta, necesitas ver como encaja todo. Este es el mapa completo — 4 grandes areas, 20 roles. Haz clic en cualquier rol para ver que hace, que skills necesita y cuanto gana.</p>
+
+    <style>
+    :root{--l1b:#FAEEDA;--l1c:#854F0B;--l1s:#EF9F27;--l2b:#EEEDFE;--l2c:#3C3489;--l2s:#7F77DD;--l3b:#E1F5EE;--l3c:#085041;--l3s:#1D9E75;--l4b:#F1EFE8;--l4c:#444441;--l4s:#888780}
+    .mm-wrap2{margin:22px 0}
+    .mm-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .mm-leg{font-size:11px;padding:4px 10px;border-radius:100px;font-weight:500}
+    .mm-leg.a{background:var(--l1b);color:var(--l1c);border:1px solid var(--l1s)}
+    .mm-leg.p{background:var(--l2b);color:var(--l2c);border:1px solid var(--l2s)}
+    .mm-leg.t{background:var(--l3b);color:var(--l3c);border:1px solid var(--l3s)}
+    .mm-leg.g{background:var(--l4b);color:var(--l4c);border:1px solid var(--l4s)}
+    .mm-svg-wrap{overflow-x:auto;margin-bottom:14px}
+    .mm-hint2{font-size:12px;color:var(--quiet);text-align:center;font-style:italic;margin-bottom:14px}
+    .mm-node2{cursor:pointer}.mm-node2:hover>rect{opacity:0.75}
+    .mm-c-amber>rect{fill:#FAEEDA;stroke:#EF9F27;stroke-width:0.5}.mm-c-amber text{fill:#633806}
+    .mm-c-purple>rect{fill:#EEEDFE;stroke:#7F77DD;stroke-width:0.5}.mm-c-purple text{fill:#3C3489}
+    .mm-c-teal>rect{fill:#E1F5EE;stroke:#1D9E75;stroke-width:0.5}.mm-c-teal text{fill:#085041}
+    .mm-c-gray>rect{fill:#F1EFE8;stroke:#888780;stroke-width:0.5}.mm-c-gray text{fill:#444441}
+    .mm-c-center>rect{fill:#f9fafb;stroke:#e5e7eb;stroke-width:0.5}
+    .mm-panel{display:none;border-radius:14px;padding:18px 20px;margin-top:16px;animation:fadeIn 0.2s ease both}
+    .mm-panel.open{display:block}
+    .mm-panel.a{background:#FAEEDA;border:1.5px solid #EF9F27}
+    .mm-panel.p{background:#EEEDFE;border:1.5px solid #7F77DD}
+    .mm-panel.t{background:#E1F5EE;border:1.5px solid #1D9E75}
+    .mm-panel.g{background:#F1EFE8;border:1.5px solid #888780}
+    .mm-panel-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+    .mm-cat-tag{font-size:10px;font-weight:700;padding:3px 10px;border-radius:100px}
+    .mm-cat-tag.a{background:rgba(255,255,255,0.6);color:#854F0B;border:1px solid #EF9F27}
+    .mm-cat-tag.p{background:rgba(255,255,255,0.6);color:#3C3489;border:1px solid #7F77DD}
+    .mm-cat-tag.t{background:rgba(255,255,255,0.6);color:#085041;border:1px solid #1D9E75}
+    .mm-cat-tag.g{background:rgba(255,255,255,0.6);color:#444441;border:1px solid #888780}
+    .mm-panel-name{font-size:18px;font-weight:700;color:var(--ink)}
+    .mm-grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+    .mm-label{font-size:10px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--quiet);margin-bottom:5px}
+    .mm-text{font-size:13px;color:var(--fg);line-height:1.55}
+    .mm-chips{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
+    .mm-chip{font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.7);color:var(--fg);border:0.5px solid rgba(0,0,0,0.1)}
+    .mm-meta{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+    .mm-meta b{color:var(--fg)}
+    </style>
+
+    <div class="mm-wrap2">
+      <div class="mm-legend">
+        <span class="mm-leg a">A · Upskilling · Analisis de negocio</span>
+        <span class="mm-leg p">B · Tecnico · Ingenieria y ciencia</span>
+        <span class="mm-leg t">C · IA y Automatizacion</span>
+        <span class="mm-leg g">D · Estrategia y liderazgo</span>
+      </div>
+
+      <div class="mm-svg-wrap">
+      <svg width="100%" viewBox="0 0 680 770" style="min-width:560px">
+        <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></marker></defs>
+        <!-- Centro -->
+        <g class="mm-c-center"><rect x="20" y="366" width="150" height="56" rx="8" stroke-width="0.5"/><text font-size="13" font-weight="600" fill="#111827" x="95" y="386" text-anchor="middle" dominant-baseline="central">Datos · IA</text><text font-size="11" fill="#6b7280" x="95" y="406" text-anchor="middle" dominant-baseline="central">y Automatizacion</text></g>
+        <!-- Rutas -->
+        <path d="M170,394 C200,394 200,132 220,132" fill="none" stroke="#EF9F27" stroke-width="1.2"/>
+        <path d="M170,394 C200,394 200,307 220,307" fill="none" stroke="#7F77DD" stroke-width="1.2"/>
+        <path d="M170,394 C200,394 200,482 220,482" fill="none" stroke="#1D9E75" stroke-width="1.2"/>
+        <path d="M170,394 C200,394 200,657 220,657" fill="none" stroke="#888780" stroke-width="1.2"/>
+        <!-- Categorias -->
+        <g class="mm-c-amber"><rect x="220" y="113" width="140" height="38" rx="8" stroke-width="0.5"/><text font-size="13" font-weight="600" x="290" y="132" text-anchor="middle" dominant-baseline="central" fill="#633806">A · Upskilling</text></g>
+        <g class="mm-c-purple"><rect x="220" y="288" width="140" height="38" rx="8" stroke-width="0.5"/><text font-size="13" font-weight="600" x="290" y="307" text-anchor="middle" dominant-baseline="central" fill="#3C3489">B · Tecnico</text></g>
+        <g class="mm-c-teal"><rect x="220" y="463" width="140" height="38" rx="8" stroke-width="0.5"/><text font-size="13" font-weight="600" x="290" y="482" text-anchor="middle" dominant-baseline="central" fill="#085041">C · IA y Auto</text></g>
+        <g class="mm-c-gray"><rect x="220" y="638" width="140" height="38" rx="8" stroke-width="0.5"/><text font-size="13" font-weight="600" x="290" y="657" text-anchor="middle" dominant-baseline="central" fill="#444441">D · Estrategia</text></g>
+        <!-- A roles -->
+        <path d="M360,132 C390,132 390,66 410,66" fill="none" stroke="#EF9F27" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,132 C390,132 390,99 410,99" fill="none" stroke="#EF9F27" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,132 C390,132 390,132 410,132" fill="none" stroke="#EF9F27" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,132 C390,132 390,165 410,165" fill="none" stroke="#EF9F27" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,132 C390,132 390,198 410,198" fill="none" stroke="#EF9F27" stroke-width="0.8" opacity="0.5"/>
+        <g class="mm-node2 mm-c-amber" onclick="showRole2('da')"><rect x="410" y="52" width="185" height="28" rx="6"/><text font-size="12" x="502" y="66" text-anchor="middle" dominant-baseline="central">Data Analyst</text></g>
+        <g class="mm-node2 mm-c-amber" onclick="showRole2('bia')"><rect x="410" y="85" width="185" height="28" rx="6"/><text font-size="12" x="502" y="99" text-anchor="middle" dominant-baseline="central">BI Analyst / Developer</text></g>
+        <g class="mm-node2 mm-c-amber" onclick="showRole2('mka')"><rect x="410" y="118" width="185" height="28" rx="6"/><text font-size="12" x="502" y="132" text-anchor="middle" dominant-baseline="central">Marketing Analyst</text></g>
+        <g class="mm-node2 mm-c-amber" onclick="showRole2('fa')"><rect x="410" y="151" width="185" height="28" rx="6"/><text font-size="12" x="502" y="165" text-anchor="middle" dominant-baseline="central">Finance and Ops Analyst</text></g>
+        <g class="mm-node2 mm-c-amber" onclick="showRole2('pa')"><rect x="410" y="184" width="185" height="28" rx="6"/><text font-size="12" x="502" y="198" text-anchor="middle" dominant-baseline="central">Product and HR Analyst</text></g>
+        <!-- B roles -->
+        <path d="M360,307 C390,307 390,241 410,241" fill="none" stroke="#7F77DD" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,307 C390,307 390,274 410,274" fill="none" stroke="#7F77DD" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,307 C390,307 390,307 410,307" fill="none" stroke="#7F77DD" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,307 C390,307 390,340 410,340" fill="none" stroke="#7F77DD" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,307 C390,307 390,373 410,373" fill="none" stroke="#7F77DD" stroke-width="0.8" opacity="0.5"/>
+        <g class="mm-node2 mm-c-purple" onclick="showRole2('de')"><rect x="410" y="227" width="185" height="28" rx="6"/><text font-size="12" x="502" y="241" text-anchor="middle" dominant-baseline="central">Data Engineer</text></g>
+        <g class="mm-node2 mm-c-purple" onclick="showRole2('ae')"><rect x="410" y="260" width="185" height="28" rx="6"/><text font-size="12" x="502" y="274" text-anchor="middle" dominant-baseline="central">Analytics Engineer</text></g>
+        <g class="mm-node2 mm-c-purple" onclick="showRole2('ds')"><rect x="410" y="293" width="185" height="28" rx="6"/><text font-size="12" x="502" y="307" text-anchor="middle" dominant-baseline="central">Data Scientist</text></g>
+        <g class="mm-node2 mm-c-purple" onclick="showRole2('mle')"><rect x="410" y="326" width="185" height="28" rx="6"/><text font-size="12" x="502" y="340" text-anchor="middle" dominant-baseline="central">ML / AI Engineer</text></g>
+        <g class="mm-node2 mm-c-purple" onclick="showRole2('darch')"><rect x="410" y="359" width="185" height="28" rx="6"/><text font-size="12" x="502" y="373" text-anchor="middle" dominant-baseline="central">MLOps / Data Architect</text></g>
+        <!-- C roles -->
+        <path d="M360,482 C390,482 390,416 410,416" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,482 C390,482 390,449 410,449" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,482 C390,482 390,482 410,482" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,482 C390,482 390,515 410,515" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,482 C390,482 390,548 410,548" fill="none" stroke="#1D9E75" stroke-width="0.8" opacity="0.5"/>
+        <g class="mm-node2 mm-c-teal" onclick="showRole2('aas')"><rect x="410" y="402" width="185" height="28" rx="6"/><text font-size="12" x="502" y="416" text-anchor="middle" dominant-baseline="central">AI Automation Specialist</text></g>
+        <g class="mm-node2 mm-c-teal" onclick="showRole2('nc')"><rect x="410" y="435" width="185" height="28" rx="6"/><text font-size="12" x="502" y="449" text-anchor="middle" dominant-baseline="central">No-Code / Low-Code</text></g>
+        <g class="mm-node2 mm-c-teal" onclick="showRole2('pe')"><rect x="410" y="468" width="185" height="28" rx="6"/><text font-size="12" x="502" y="482" text-anchor="middle" dominant-baseline="central">Prompt / Agent Engineer</text></g>
+        <g class="mm-node2 mm-c-teal" onclick="showRole2('apb')"><rect x="410" y="501" width="185" height="28" rx="6"/><text font-size="12" x="502" y="515" text-anchor="middle" dominant-baseline="central">AI Product Builder</text></g>
+        <g class="mm-node2 mm-c-teal" onclick="showRole2('aic')"><rect x="410" y="534" width="185" height="28" rx="6"/><text font-size="12" x="502" y="548" text-anchor="middle" dominant-baseline="central">AI Consultant</text></g>
+        <!-- D roles -->
+        <path d="M360,657 C390,657 390,591 410,591" fill="none" stroke="#888780" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,657 C390,657 390,624 410,624" fill="none" stroke="#888780" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,657 C390,657 390,657 410,657" fill="none" stroke="#888780" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,657 C390,657 390,690 410,690" fill="none" stroke="#888780" stroke-width="0.8" opacity="0.5"/>
+        <path d="M360,657 C390,657 390,723 410,723" fill="none" stroke="#888780" stroke-width="0.8" opacity="0.5"/>
+        <g class="mm-node2 mm-c-gray" onclick="showRole2('cdo')"><rect x="410" y="577" width="185" height="28" rx="6"/><text font-size="12" x="502" y="591" text-anchor="middle" dominant-baseline="central">Chief Data Officer</text></g>
+        <g class="mm-node2 mm-c-gray" onclick="showRole2('dst')"><rect x="410" y="610" width="185" height="28" rx="6"/><text font-size="12" x="502" y="624" text-anchor="middle" dominant-baseline="central">Data Strategist</text></g>
+        <g class="mm-node2 mm-c-gray" onclick="showRole2('hod')"><rect x="410" y="643" width="185" height="28" rx="6"/><text font-size="12" x="502" y="657" text-anchor="middle" dominant-baseline="central">Head of Data</text></g>
+        <g class="mm-node2 mm-c-gray" onclick="showRole2('ail')"><rect x="410" y="676" width="185" height="28" rx="6"/><text font-size="12" x="502" y="690" text-anchor="middle" dominant-baseline="central">AI Strategy Lead</text></g>
+        <g class="mm-node2 mm-c-gray" onclick="showRole2('anm')"><rect x="410" y="709" width="185" height="28" rx="6"/><text font-size="12" x="502" y="723" text-anchor="middle" dominant-baseline="central">Analytics Manager</text></g>
+      </svg>
+      </div>
+
+      <p class="mm-hint2">Haz clic en cualquier rol para ver que hace, skills y salario</p>
+
+      <div id="mm-role-panel"></div>
+    </div>
+
+    <script>
+    const R2={
+      da:{n:'Data Analyst',t:'a',tl:'A · Upskilling',w:'Transforma datos en insights accionables. Detecta tendencias y comunica hallazgos con claridad a equipos de negocio.',i:'Reduce decisiones por intuicion. Es la base de toda cultura data-driven en una empresa.',s:['SQL','Excel avanzado','Power BI / Tableau','Estadistica basica','Visualizacion'],l:'Junior a Senior',o:'Todos los sectores. El rol mas demandado del sector.',sal:'32k a 65k euros'},
+      bia:{n:'BI Analyst / Developer',t:'a',tl:'A · Upskilling',w:'Diseña dashboards e implementa soluciones de Business Intelligence para que el negocio se monitoree de forma autonoma.',i:'Visibilidad sobre KPIs. Ahorra horas de reporting manual cada semana.',s:['Power BI / Looker','SQL avanzado','Modelado dimensional','ETL'],l:'Junior a Senior',o:'Corporaciones, fintech, retail.',sal:'30k a 58k euros'},
+      mka:{n:'Marketing Analyst',t:'a',tl:'A · Upskilling',w:'Analiza campanas, embudos de conversion y audiencias para maximizar el ROI de cada euro invertido en marketing.',i:'Reduce gasto ineficiente. Personaliza mensajes al segmento correcto.',s:['Google Analytics','SQL','Excel','Power BI','Attribution'],l:'Junior a Senior',o:'E-commerce, agencias, tech.',sal:'28k a 52k euros'},
+      fa:{n:'Finance and Ops Analyst',t:'a',tl:'A · Upskilling',w:'Analiza datos financieros y operativos para guiar decisiones de presupuesto, costes y eficiencia operacional.',i:'Control de costes real y proyecciones fiables en lugar de estimaciones.',s:['Excel avanzado','SQL','Power BI','Modelado financiero'],l:'Junior a FP&A Lead',o:'Banca, fintech, corporaciones.',sal:'30k a 60k euros'},
+      pa:{n:'Product and HR Analyst',t:'a',tl:'A · Upskilling',w:'Analiza comportamiento de usuarios en productos digitales o datos de personas para mejorar experiencia y retencion.',i:'Mejora conversion, reduce rotacion de empleados y optimiza procesos internos.',s:['SQL','Amplitude / Mixpanel','A/B Testing','Excel','People Analytics'],l:'Mid a Senior',o:'Startups tech, corporaciones.',sal:'30k a 55k euros'},
+      de:{n:'Data Engineer',t:'p',tl:'B · Tecnico',w:'Construye y mantiene los pipelines que mueven y almacenan datos a escala. Es la infraestructura sobre la que trabajan todos los demas.',i:'Sin Data Engineers no hay datos limpios ni accesibles para el analista.',s:['Python avanzado','SQL avanzado','Spark','Airflow / dbt','Cloud AWS GCP Azure'],l:'Junior a Staff a Principal',o:'Todas las empresas tech y datos.',sal:'38k a 72k euros'},
+      ae:{n:'Analytics Engineer',t:'p',tl:'B · Tecnico',w:'Perfil hibrido entre ingenieria y analisis. Transforma datos crudos en modelos analiticos limpios y confiables.',i:'Datos de confianza para todo el equipo de analisis y negocio.',s:['dbt','SQL avanzado','Git','Python','Data Modeling'],l:'Mid a Senior',o:'Empresas tech, scaleups.',sal:'36k a 65k euros'},
+      ds:{n:'Data Scientist',t:'p',tl:'B · Tecnico',w:'Aplica machine learning y estadistica avanzada para construir modelos predictivos que anticipan comportamientos futuros.',i:'Prediccion de churn, precios dinamicos, deteccion de fraude en tiempo real.',s:['Python','scikit-learn / XGBoost','Estadistica','SQL','Jupyter'],l:'Junior a Lead Data Scientist',o:'Tech, fintech, salud, corporaciones.',sal:'40k a 75k euros'},
+      mle:{n:'ML / AI Engineer',t:'p',tl:'B · Tecnico',w:'Lleva modelos de machine learning a produccion de forma escalable y mantenible. Une la ciencia de datos con la ingenieria de software.',i:'Un modelo que no esta en produccion no genera valor. Este rol cierra esa brecha.',s:['Python','PyTorch / TensorFlow','MLflow','Docker','Cloud'],l:'Mid a Staff MLE',o:'Big tech, unicorns, IA startups.',sal:'45k a 90k euros'},
+      darch:{n:'MLOps / Data Architect',t:'p',tl:'B · Tecnico',w:'Diseña la arquitectura global de datos y los sistemas de gestion del ciclo de vida de modelos de ML en produccion.',i:'Decisiones de arquitectura que afectan como trabaja toda la empresa durante anos.',s:['Arquitectura cloud','Data Mesh','Kubernetes','Big Data','MLflow'],l:'Senior a Principal',o:'Grandes corporaciones, tech.',sal:'50k a 85k euros'},
+      aas:{n:'AI Automation Specialist',t:'t',tl:'C · IA y Automatizacion',w:'Automatiza flujos de trabajo empresariales usando herramientas de IA y conectores sin codigo o con poco codigo.',i:'Elimina tareas repetitivas de alto volumen. Libera tiempo para trabajo de mayor valor.',s:['n8n / Make / Zapier','APIs','Prompting','Claude / ChatGPT','Logica de negocio'],l:'Junior a Senior',o:'Pymes, agencias, corporaciones.',sal:'24k a 45k euros'},
+      nc:{n:'No-Code / Low-Code Builder',t:'t',tl:'C · IA y Automatizacion',w:'Construye aplicaciones, automatizaciones y productos digitales sin escribir codigo tradicional usando plataformas visuales.',i:'Democratiza la creacion de soluciones. Reduce tiempos y costes de desarrollo.',s:['Bubble / Webflow','Airtable','n8n / Make','APIs','Logica de aplicacion'],l:'Junior a Senior',o:'Startups, freelance, pymes.',sal:'22k a 42k euros'},
+      pe:{n:'Prompt / Agent Engineer',t:'t',tl:'C · IA y Automatizacion',w:'Diseña y optimiza prompts avanzados y sistemas de agentes de IA que razonan, planifican y ejecutan tareas de forma autonoma.',i:'El perfil mas emergente de 2025-2026. Muy alta demanda y poca oferta.',s:['Prompting avanzado','LangChain / CrewAI','Python','APIs de LLMs','RAG'],l:'Mid a Senior',o:'IA startups, tech, consultoras.',sal:'35k a 70k euros'},
+      apb:{n:'AI Product Builder',t:'t',tl:'C · IA y Automatizacion',w:'Construye productos y herramientas basadas en IA generativa. Une vision de producto con capacidad tecnica para crear soluciones con LLMs.',i:'Lleva la IA del experimento al producto real que usan clientes.',s:['Python','APIs de OpenAI / Anthropic','Product thinking','Prompting','LangChain'],l:'Mid a Senior',o:'Startups de IA, producto tech.',sal:'40k a 80k euros'},
+      aic:{n:'AI Consultant',t:'t',tl:'C · IA y Automatizacion',w:'Asesora a empresas sobre como adoptar IA y automatizacion de forma estrategica, identificando casos de uso de alto impacto.',i:'Acelera la adopcion de IA con criterio. Evita inversiones en tecnologia sin ROI.',s:['Conocimiento del negocio','Prompting','Automatizacion','Comunicacion ejecutiva'],l:'Senior',o:'Consultoras, freelance, corporaciones.',sal:'40k a 90k euros'},
+      cdo:{n:'Chief Data Officer',t:'g',tl:'D · Estrategia',w:'Define la vision estrategica de datos de toda la organizacion. Lidera la cultura data-driven y es responsable del valor que generan los datos.',i:'La persona que decide como los datos se convierten en ventaja competitiva.',s:['Liderazgo ejecutivo','Estrategia de datos','Gobernanza','Comunicacion C-level'],l:'Director a C-Level',o:'Corporaciones, grandes empresas.',sal:'70k a 150k euros'},
+      dst:{n:'Data Strategist',t:'g',tl:'D · Estrategia',w:'Diseña la hoja de ruta de datos de una organizacion, priorizando iniciativas segun su impacto de negocio y viabilidad tecnica.',i:'Alinea los datos con los objetivos estrategicos de la empresa.',s:['Estrategia de negocio','Roadmapping','Gobernanza de datos','Stakeholder management'],l:'Senior a Director',o:'Consultoras, corporaciones.',sal:'55k a 100k euros'},
+      hod:{n:'Head of Data',t:'g',tl:'D · Estrategia',w:'Lidera el equipo de datos de una empresa. Gestiona analistas, engineers y scientists. Define prioridades y garantiza la calidad del trabajo.',i:'El puente entre la estrategia de negocio y la ejecucion tecnica del equipo.',s:['Liderazgo de equipos','SQL','Python basico','Estrategia','Comunicacion ejecutiva'],l:'Senior a Director',o:'Empresas tech, scaleups, corporaciones.',sal:'55k a 95k euros'},
+      ail:{n:'AI Strategy Lead',t:'g',tl:'D · Estrategia',w:'Lidera la adopcion estrategica de inteligencia artificial en una organizacion, desde la vision hasta la implementacion.',i:'Define que IA implementar, cuando y por que. Evita el hype sin sustancia.',s:['IA aplicada','Estrategia de negocio','Prompting avanzado','Liderazgo','Comunicacion'],l:'Senior a C-Level',o:'Corporaciones, consultoras estrategicas.',sal:'60k a 120k euros'},
+      anm:{n:'Analytics Manager',t:'g',tl:'D · Estrategia',w:'Gestiona equipos de analistas, define metodologias y garantiza que el trabajo de datos impacte en las decisiones de negocio.',i:'Traduce las necesidades del negocio en proyectos de datos con resultados medibles.',s:['Liderazgo','SQL','Power BI','Estrategia analitica','Comunicacion ejecutiva'],l:'Senior a Director',o:'Todos los sectores.',sal:'45k a 80k euros'}
+    };
+
+    function showRole2(id) {
+      const r = R2[id]; if (!r) return;
+      const cm = {a:'#EF9F27',p:'#7F77DD',t:'#1D9E75',g:'#888780'};
+      const panel = document.getElementById('mm-role-panel');
+      panel.innerHTML = `<div class="mm-panel ${r.t} open">
+        <div class="mm-panel-header">
+          <span class="mm-cat-tag ${r.t}">${r.tl}</span>
+          <span class="mm-panel-name">${r.n}</span>
+        </div>
+        <div class="mm-grid2">
+          <div><div class="mm-label">Que hace</div><div class="mm-text">${r.w}</div></div>
+          <div><div class="mm-label">Impacto en la empresa</div><div class="mm-text">${r.i}</div></div>
+        </div>
+        <div class="mm-label">Skills clave</div>
+        <div class="mm-chips">${r.s.map(s=>`<span class="mm-chip">${s}</span>`).join('')}</div>
+        <div class="mm-meta">
+          <span><b>Nivel:</b> ${r.l}</span>
+          <span><b>Salario:</b> ${r.sal}</span>
+          <span><b>Donde:</b> ${r.o}</span>
+        </div>
+      </div>`;
+      panel.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }
+    showRole2('da');
+    </script>
+
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p>El rol que vamos a desarrollar en este curso es el <b>Data Analyst</b> — el mas demandado del sector y el mas accesible para quien viene del negocio. Es tambien la base de todos los demas caminos.</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l2">
+    <div class="lesson-eyebrow">Leccion 2.3 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Cuatro niveles que<br>describen como evoluciona<br><em>un analista de datos.</em></h2>
+    <p class="body-text">No se aprende todo de golpe. Hay una progresion clara con habilidades distintas en cada etapa. Saber en que nivel estas hoy te da claridad sobre que aprender despues.</p>
+
+    <!-- BARRAS DE NIVEL -->
+    <div style="display:flex;align-items:flex-end;gap:7px;height:84px;border-bottom:1.5px solid var(--rule);margin:22px 0 6px">
+      <div style="flex:1;height:22%;background:#FAEEDA;border-radius:4px 4px 0 0;border-top:2px solid #EF9F27;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:500;color:#854F0B">N1</span></div>
+      <div style="flex:1;height:46%;background:#FAEEDA;border-radius:4px 4px 0 0;border-top:2px solid #EF9F27;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:500;color:#854F0B">N2</span></div>
+      <div style="flex:1;height:70%;background:#FAECE7;border-radius:4px 4px 0 0;border-top:2px solid #D85A30;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:500;color:#993C1D">N3</span></div>
+      <div style="flex:1;height:94%;background:#FCEBEB;border-radius:4px 4px 0 0;border-top:2px solid #E24B4A;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:500;color:#A32D2D">N4</span></div>
+    </div>
+    <div style="display:flex;gap:7px;margin-bottom:24px">
+      <span style="flex:1;font-size:10px;text-align:center;color:#854F0B;font-weight:500">Ordenar</span>
+      <span style="flex:1;font-size:10px;text-align:center;color:#854F0B;font-weight:500">Analizar</span>
+      <span style="flex:1;font-size:10px;text-align:center;color:#993C1D;font-weight:500">Decidir</span>
+      <span style="flex:1;font-size:10px;text-align:center;color:#A32D2D;font-weight:500">Estrategia</span>
+    </div>
+
+    <!-- TARJETAS DE NIVEL -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:24px">
+
+      <div style="border:0.5px solid #EF9F27;border-radius:12px;overflow:hidden">
+        <div style="background:#FAEEDA;border-bottom:0.5px solid #EF9F27;padding:10px 14px">
+          <span style="font-size:12px;font-weight:600;color:#854F0B">Nivel 1 · Ordenar y entender</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Que hacen</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Organizan informacion · Hacen seguimiento · Responden preguntas simples</p>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Ejemplos reales</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Nutricionista con pacientes · Administrativo · RRHH basico</p>
+          <span style="display:inline-block;font-size:11px;padding:2px 9px;border-radius:8px;background:#FAEEDA;color:#854F0B;border:0.5px solid #EF9F27">Excel / Google Sheets</span>
+          <p style="font-size:12px;font-style:italic;line-height:1.45;border-left:2px solid #EF9F27;padding-left:8px;margin-top:10px;color:#854F0B">"Pasas de caos a claridad. Solo con esto ya puedes aportar valor."</p>
+        </div>
+      </div>
+
+      <div style="border:0.5px solid #EF9F27;border-radius:12px;overflow:hidden">
+        <div style="background:#FAEEDA;border-bottom:0.5px solid #EF9F27;padding:10px 14px">
+          <span style="font-size:12px;font-weight:600;color:#854F0B">Nivel 2 · Analizar</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Que hacen</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Cruzan datos · Detectan patrones · Explican que esta pasando</p>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Ejemplos reales</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Marketing analizando campanas · Finanzas · Operaciones</p>
+          <span style="display:inline-block;font-size:11px;padding:2px 9px;border-radius:8px;background:#FAEEDA;color:#854F0B;border:0.5px solid #EF9F27">Excel avanzado / SQL basico</span>
+          <p style="font-size:12px;font-style:italic;line-height:1.45;border-left:2px solid #EF9F27;padding-left:8px;margin-top:10px;color:#854F0B">"Pasas de ver datos a entenderlos. Aqui empiezas a diferenciarte."</p>
+        </div>
+      </div>
+
+      <div style="border:0.5px solid #D85A30;border-radius:12px;overflow:hidden">
+        <div style="background:#FAECE7;border-bottom:0.5px solid #D85A30;padding:10px 14px">
+          <span style="font-size:12px;font-weight:600;color:#993C1D">Nivel 3 · Decidir</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Que hacen</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Recomiendan acciones · Definen KPIs · Proponen mejoras</p>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Ejemplos reales</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Analista de negocio · Product Analyst · Data Analyst senior</p>
+          <span style="display:inline-block;font-size:11px;padding:2px 9px;border-radius:8px;background:#FAECE7;color:#993C1D;border:0.5px solid #D85A30">SQL + Power BI / Tableau</span>
+          <p style="font-size:12px;font-style:italic;line-height:1.45;border-left:2px solid #D85A30;padding-left:8px;margin-top:10px;color:#993C1D">"Pasas de analizar a influir. Aqui generas impacto real."</p>
+        </div>
+      </div>
+
+      <div style="border:0.5px solid #E24B4A;border-radius:12px;overflow:hidden">
+        <div style="background:#FCEBEB;border-bottom:0.5px solid #E24B4A;padding:10px 14px">
+          <span style="font-size:12px;font-weight:600;color:#A32D2D">Nivel 4 · Estrategia</span>
+        </div>
+        <div style="padding:12px 14px">
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Que hacen</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Disenan estrategias · Lideran equipos · Transforman organizaciones</p>
+          <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);margin-bottom:4px">Ejemplos reales</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;margin-bottom:8px">Head of Data · CDO · AI Strategy Lead</p>
+          <span style="display:inline-block;font-size:11px;padding:2px 9px;border-radius:8px;background:#FCEBEB;color:#A32D2D;border:0.5px solid #E24B4A">Liderazgo · Vision de negocio · Comunicacion ejecutiva</span>
+          <p style="font-size:12px;font-style:italic;line-height:1.45;border-left:2px solid #E24B4A;padding-left:8px;margin-top:10px;color:#A32D2D">"Pasas de analizar a liderar. El nivel mas valorado del mercado."</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RECORRIDO EN LA ACADEMIA -->
+    <p style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px">Tu recorrido en la academia</p>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:16px">El bootcamp cubre desde proyectos simples hasta los que se hacen en corporaciones. Cada nivel abre nuevas puertas.</p>
+
+    <div style="display:flex;flex-direction:column;gap:0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden;margin-bottom:22px">
+
+      <!-- N1 -->
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border-bottom:1px solid var(--rule);background:var(--paper)">
+        <div style="flex-shrink:0;text-align:center;min-width:48px">
+          <div style="font-size:16px;font-weight:800;color:var(--muted)">N1</div>
+          <div style="font-size:10px;color:var(--quiet);font-weight:500;margin-top:2px">Gratis</div>
+        </div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap">
+            <span style="font-size:13px;font-weight:700;color:var(--ink)">El Explorador</span>
+            <span style="font-size:10px;padding:2px 8px;border-radius:100px;border:1px solid var(--rule);color:var(--muted);font-weight:500">DATA 101</span>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:6px">
+            <span>🔧 <b style="color:var(--fg)">Herramientas:</b> Google Sheets, Excel</span>
+            <span>📍 <b style="color:var(--fg)">Donde:</b> Cualquier empresa, cualquier rol</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted)">🎯 <b style="color:var(--fg)">Proyecto:</b> Reportes basicos en Google Sheets. Seguimiento manual de metricas simples.</div>
+        </div>
+      </div>
+
+      <!-- N2 -->
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border-bottom:1px solid var(--rule);background:#FAEEDA20">
+        <div style="flex-shrink:0;text-align:center;min-width:48px">
+          <div style="font-size:16px;font-weight:800;color:#854F0B">N2</div>
+          <div style="font-size:10px;color:#854F0B;font-weight:500;margin-top:2px">Bootcamp</div>
+        </div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap">
+            <span style="font-size:13px;font-weight:700;color:var(--ink)">El Analista Junior</span>
+            <span style="font-size:10px;padding:2px 8px;border-radius:100px;background:#FAEEDA;color:#854F0B;border:1px solid #EF9F27;font-weight:500">Inicio del bootcamp</span>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:6px">
+            <span>🔧 <b style="color:var(--fg)">Herramientas:</b> SQL, Excel avanzado, Power BI basico</span>
+            <span>📍 <b style="color:var(--fg)">Donde:</b> Pymes, startups, equipos de marketing o finanzas</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted)">🎯 <b style="color:var(--fg)">Proyecto:</b> Dashboard de KPIs operativos con SQL y Power BI para una empresa real.</div>
+        </div>
+      </div>
+
+      <!-- N3 -->
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border-bottom:1px solid var(--purple-light);background:var(--purple-soft)">
+        <div style="flex-shrink:0;text-align:center;min-width:48px">
+          <div style="font-size:16px;font-weight:800;color:var(--purple-deep)">N3</div>
+          <div style="font-size:10px;color:var(--purple);font-weight:500;margin-top:2px">Bootcamp</div>
+        </div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap">
+            <span style="font-size:13px;font-weight:700;color:var(--purple-deep)">El Analista</span>
+            <span style="font-size:10px;padding:2px 8px;border-radius:100px;background:rgba(255,255,255,0.7);color:var(--purple);border:1px solid var(--purple-light);font-weight:500">Nucleo del bootcamp</span>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--purple);margin-bottom:6px">
+            <span>🔧 <b style="color:var(--purple-deep)">Herramientas:</b> SQL avanzado, Python, Power BI, IA como copiloto</span>
+            <span>📍 <b style="color:var(--purple-deep)">Donde:</b> Empresas medianas, tech, consultoras, roles dedicados de datos</span>
+          </div>
+          <div style="font-size:12px;color:var(--purple)">🎯 <b style="color:var(--purple-deep)">Proyecto:</b> Pipeline de datos automatizado con analisis predictivo basico y presentacion ejecutiva.</div>
+        </div>
+      </div>
+
+      <!-- N4 -->
+      <div style="display:flex;align-items:flex-start;gap:14px;padding:15px 18px;background:#FCEBEB30">
+        <div style="flex-shrink:0;text-align:center;min-width:48px">
+          <div style="font-size:16px;font-weight:800;color:#A32D2D">N4</div>
+          <div style="font-size:10px;color:#A32D2D;font-weight:500;margin-top:2px">Avanzado</div>
+        </div>
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;flex-wrap:wrap">
+            <span style="font-size:13px;font-weight:700;color:var(--ink)">El Transformador</span>
+            <span style="font-size:10px;padding:2px 8px;border-radius:100px;background:#FCEBEB;color:#A32D2D;border:1px solid #E24B4A;font-weight:500">Programa avanzado</span>
+          </div>
+          <div style="display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-bottom:6px">
+            <span>🔧 <b style="color:var(--fg)">Herramientas:</b> Python avanzado, ML, automatizacion, liderazgo</span>
+            <span>📍 <b style="color:var(--purple-deep)">Donde:</b> Corporaciones, big tech, Head of Data, CDO, AI Lead</span>
+          </div>
+          <div style="font-size:12px;color:var(--muted)">🎯 <b style="color:var(--fg)">Proyecto:</b> Modelo predictivo de churn con impacto economico calculado y estrategia de implementacion.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">🎯</span>
+      <p>Este curso te lleva al <b>Nivel 1 con bases del Nivel 2.</b> El bootcamp te lleva al Nivel 2 completo. El objetivo no es que todos lleguen al Nivel 4 — es que cada persona tenga el nivel que necesita para su trabajo y sus objetivos.</p>
+    </div>
+  </div>
+
+<div class="lesson" id="l3">
+    <div class="lesson-eyebrow">Leccion 2.5 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Las palabras que<br>todos usan y<br><em>pocos entienden.</em></h2>
+    <p class="body-text">Este es el vocabulario esencial del sector. No hace falta memorizarlo todo hoy — lo vas a ir incorporando naturalmente. Pero tenerlo claro desde el principio te ahorra mucha confusion.</p>
+    <div class="glosario">
+      <div class="gloss-card feat">
+        <div class="gloss-header"><span class="gloss-term">Dataset</span><span class="gloss-badge">FUNDAMENTAL</span></div>
+        <p class="gloss-def">Un conjunto de datos organizado en filas y columnas. Es la materia prima de cualquier analisis. Sin dataset, no hay nada que analizar.</p>
+        <div class="gloss-ej">Una tabla de Excel con 10.000 filas de ventas, cada una con fecha, producto, cantidad y precio es un dataset.</div>
+      </div>
+      <div class="gloss-card">
+        <div class="gloss-header"><span class="gloss-term">API</span><span class="gloss-badge">CONECTA SISTEMAS</span></div>
+        <p class="gloss-def">Application Programming Interface. Un puente que permite que dos sistemas se comuniquen entre si e intercambien datos de forma automatica.</p>
+        <div class="gloss-ej">Cuando una app del tiempo muestra el pronostico, lo obtiene llamando a una API meteorologica. Cuando usas ChatGPT desde otra herramienta, se conecta via API de OpenAI.</div>
+      </div>
+      <div class="gloss-card feat">
+        <div class="gloss-header"><span class="gloss-term">Modelo</span><span class="gloss-badge">CLAVE EN IA</span></div>
+        <p class="gloss-def">El resultado de entrenar una IA con datos. Es el sistema que aprendio los patrones y que ahora puede hacer predicciones o generar respuestas.</p>
+        <div class="gloss-ej">GPT-4 es un modelo de lenguaje. Un modelo de fraude bancario detecta transacciones sospechosas. Cada uno fue entrenado con datos distintos para un objetivo distinto.</div>
+      </div>
+      <div class="gloss-card">
+        <div class="gloss-header"><span class="gloss-term">Pipeline</span><span class="gloss-badge">FLUJO DE DATOS</span></div>
+        <p class="gloss-def">Un proceso automatizado que mueve y transforma datos de un lugar a otro. Como una tuberia: los datos entran por un lado, se procesan en el camino y salen listos para analizar.</p>
+        <div class="gloss-ej">Un pipeline puede extraer ventas del ERP cada noche, limpiarlas y cargarlas en un dashboard que el equipo ve a la manana siguiente.</div>
+      </div>
+      <div class="gloss-card feat">
+        <div class="gloss-header"><span class="gloss-term">ETL</span><span class="gloss-badge">PROCESO CLASICO</span></div>
+        <p class="gloss-def">Extract, Transform, Load. El proceso de extraer datos de sus fuentes, transformarlos y limpiarlos, y cargarlos en un sistema listo para analizar. Es el trabajo invisible que hace posible todo lo demas.</p>
+        <div class="gloss-ej">Un analista hace ETL cuando descarga datos del CRM, los limpia en Excel eliminando duplicados y los carga en Power BI para crear un dashboard.</div>
+      </div>
+      <div class="gloss-card">
+        <div class="gloss-header"><span class="gloss-term">Cloud · Nube</span><span class="gloss-badge">DONDE VIVE TODO</span></div>
+        <p class="gloss-def">Servidores remotos accesibles por internet donde se almacenan, procesan y analizan datos. En lugar de tener computadoras propias enormes, las empresas alquilan capacidad de computo.</p>
+        <div class="gloss-ej">AWS (Amazon), Google Cloud y Azure (Microsoft) son los tres grandes proveedores de nube. La mayoria de las empresas guardan sus datos en alguno de estos tres.</div>
+      </div>
+      <div class="gloss-card feat">
+        <div class="gloss-header"><span class="gloss-term">Prompt</span><span class="gloss-badge">INPUT DE LA IA</span></div>
+        <p class="gloss-def">La instruccion o pregunta que le das a un modelo de IA. La calidad del prompt determina en gran parte la calidad de la respuesta. Es una habilidad que se aprende y que marca la diferencia.</p>
+        <div class="gloss-ej">Prompt malo: "analiza esto". Prompt bueno: "Sos un analista de ventas. Estos son los datos de ventas de marzo de una tienda de ropa. Identifica las 3 categorias con mayor caida y explica posibles causas."</div>
+      </div>
+      <div class="gloss-card">
+        <div class="gloss-header"><span class="gloss-term">KPI</span><span class="gloss-badge">MEDIR EL EXITO</span></div>
+        <p class="gloss-def">Key Performance Indicator. Una metrica clave que mide el rendimiento de un objetivo de negocio. Buenas decisiones requieren los KPIs correctos.</p>
+        <div class="gloss-ej">Para un ecommerce: tasa de conversion, ticket promedio, tasa de abandono de carrito. Para un SaaS: churn rate, MRR, NPS.</div>
+      </div>
+      <div class="gloss-card feat">
+        <div class="gloss-header"><span class="gloss-term">Dashboard</span><span class="gloss-badge">EL ENTREGABLE CLAVE</span></div>
+        <p class="gloss-def">Panel visual interactivo que muestra las metricas clave de un negocio en tiempo real. Permite que el equipo se monitoree solo sin necesitar al analista para cada consulta.</p>
+        <div class="gloss-ej">Un dashboard de ventas muestra en una sola pantalla: ingresos del mes, comparativa con el mes anterior, top productos y rendimiento por region. Todo actualizado automaticamente.</div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="callout-icon">▶</span>
+      <p><b>Siguiente seccion:</b> El mundo empresarial. Como usan los datos las empresas realmente, que estructura necesitan por dentro y por que algunas lo hacen bien y otras no.</p>
+    </div>
+  </div>
+
+  <div class="lesson" id="l4">
+    <div class="lesson-eyebrow">Leccion 2.5 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Las habilidades de datos<br>tienen precio<br><em>de mercado directo.</em></h2>
+    <p class="body-text">Saber analizar datos no es solo una habilidad tecnica. Es una habilidad que se monetiza de cuatro formas reales y no excluyentes entre si.</p>
+    <div class="roles">
+      <div class="rol-card feat">
+        <div class="rol-header"><span class="rol-icon">🏢</span><span class="rol-title">En tu empresa actual</span></div>
+        <p class="rol-desc">Propones mejoras con datos, reduces trabajo manual y te conviertes en la referencia analitica del equipo. Las empresas retienen y promocionan a quien les da visibilidad que antes no tenian.</p>
+        <div class="rol-tools">Ascenso o diferencial salarial del 20 al 40%</div>
+        <div style="background:rgba(255,255,255,0.6);border-radius:8px;padding:10px 14px;margin-top:10px;border:1px solid var(--purple-light)">
+          <div style="font-size:10px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Ejemplo real</div>
+          <p style="font-size:12px;color:var(--purple-deep);line-height:1.5;font-style:italic">Un responsable de operaciones automatiza el reporting mensual de su equipo y pasa de Analyst a Senior en 18 meses, sin cambiar de empresa.</p>
+        </div>
+      </div>
+      <div class="rol-card">
+        <div class="rol-header"><span class="rol-icon">🔄</span><span class="rol-title">Cambio a perfil mixto de datos</span></div>
+        <p class="rol-desc">Combinas tu experiencia de sector con habilidades analiticas y accedes a roles que antes no existian para ti: Data Analyst, BI Analyst o Analyst especializado en tu area.</p>
+        <div class="rol-tools">Diferencial salarial del 30 al 50% sobre tu rol anterior</div>
+        <div style="background:var(--paper);border-radius:8px;padding:10px 14px;margin-top:10px;border:1px solid var(--rule)">
+          <div style="font-size:10px;font-weight:700;color:var(--quiet);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Ejemplo real</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;font-style:italic">Profesional de marketing con 5 anos de experiencia aprende SQL y Power BI. Pasa a Marketing Data Analyst en una empresa tech. Salario +35%.</p>
+        </div>
+      </div>
+      <div class="rol-card">
+        <div class="rol-header"><span class="rol-icon">💼</span><span class="rol-title">Freelance para pymes</span></div>
+        <p class="rol-desc">Las pymes necesitan analisis pero no pueden contratar un analista a tiempo completo. Tu cubres esa necesidad con proyectos puntuales de alto valor para ellas.</p>
+        <div class="rol-tools">500 a 3.000 euros por proyecto segun complejidad</div>
+        <div style="background:var(--paper);border-radius:8px;padding:10px 14px;margin-top:10px;border:1px solid var(--rule)">
+          <div style="font-size:10px;font-weight:700;color:var(--quiet);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Ejemplo real</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5;font-style:italic">Primer cliente: dashboard de ventas para una tienda online (800 euros). Segundo mes: automatizacion de reporting para una clinica (1.200 euros). Al tercero ya tenes referencias.</p>
+        </div>
+      </div>
+      <div class="rol-card feat">
+        <div class="rol-header"><span class="rol-icon">🔁</span><span class="rol-title">Consultoria recurrente</span></div>
+        <p class="rol-desc">Un cliente que te contrata mes a mes para mantener dashboards, actualizar analisis o responder preguntas de negocio con datos. La forma mas predecible de monetizar.</p>
+        <div class="rol-tools">400 a 1.500 euros por cliente al mes</div>
+        <div style="background:rgba(255,255,255,0.6);border-radius:8px;padding:10px 14px;margin-top:10px;border:1px solid var(--purple-light)">
+          <div style="font-size:10px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Ejemplo real</div>
+          <p style="font-size:12px;color:var(--purple-deep);line-height:1.5;font-style:italic">3 clientes recurrentes a 600 euros al mes = 1.800 euros mensuales predecibles. Compatible con un empleo a tiempo completo.</p>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="callout-icon">▶</span>
+      <p><b>Siguiente seccion:</b> El mundo empresarial. Como usan los datos las empresas por dentro, que estructura necesitan y por que algunas lo hacen bien y otras no.</p>
+    </div>
+  </div>
+
+  <div class="lesson-nav">
+    <button class="btn-lesson" id="btn-prev" onclick="prevLesson()" disabled>← Anterior</button>
+    <span class="lesson-pos" id="lesson-pos">Leccion 1 de 5</span>
+    <button class="btn-lesson primary" id="btn-next" onclick="nextLesson()">Siguiente →</button>
+  </div>
+
+</div>
+
+<script>
+let cur = 0;
+const total = 5;
+function goLesson(i) {
+  document.getElementById('l' + cur).classList.remove('show');
+  document.querySelectorAll('.tab')[cur].classList.remove('active');
+  cur = i;
+  document.getElementById('l' + cur).classList.add('show');
+  document.querySelectorAll('.tab')[cur].classList.add('active');
+  document.getElementById('lesson-pos').textContent = 'Leccion ' + (cur + 1) + ' de ' + total;
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur === total - 1;
+  document.getElementById('btn-next').textContent = cur === total - 1 ? 'Seccion completada ✓' : 'Siguiente →';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function nextLesson() { if (cur < total - 1) goLesson(cur + 1); }
+function prevLesson() { if (cur > 0) goLesson(cur - 1); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') nextLesson();
+  if (e.key === 'ArrowLeft') prevLesson();
+});
+</script>
+<div class="sec-between-nav"><div class="sec-between-inner"><a href="../seccion-1/" class="nav-btn">← Sección 1</a><a href="../seccion-3/" class="nav-btn nav-btn-primary">Sección 3 →</a></div></div></body>
+</html>

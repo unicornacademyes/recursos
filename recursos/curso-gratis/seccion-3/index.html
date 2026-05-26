@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>S3 · El rol del Analista 360 · Unicorn Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#0A0A0A;--fg:#111827;--muted:#6b7280;--quiet:#9ca3af;--rule:#e5e7eb;--paper:#f9fafb;--purple:#563C77;--purple-soft:#F5F1FA;--purple-light:#D4B8F5;--purple-deep:#3D2B54;--easing:cubic-bezier(.22,.61,.36,1)}
+html,body{background:#fff;color:var(--fg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
+.header{background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1.5px solid var(--rule);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink)}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.sec-badge{font-size:11px;color:var(--quiet);letter-spacing:0.05em;font-weight:500}
+.sec-header{max-width:860px;margin:0 auto;padding:28px 32px 0}
+.sec-tag{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.sec-title{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:6px}
+.sec-desc{font-size:15px;color:var(--muted);max-width:560px;line-height:1.6}
+.tabs-wrap{max-width:860px;margin:0 auto;padding:20px 32px 0}
+.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--rule);overflow-x:auto}
+.tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:all 0.15s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif;flex-shrink:0}
+.tab:hover{color:var(--purple)}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple);font-weight:600}
+.tab-num{font-size:10px;font-weight:700;color:var(--purple-light);margin-right:5px;letter-spacing:0.03em}
+.tab.active .tab-num{color:var(--purple)}
+.content-wrap{max-width:860px;margin:0 auto;padding:36px 32px 80px}
+.lesson{display:none}
+.lesson.show{display:block;animation:fadeIn 0.25s var(--easing) both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.lesson-eyebrow{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.lesson-eyebrow::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.lesson-time{font-size:10px;color:var(--quiet);font-weight:400;margin-left:2px}
+.lesson-title{font-size:34px;font-weight:800;color:var(--ink);line-height:1.08;letter-spacing:-0.02em;margin-bottom:20px}
+.lesson-title em{font-style:italic;color:var(--purple)}
+.body-text{font-size:17px;line-height:1.75;color:var(--muted);margin:14px 0;max-width:660px}
+.body-text b{color:var(--ink);font-weight:600}
+.quote-block{border-left:4px solid var(--purple);background:var(--purple-soft);padding:18px 22px;border-radius:0 10px 10px 0;margin:20px 0}
+.quote-block p{font-size:18px;font-weight:600;color:var(--purple-deep);line-height:1.45}
+.callout{display:flex;align-items:flex-start;gap:13px;background:var(--paper);border:1.5px solid var(--rule);border-radius:12px;padding:18px 20px;margin:20px 0}
+.callout-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.callout p{font-size:15px;color:var(--fg);line-height:1.65}
+.callout p b{color:var(--ink);font-weight:700}
+.bullets{display:flex;flex-direction:column;gap:12px;margin:22px 0}
+.bullet-row{display:flex;align-items:flex-start;gap:12px;font-size:16px;color:var(--fg);line-height:1.55}
+.bullet-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:8px}
+.bullet-row b{color:var(--ink);font-weight:700}
+.capacidades{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:22px 0}
+.cap-card{border:1.5px solid var(--rule);border-radius:14px;padding:20px 18px;background:#fff;text-align:center;transition:border-color 0.2s,transform 0.2s}
+.cap-card:hover{border-color:var(--purple-light);transform:translateY(-2px)}
+.cap-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.cap-icon{font-size:28px;margin-bottom:10px}
+.cap-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.cap-card.feat .cap-title{color:var(--purple-deep)}
+.cap-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.cap-card.feat .cap-desc{color:var(--purple)}
+.tool-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin:16px 0}
+.tool-card{border:1.5px solid var(--rule);border-radius:12px;padding:14px;background:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;transition:border-color 0.2s,transform 0.15s}
+.tool-card:hover{border-color:var(--purple-light);transform:translateY(-2px)}
+.tool-logo{width:48px;height:48px;margin-bottom:10px;display:flex;align-items:center;justify-content:center}
+.tool-name{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.tool-para{font-size:11px;color:var(--quiet);line-height:1.3}
+.cat-title{font-size:14px;font-weight:700;color:var(--ink);margin:24px 0 10px;display:flex;align-items:center;gap:8px}
+.cat-title::before{content:'';width:3px;height:16px;background:var(--purple);border-radius:2px}
+.habilidades{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+.hab-card{border:1.5px solid var(--rule);border-radius:14px;padding:18px;background:#fff;transition:border-color 0.2s}
+.hab-card:hover{border-color:var(--purple-light)}
+.hab-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.hab-icon{font-size:22px;margin-bottom:8px}
+.hab-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.hab-card.feat .hab-title{color:var(--purple-deep)}
+.hab-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.hab-card.feat .hab-desc{color:var(--purple)}
+.roadmap{display:flex;flex-direction:column;gap:0;margin:22px 0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden}
+.road-row{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule);transition:background 0.15s}
+.road-row:last-child{border-bottom:none}
+.road-row:hover{background:var(--paper)}
+.road-row.hl{background:var(--purple-soft)}
+.road-fase{flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;padding-top:2px}
+.road-body{flex:1}
+.road-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.road-row.hl .road-title{color:var(--purple-deep)}
+.road-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px}
+.road-row.hl .road-desc{color:var(--purple)}
+.road-tools{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px}
+.road-tool{font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)}
+.road-row.hl .road-tool{background:rgba(255,255,255,0.6);color:var(--purple);border-color:var(--purple-light)}
+.entregables{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+.ent-card{border:1.5px solid var(--rule);border-radius:14px;padding:18px;background:#fff;transition:border-color 0.2s}
+.ent-card:hover{border-color:var(--purple-light)}
+.ent-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.ent-icon{font-size:22px;margin-bottom:8px}
+.ent-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.ent-card.feat .ent-title{color:var(--purple-deep)}
+.ent-desc{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:8px}
+.ent-card.feat .ent-desc{color:var(--purple)}
+.ent-ejemplo{font-size:12px;color:var(--quiet);font-style:italic}
+.lesson-nav{display:flex;align-items:center;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1.5px solid var(--rule)}
+.btn-lesson{padding:10px 18px;border:1.5px solid var(--rule);border-radius:10px;font-size:14px;font-weight:600;background:#fff;color:var(--fg);cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.btn-lesson:hover:not(:disabled){background:var(--paper);border-color:var(--purple-light)}
+.btn-lesson:disabled{opacity:0.4;cursor:not-allowed}
+.btn-lesson.primary{background:var(--purple);color:#fff;border-color:var(--purple)}
+.btn-lesson.primary:hover{background:var(--purple-deep)}
+.lesson-pos{font-size:13px;color:var(--quiet)}
+@media(max-width:640px){
+  .header,.sec-header,.tabs-wrap,.content-wrap{padding-left:20px;padding-right:20px}
+  .lesson-title{font-size:26px}
+  .capacidades,.habilidades,.entregables{grid-template-columns:1fr}
+  .tool-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr))}
+  .road-fase{width:70px;font-size:10px}
+}
+</style>
+<style>.sec-between-nav{background:#f9fafb;border-top:1.5px solid #e5e7eb;padding:24px 32px;margin-top:0}.sec-between-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1.5px solid #e5e7eb;background:#fff;font-family:Inter,sans-serif;font-size:13px;font-weight:500;color:#374151;text-decoration:none;transition:all 0.15s}.nav-btn:hover{border-color:#563C77;color:#563C77}.nav-btn-primary{background:#0A0A0A;color:#fff;border-color:#0A0A0A}.nav-btn-primary:hover{background:#563C77;border-color:#563C77}</style></head>
+<body>
+<header class="header">
+  <div class="brand"><div class="brand-dot"></div>Unicorn Academy</div>
+  <span class="sec-badge">SECCION 3 DE 4</span>
+</header>
+
+<div class="sec-header">
+  <div class="sec-tag">Seccion 3</div>
+  <h1 class="sec-title">El rol del Analista 360</h1>
+  <p class="sec-desc">El perfil especifico que estamos construyendo. Herramientas, habilidades, proyectos y el roadmap de aprendizaje concreto.</p>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="goLesson(0)"><span class="tab-num">3.1</span>Que es el Analista 360</button>
+    <button class="tab"        onclick="goLesson(1)"><span class="tab-num">3.2</span>El ecosistema de herramientas</button>
+    <button class="tab"        onclick="goLesson(2)"><span class="tab-num">3.3</span>Madurez y tipos de analitica</button>
+    <button class="tab"        onclick="goLesson(3)"><span class="tab-num">3.4</span>Calidad de los datos</button>
+    <button class="tab"        onclick="goLesson(4)"><span class="tab-num">3.5</span>Proyectos que entrega</button>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- LECCION 3.1 -->
+  <div class="lesson show" id="l0">
+    <div class="lesson-eyebrow">Leccion 3.1 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">El Analista 360 no es alguien<br>que sabe mas herramientas.<br><em>Es quien las combina con criterio.</em></h2>
+    <p class="body-text">El mercado esta lleno de gente que sabe usar ChatGPT, Excel o Power BI. Lo que escasea es quien sabe cuando usar cada uno, como validar el resultado y como traducir un analisis tecnico en una frase que un directivo puede usar para decidir.</p>
+    
+    <div class="quote-block">
+      <p>"El Analista 360 conecta tres capacidades que el mercado paga de forma diferencial: criterio de negocio, ejecucion con IA y comunicacion ejecutiva."</p>
+    </div>
+
+    <div class="capacidades">
+      <div class="cap-card feat">
+        <div class="cap-icon">🎯</div>
+        <div class="cap-title">Criterio de negocio</div>
+        <div class="cap-desc">Sabe que pregunta hacerle al dato antes de abrir cualquier herramienta. Conecta el analisis con una decision real.</div>
+      </div>
+      <div class="cap-card feat">
+        <div class="cap-icon">⚡</div>
+        <div class="cap-title">Ejecucion con IA</div>
+        <div class="cap-desc">Usa SQL, Python y Power BI con IA como copiloto. No ejecuta para la IA. La dirige. Sabe cuando se equivoca y por que.</div>
+      </div>
+      <div class="cap-card feat">
+        <div class="cap-icon">💬</div>
+        <div class="cap-title">Comunicacion ejecutiva</div>
+        <div class="cap-desc">Traduce el resultado tecnico en tres frases que un directivo puede usar en una reunion. No hace informes. Genera decisiones.</div>
+      </div>
+    </div>
+
+    <p class="body-text">Estas tres capacidades juntas definen el perfil. Sin las tres, eres analista tecnico, consultor de negocio o comunicador sin sustancia. Con las tres, eres diferencial.</p>
+
+
+  </div>
+
+  <!-- LECCION 3.2 -->
+  <div class="lesson" id="l1">
+    <div class="lesson-eyebrow">Leccion 3.2 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Las herramientas no son el fin.<br><em>Son el medio.</em></h2>
+    <p class="body-text">El ecosistema de herramientas de datos es enorme. Lo importante no es conocerlas todas — es saber cuando usar cada una y como se conectan entre si.</p>
+
+    <div class="cat-title">Analisis de datos</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Para organizar, filtrar, calcular y entender datos sin programar</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#217346" rx="4"/><text x="20" y="26" font-family="Arial" font-weight="bold" font-size="18" fill="#fff" text-anchor="middle">XL</text></svg>
+        </div>
+        <div class="tool-name">Excel</div>
+        <div class="tool-para">Analisis rapido, reportes</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#0F9D58" rx="4"/><path d="M10 12 L30 12 L30 28 L10 28 Z" fill="#fff"/><rect x="12" y="16" width="7" height="2" fill="#0F9D58"/><rect x="21" y="16" width="7" height="2" fill="#0F9D58"/><rect x="12" y="22" width="7" height="2" fill="#0F9D58"/></svg>
+        </div>
+        <div class="tool-name">Sheets</div>
+        <div class="tool-para">Colaboracion online</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#00758F" rx="4"/><text x="20" y="27" font-family="monospace" font-weight="bold" font-size="16" fill="#fff" text-anchor="middle">SQL</text></svg>
+        </div>
+        <div class="tool-name">SQL</div>
+        <div class="tool-para">Consultas a bases</div>
+      </div>
+    </div>
+
+    <div class="cat-title">Visualizacion</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Para convertir tablas en graficos y dashboards interactivos</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#F2C811" rx="4"/><rect x="10" y="18" width="6" height="12" fill="#000"/><rect x="17" y="12" width="6" height="18" fill="#000"/><rect x="24" y="15" width="6" height="15" fill="#000"/></svg>
+        </div>
+        <div class="tool-name">Power BI</div>
+        <div class="tool-para">Dashboards empresariales</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#E97627" rx="4"/><text x="20" y="26" font-family="Arial" font-weight="bold" font-size="16" fill="#fff" text-anchor="middle">Tb</text></svg>
+        </div>
+        <div class="tool-name">Tableau</div>
+        <div class="tool-para">Visualizacion avanzada</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#4285F4" rx="4"/><circle cx="20" cy="20" r="8" fill="#fff"/><circle cx="20" cy="20" r="4" fill="#4285F4"/></svg>
+        </div>
+        <div class="tool-name">Looker</div>
+        <div class="tool-para">BI en la nube</div>
+      </div>
+    </div>
+
+    <div class="cat-title">Programacion</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Para analisis avanzado, automatizacion y machine learning</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#3776AB" rx="4"/><path d="M14 12 L14 20 L18 20 L18 12 L22 12 L22 20 L26 20 L26 12 Z M14 22 L14 28 L26 28 L26 22 Z" fill="#FFD43B"/></svg>
+        </div>
+        <div class="tool-name">Python</div>
+        <div class="tool-para">Analisis y ML</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#276DC3" rx="4"/><text x="20" y="28" font-family="Arial" font-weight="bold" font-size="22" fill="#fff" text-anchor="middle">R</text></svg>
+        </div>
+        <div class="tool-name">R</div>
+        <div class="tool-para">Estadistica avanzada</div>
+      </div>
+    </div>
+
+    <div class="cat-title">Bases de datos</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Donde se almacenan y procesan los datos a escala</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#336791" rx="4"/><ellipse cx="20" cy="15" rx="8" ry="3" fill="#fff"/><ellipse cx="20" cy="25" rx="8" ry="3" fill="#fff"/><line x1="12" y1="15" x2="12" y2="25" stroke="#fff" stroke-width="2"/><line x1="28" y1="15" x2="28" y2="25" stroke="#fff" stroke-width="2"/></svg>
+        </div>
+        <div class="tool-name">PostgreSQL</div>
+        <div class="tool-para">DB relacional</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#4479A1" rx="4"/><text x="20" y="28" font-family="Arial" font-weight="bold" font-size="14" fill="#fff" text-anchor="middle">MySQL</text></svg>
+        </div>
+        <div class="tool-name">MySQL</div>
+        <div class="tool-para">DB popular</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#4285F4" rx="4"/><path d="M15 18 L25 18 L25 22 L15 22 Z M12 12 L28 12 L28 28 L12 28 Z" fill="#fff"/></svg>
+        </div>
+        <div class="tool-name">BigQuery</div>
+        <div class="tool-para">Data warehouse cloud</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#29B5E8" rx="4"/><path d="M20 10 L25 15 L20 20 L15 15 Z M20 20 L25 25 L20 30 L15 25 Z" fill="#fff"/></svg>
+        </div>
+        <div class="tool-name">Snowflake</div>
+        <div class="tool-para">Plataforma de datos</div>
+      </div>
+    </div>
+
+    <div class="cat-title">IA como copiloto</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Para escribir codigo, generar queries y validar analisis</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#10A37F" rx="4"/><circle cx="20" cy="20" r="8" fill="#fff"/><path d="M20 14 L23 20 L20 26 L17 20 Z" fill="#10A37F"/></svg>
+        </div>
+        <div class="tool-name">ChatGPT</div>
+        <div class="tool-para">LLM de OpenAI</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#CC9B7A" rx="4"/><rect x="14" y="16" width="12" height="2" fill="#1F1F1F"/><rect x="14" y="20" width="12" height="2" fill="#1F1F1F"/><rect x="14" y="24" width="8" height="2" fill="#1F1F1F"/></svg>
+        </div>
+        <div class="tool-name">Claude</div>
+        <div class="tool-para">LLM de Anthropic</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#181717" rx="4"/><path d="M20 12 L24 18 L20 24 L16 18 Z" fill="#fff"/><circle cx="20" cy="28" r="2" fill="#fff"/></svg>
+        </div>
+        <div class="tool-name">Copilot</div>
+        <div class="tool-para">IA en el codigo</div>
+      </div>
+    </div>
+
+    <div class="cat-title">Automatizacion</div>
+    <p style="font-size:14px;color:var(--muted);margin-bottom:12px">Para conectar herramientas y automatizar flujos de trabajo</p>
+    <div class="tool-grid">
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#EA4B71" rx="4"/><circle cx="15" cy="20" r="3" fill="#fff"/><circle cx="25" cy="20" r="3" fill="#fff"/><line x1="18" y1="20" x2="22" y2="20" stroke="#fff" stroke-width="2"/></svg>
+        </div>
+        <div class="tool-name">n8n</div>
+        <div class="tool-para">Workflows open source</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#8B46FF" rx="4"/><path d="M15 15 L20 20 L15 25 M20 20 L25 15 M20 20 L25 25" stroke="#fff" stroke-width="2" fill="none"/></svg>
+        </div>
+        <div class="tool-name">Make</div>
+        <div class="tool-para">Integraciones visuales</div>
+      </div>
+      <div class="tool-card">
+        <div class="tool-logo">
+          <svg width="40" height="40" viewBox="0 0 40 40"><rect width="40" height="40" fill="#FF4A00" rx="4"/><path d="M12 20 L20 12 L28 20 L20 28 Z" fill="#fff"/></svg>
+        </div>
+        <div class="tool-name">Zapier</div>
+        <div class="tool-para">Automatizacion sin codigo</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">🎯</span>
+      <p>El Analista 360 no domina todas estas herramientas desde el dia 1. <b>Empieza con Excel o Sheets, suma SQL, agrega Power BI y usa IA como copiloto en todo el proceso.</b> El resto se aprende sobre la marcha segun el proyecto lo requiera.</p>
+    </div>
+  </div>
+
+  <!-- LECCION 3.3 -->
+  <div class="lesson" id="l2">
+    <div class="lesson-eyebrow">Leccion 3.3 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">No todas las empresas<br>usan datos<br><em>del mismo modo.</em></h2>
+    <p class="body-text">Hay cinco niveles de madurez y cuatro tipos de analitica. Saber donde esta cada empresa cambia completamente lo que se espera del analista — y donde podes generar mas valor.</p>
+
+    <!-- TIPOS DE ANALITICA -->
+    <div style="margin-top:24px;padding:18px;border:1.5px solid var(--rule);border-radius:14px;background:var(--paper)">
+      <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:14px;display:flex;align-items:center;gap:8px">
+        <span style="width:3px;height:14px;background:var(--purple);border-radius:2px;display:inline-block"></span>
+        Los 4 tipos de analitica
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:#fff;border:1px solid var(--rule);border-radius:10px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:var(--quiet);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Nivel 1</div>
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Descriptiva</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5"><b>Que paso?</b> Reportes de lo que ya ocurrio. Ventas del mes, usuarios activos, ingresos.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--rule);border-radius:10px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:var(--quiet);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Nivel 2</div>
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Diagnostica</div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5"><b>Por que paso?</b> Encontrar las causas. Por que bajaron las ventas, por que se van los clientes.</p>
+        </div>
+        <div style="background:var(--purple-soft);border:1px solid var(--purple-light);border-radius:10px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Nivel 3</div>
+          <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:4px">Predictiva</div>
+          <p style="font-size:12px;color:var(--purple);line-height:1.5"><b>Que va a pasar?</b> Modelos que estiman el futuro. Prediccion de demanda, deteccion de churn.</p>
+        </div>
+        <div style="background:var(--purple-soft);border:1.5px solid var(--purple);border-radius:10px;padding:12px">
+          <div style="font-size:10px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Nivel 4</div>
+          <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:4px">Prescriptiva</div>
+          <p style="font-size:12px;color:var(--purple);line-height:1.5"><b>Que deberiamos hacer?</b> Recomendaciones de accion. Que precio poner, a quien contactar.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text" style="margin-top:24px">Y estos son los niveles de madurez en los que vive cada empresa:</p>
+
+    <!-- GRAFICO SVG DE MADUREZ -->
+    <div style="margin:20px 0;overflow-x:auto">
+      <svg width="100%" viewBox="0 0 700 460" style="min-width:600px">
+        <defs>
+          <linearGradient id="grad1" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#E5E5E5;stop-opacity:1" />
+            <stop offset="20%" style="stop-color:#FFD7C4;stop-opacity:1" />
+            <stop offset="40%" style="stop-color:#FFB89D;stop-opacity:1" />
+            <stop offset="60%" style="stop-color:#FF9A76;stop-opacity:1" />
+            <stop offset="80%" style="stop-color:#FF7C4F;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#FF5E28;stop-opacity:1" />
+          </linearGradient>
+          <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+            <polygon points="0 0, 10 3, 0 6" fill="#1a1a1a" />
+          </marker>
+        </defs>
+        <rect x="80" y="60" width="580" height="340" fill="url(#grad1)" rx="4"/>
+        <line x1="80" y1="332" x2="660" y2="332" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+        <line x1="80" y1="264" x2="660" y2="264" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+        <line x1="80" y1="196" x2="660" y2="196" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+        <line x1="80" y1="128" x2="660" y2="128" stroke="#fff" stroke-width="1.5" opacity="0.4"/>
+        <line x1="80" y1="400" x2="660" y2="60" stroke="#1a1a1a" stroke-width="3" marker-end="url(#arrowhead)"/>
+        <circle cx="140" cy="355" r="14" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="140" y="362" font-size="12" font-weight="700" fill="#1a1a1a" text-anchor="middle">01</text>
+        <circle cx="254" cy="287" r="14" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="254" y="294" font-size="12" font-weight="700" fill="#1a1a1a" text-anchor="middle">02</text>
+        <circle cx="368" cy="219" r="14" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="368" y="226" font-size="12" font-weight="700" fill="#1a1a1a" text-anchor="middle">03</text>
+        <circle cx="482" cy="151" r="14" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="482" y="158" font-size="12" font-weight="700" fill="#1a1a1a" text-anchor="middle">04</text>
+        <circle cx="596" cy="83" r="14" fill="#fff" stroke="#1a1a1a" stroke-width="2"/>
+        <text x="596" y="90" font-size="12" font-weight="700" fill="#1a1a1a" text-anchor="middle">05</text>
+        <text x="140" y="310" font-size="11" font-weight="600" fill="#1a1a1a" text-anchor="middle">Operational</text>
+        <text x="140" y="325" font-size="11" font-weight="600" fill="#1a1a1a" text-anchor="middle">Intelligence</text>
+        <text x="254" y="242" font-size="11" font-weight="600" fill="#1a1a1a" text-anchor="middle">Business</text>
+        <text x="254" y="257" font-size="11" font-weight="600" fill="#1a1a1a" text-anchor="middle">Intelligence</text>
+        <text x="368" y="174" font-size="11" font-weight="600" fill="#1a1a1a" text-anchor="middle">Predictive</text>
+        <text x="368" y="189" font-size="11" font-weight="600" fill="#1a1a1a" text-anchor="middle">Analytics</text>
+        <text x="482" y="106" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Prescriptive</text>
+        <text x="482" y="121" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">Analytics</text>
+        <text x="596" y="38" font-size="11" font-weight="600" fill="#fff" text-anchor="middle">AI</text>
+        <text x="370" y="435" font-size="12" font-weight="600" fill="#6b7280" text-anchor="middle">Data Volume</text>
+        <text x="40" y="230" font-size="12" font-weight="600" fill="#6b7280" text-anchor="middle" transform="rotate(-90 40 230)">Business Impact</text>
+        <text x="80" y="435" font-size="10" fill="#9ca3af">Low</text>
+        <text x="645" y="435" font-size="10" fill="#9ca3af">High</text>
+        <text x="50" y="405" font-size="10" fill="#9ca3af">Low</text>
+        <text x="50" y="70" font-size="10" fill="#9ca3af">High</text>
+      </svg>
+    </div>
+
+    <!-- TARJETAS DE NIVELES -->
+    <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px">
+      <div style="border:1.5px solid #E5E5E5;border-radius:12px;padding:14px 18px;background:#FAFAFA">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <div style="width:32px;height:32px;border-radius:50%;background:#E5E5E5;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#1a1a1a;flex-shrink:0">01</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:var(--ink)">Operational Intelligence</div>
+            <div style="font-size:11px;color:var(--quiet)">Pequenas empresas · Analitica descriptiva</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">Reportes basicos y manuales. Datos en hojas de calculo. Informes historicos sin analisis profundo.</div>
+      </div>
+      <div style="border:1.5px solid #FFD7C4;border-radius:12px;padding:14px 18px;background:#FFF5F0">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <div style="width:32px;height:32px;border-radius:50%;background:#FFD7C4;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#1a1a1a;flex-shrink:0">02</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:var(--ink)">Business Intelligence Avanzado</div>
+            <div style="font-size:11px;color:var(--quiet)">Empresas medianas · Analitica descriptiva + diagnostica</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">Dashboards interactivos. Integracion de multiples fuentes. Analisis sofisticado y limpieza avanzada.</div>
+      </div>
+      <div style="border:1.5px solid #FFB89D;border-radius:12px;padding:14px 18px;background:#FFF0EB">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <div style="width:32px;height:32px;border-radius:50%;background:#FFB89D;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#1a1a1a;flex-shrink:0">03</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:var(--ink)">Analitica Predictiva</div>
+            <div style="font-size:11px;color:var(--quiet)">Empresas medianas-grandes · Analitica predictiva</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">Modelos estadisticos para predecir tendencias. Software avanzado para prever escenarios futuros.</div>
+      </div>
+      <div style="border:1.5px solid #FF9A76;border-radius:12px;padding:14px 18px;background:#FFEBE5">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <div style="width:32px;height:32px;border-radius:50%;background:#FF9A76;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">04</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:var(--ink)">Analitica Prescriptiva y Machine Learning</div>
+            <div style="font-size:11px;color:var(--quiet)">Empresas grandes · Analitica prescriptiva</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">ML para recomendaciones y automatizacion de decisiones. Algoritmos que deciden de forma autonoma.</div>
+      </div>
+      <div style="border:1.5px solid #FF5E28;border-radius:12px;padding:14px 18px;background:#FFE6DD">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+          <div style="width:32px;height:32px;border-radius:50%;background:#FF5E28;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">05</div>
+          <div style="flex:1">
+            <div style="font-size:14px;font-weight:700;color:var(--ink)">Inteligencia Artificial Autonoma</div>
+            <div style="font-size:11px;color:var(--quiet)">Empresas muy grandes · IA avanzada</div>
+          </div>
+        </div>
+        <div style="font-size:12px;color:var(--muted);line-height:1.5">Sistemas autonomos que toman decisiones sin intervencion humana. Analisis en tiempo real y procesos automatizados complejos.</div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p>La mayoria de las empresas medianas estan en el <b>Nivel 2 o 3</b>. Pocas llegan al Nivel 5 — no porque no puedan, sino porque el coste es enorme y el retorno no siempre justifica la inversion. <b>Es ahi donde el Analista 360 genera mas valor real.</b></p>
+    </div>
+  </div>
+
+  <!-- LECCION 3.4 -->
+  <div class="lesson" id="l3">
+    <div class="lesson-eyebrow">Leccion 3.4 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Los datos llegan sucios.<br><em>Siempre.</em></h2>
+    <p class="body-text">Una de las cosas que nadie te dice antes de trabajar con datos es que la mayoria del tiempo <b>no estan limpios</b>. Tienen errores, duplicados, formatos inconsistentes y valores que no tienen sentido. Saber detectarlos y corregirlos es una habilidad fundamental.</p>
+
+    <div class="quote-block">
+      <p>"Los analistas pasan entre el 60% y 80% de su tiempo limpiando datos. La diferencia entre un buen analisis y uno malo casi nunca esta en el algoritmo — esta en la calidad de los datos."</p>
+    </div>
+
+    <p class="body-text" style="margin-top:24px">Estos son los problemas mas comunes que vas a encontrar:</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0">
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px;background:var(--paper)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">🔁</span>
+          <span style="font-size:14px;font-weight:700;color:var(--ink)">Duplicados</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">El mismo cliente registrado 3 veces con datos ligeramente distintos. Inflan numeros y distorsionan analisis.</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px;background:var(--paper)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">❓</span>
+          <span style="font-size:14px;font-weight:700;color:var(--ink)">Valores faltantes</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">Celdas vacias, NULL, "N/A". Decidir si los completas, los excluyes o los marcas cambia el resultado del analisis.</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px;background:var(--paper)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">📅</span>
+          <span style="font-size:14px;font-weight:700;color:var(--ink)">Formatos inconsistentes</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">"01/03/2026", "1-Mar-26", "March 1 2026" — son la misma fecha pero el sistema las ve como tres cosas distintas.</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px;background:var(--paper)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">⚠️</span>
+          <span style="font-size:14px;font-weight:700;color:var(--ink)">Outliers</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">Valores extremos que rompen los promedios. Una venta de 999.999€ por error tipografico distorsiona toda la media.</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px;background:var(--paper)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">🔤</span>
+          <span style="font-size:14px;font-weight:700;color:var(--ink)">Errores tipograficos</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">"Madrid", "madrid", "Madird" se cuentan como tres ciudades distintas. Un dolor real en cualquier reporte.</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px;background:var(--paper)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+          <span style="font-size:18px">🧩</span>
+          <span style="font-size:14px;font-weight:700;color:var(--ink)">Datos incompatibles</span>
+        </div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">CRM dice una cosa, contabilidad dice otra, el ERP dice una tercera. Sin reconciliar no hay analisis confiable.</p>
+      </div>
+    </div>
+
+    <div style="background:var(--purple-soft);border:1.5px solid var(--purple-light);border-radius:14px;padding:18px 20px;margin:20px 0">
+      <div style="font-size:13px;font-weight:700;color:var(--purple-deep);margin-bottom:10px">El proceso del Analista 360 con IA</div>
+      <p style="font-size:13px;color:var(--purple);line-height:1.6;margin-bottom:8px"><b>1. Detectar.</b> Inspeccionar la fuente. Cuantos registros, cuantos nulos, que tipos de datos, que rangos.</p>
+      <p style="font-size:13px;color:var(--purple);line-height:1.6;margin-bottom:8px"><b>2. Decidir.</b> Que hacer con cada problema: corregir, excluir, imputar o marcar. La decision depende del negocio, no de la tecnica.</p>
+      <p style="font-size:13px;color:var(--purple);line-height:1.6"><b>3. Documentar.</b> Que decisiones tomaste y por que. Si otro analista repite el analisis, debe llegar al mismo resultado.</p>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p>La IA acelera enormemente la limpieza — pero <b>el criterio sigue siendo del analista</b>. Decidir si un valor faltante se imputa con la media o se excluye no es una decision tecnica, es una decision de negocio.</p>
+    </div>
+  </div>
+
+  <!-- LECCION 3.5 -->
+  <div class="lesson" id="l4">
+    <div class="lesson-eyebrow">Leccion 3.5 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Lo que hace un analista<br>no son archivos.<br><em>Son proyectos con impacto.</em></h2>
+    <p class="body-text">Dominar el analisis de datos abre un tipo de impacto que muy pocas habilidades dan: puedes aplicarlo en cualquier empresa, sector o funcion. Estos son los proyectos reales que un analista resuelve y como se traduce eso en valor economico.</p>
+
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin:24px 0">
+      
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">📈</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Visibilidad</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Seguimiento de KPIs</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Monitorear las metricas clave del negocio para tomar decisiones en tiempo real, no a ciegas.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Retail</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">E-commerce</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Startups</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Dashboard con ventas, usuarios activos y tasa de conversion actualizado en tiempo real.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">📉</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Retencion</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Analisis de Churn</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Entender por que los clientes o usuarios se van y en que momento del ciclo ocurre.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">SaaS</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Educacion online</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Telefonia</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Detectar por que los alumnos abandonan un curso online despues de la segunda clase.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">👥</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Marketing</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Segmentacion de Clientes</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Agrupar usuarios por comportamiento o caracteristicas para personalizar acciones y priorizar esfuerzos.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Finanzas</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Marketing</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Turismo</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Dividir clientes por uso de servicios financieros para lanzar campanas personalizadas.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">💸</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Decision</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Rentabilidad por Producto</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Ver que productos, canales o clientes generan mas valor real — no solo mas ventas, sino mejor margen.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">E-commerce</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Educacion</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Alimentos</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Analizar que curso genera mas ingresos en relacion con su tasa de finalizacion.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">⚡</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Eficiencia</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Automatizacion de Reportes</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Eliminar trabajo manual repetitivo. El reporte que antes tomaba 2 horas ahora se actualiza solo cada manana.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Todos los sectores</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Dashboard de ventas semanales que se actualiza automaticamente cada lunes a las 8am.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">🔍</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Exploracion</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Analisis Ad-hoc</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Responder preguntas de negocio urgentes que nadie habia hecho antes. Investigacion rapida con datos.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Estrategia</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Producto</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Operaciones</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">El CEO pregunta "por que bajaron las ventas en Italia el mes pasado". Tu entregas la respuesta en 2 horas.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">🎯</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Optimizacion</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Embudos de Conversion</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Ver en que paso exacto del proceso se pierden usuarios y cuanto cuesta cada abandono.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">SaaS</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Educacion</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Inmobiliaria</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Medir cuantos visitan una landing page y cuantos completan la compra — y donde se pierden.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">📦</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Operaciones</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">Optimizacion Logistica</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Mejorar operaciones, tiempos de entrega o abastecimiento identificando cuellos de botella con datos.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Supply Chain</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Transporte</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">E-commerce</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Medir demoras por zona geografica y proponer optimizacion de rutas de entrega.</p>
+        </div>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:16px;border-top:3px solid var(--purple)">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:20px">🧪</span>
+          <span style="font-size:10px;font-weight:600;padding:4px 10px;border-radius:100px;background:var(--purple-soft);color:var(--purple);border:1px solid var(--purple-light)">Experimentacion</span>
+        </div>
+        <p style="font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px">A/B Testing</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:10px">Comparar dos variantes de un producto, pagina o mensaje para tomar decisiones basadas en evidencia, no en opiniones.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px">
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Producto</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Marketing</span>
+          <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Educacion</span>
+        </div>
+        <div style="border-top:1px solid var(--rule);padding-top:10px">
+          <span style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:var(--quiet);font-weight:600">Ejemplo real</span>
+          <p style="font-size:12px;color:var(--muted);margin-top:4px;font-style:italic;line-height:1.5">Medir que version de un boton de compra genera mas clics — y con que nivel de confianza estadistica.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="quote-block">
+      <p>"El trabajo del analista termina cuando el directivo toma una decision informada. Todo lo demas es ruido."</p>
+    </div>
+
+
+  </div>
+
+  <div class="lesson-nav">
+    <button class="btn-lesson" id="btn-prev" onclick="prevLesson()" disabled>← Anterior</button>
+    <span class="lesson-pos" id="lesson-pos">Leccion 1 de 5</span>
+    <button class="btn-lesson primary" id="btn-next" onclick="nextLesson()">Siguiente →</button>
+  </div>
+
+</div>
+
+<script>
+let cur = 0;
+const lessons = document.querySelectorAll('.lesson');
+const tabs = document.querySelectorAll('.tab');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+const lessonPos = document.getElementById('lesson-pos');
+
+function goLesson(n) {
+  if (n < 0 || n >= lessons.length) return;
+  lessons[cur].classList.remove('show');
+  tabs[cur].classList.remove('active');
+  cur = n;
+  lessons[cur].classList.add('show');
+  tabs[cur].classList.add('active');
+  btnPrev.disabled = cur === 0;
+  btnNext.disabled = cur === lessons.length - 1;
+  lessonPos.textContent = `Leccion ${cur + 1} de ${lessons.length}`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextLesson() { if (cur < lessons.length - 1) goLesson(cur + 1); }
+function prevLesson() { if (cur > 0) goLesson(cur - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') nextLesson();
+  if (e.key === 'ArrowLeft') prevLesson();
+});
+</script>
+<div class="sec-between-nav"><div class="sec-between-inner"><a href="../seccion-2/" class="nav-btn">← Sección 2</a><a href="../seccion-4/" class="nav-btn nav-btn-primary">Sección 4 →</a></div></div></body>
+</html>

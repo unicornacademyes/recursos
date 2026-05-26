@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>S5 · Tu carrera en datos · Unicorn Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#0A0A0A;--fg:#111827;--muted:#6b7280;--quiet:#9ca3af;--rule:#e5e7eb;--paper:#f9fafb;--purple:#563C77;--purple-soft:#F5F1FA;--purple-light:#D4B8F5;--purple-deep:#3D2B54;--easing:cubic-bezier(.22,.61,.36,1)}
+html,body{background:#fff;color:var(--fg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
+.header{background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1.5px solid var(--rule);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink)}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.sec-badge{font-size:11px;color:var(--quiet);letter-spacing:0.05em;font-weight:500}
+.sec-header{max-width:860px;margin:0 auto;padding:28px 32px 0}
+.sec-tag{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.sec-title{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:6px}
+.sec-desc{font-size:15px;color:var(--muted);max-width:560px;line-height:1.6}
+.tabs-wrap{max-width:860px;margin:0 auto;padding:20px 32px 0}
+.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--rule);overflow-x:auto}
+.tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:all 0.15s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif;flex-shrink:0}
+.tab:hover{color:var(--purple)}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple);font-weight:600}
+.tab-num{font-size:10px;font-weight:700;color:var(--purple-light);margin-right:5px;letter-spacing:0.03em}
+.tab.active .tab-num{color:var(--purple)}
+.content-wrap{max-width:860px;margin:0 auto;padding:36px 32px 80px}
+.lesson{display:none}
+.lesson.show{display:block;animation:fadeIn 0.25s var(--easing) both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.lesson-eyebrow{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.lesson-eyebrow::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.lesson-time{font-size:10px;color:var(--quiet);font-weight:400;margin-left:2px}
+.lesson-title{font-size:34px;font-weight:800;color:var(--ink);line-height:1.08;letter-spacing:-0.02em;margin-bottom:20px}
+.lesson-title em{font-style:italic;color:var(--purple)}
+.body-text{font-size:17px;line-height:1.75;color:var(--muted);margin:14px 0;max-width:660px}
+.body-text b{color:var(--ink);font-weight:600}
+.quote-block{border-left:4px solid var(--purple);background:var(--purple-soft);padding:18px 22px;border-radius:0 10px 10px 0;margin:20px 0}
+.quote-block p{font-size:18px;font-weight:600;color:var(--purple-deep);line-height:1.45}
+.callout{display:flex;align-items:flex-start;gap:13px;background:var(--paper);border:1.5px solid var(--rule);border-radius:12px;padding:18px 20px;margin:20px 0}
+.callout-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.callout p{font-size:15px;color:var(--fg);line-height:1.65}
+.callout p b{color:var(--ink);font-weight:700}
+.bullets{display:flex;flex-direction:column;gap:12px;margin:22px 0}
+.bullet-row{display:flex;align-items:flex-start;gap:12px;font-size:16px;color:var(--fg);line-height:1.55}
+.bullet-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:8px}
+.bullet-row b{color:var(--ink);font-weight:700}
+
+/* STATS */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.stat-card{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;padding:20px 16px;text-align:center}
+.stat-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.stat-num{font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1}
+.stat-card.feat .stat-num{color:var(--purple-deep)}
+.stat-label{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
+.stat-card.feat .stat-label{color:var(--purple)}
+
+/* SECTORES */
+.sectores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
+.sec-card{border:1.5px solid var(--rule);border-radius:12px;padding:16px 18px;background:#fff;transition:border-color 0.2s}
+.sec-card:hover{border-color:var(--purple-light)}
+.sec-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.sec-icon{font-size:22px;margin-bottom:8px}
+.sec-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.sec-card.feat .sec-title{color:var(--purple-deep)}
+.sec-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.sec-card.feat .sec-desc{color:var(--purple)}
+
+/* BARRERAS */
+.barreras{display:flex;flex-direction:column;gap:10px;margin:22px 0}
+.barrera-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.barrera-card{border-radius:12px;padding:16px 18px}
+.barrera-card.prob{background:#fff5f5;border:1.5px solid #fecaca}
+.barrera-card.sol{background:var(--purple-soft);border:1.5px solid rgba(86,60,119,0.22)}
+.barrera-label{font-size:10px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px}
+.barrera-card.prob .barrera-label{color:#dc2626}
+.barrera-card.sol .barrera-label{color:var(--purple)}
+.barrera-text{font-size:13px;line-height:1.55}
+.barrera-card.prob .barrera-text{color:#7f1d1d}
+.barrera-card.sol .barrera-text{color:var(--purple-deep)}
+
+/* ROADMAP */
+.roadmap{display:flex;flex-direction:column;gap:0;margin:22px 0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden}
+.rm-row{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule);transition:background 0.15s}
+.rm-row:last-child{border-bottom:none}
+.rm-row:hover{background:var(--paper)}
+.rm-row.hl{background:var(--purple-soft)}
+.rm-mes{font-size:11px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:1px solid var(--purple-light);padding:3px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-top:2px;min-width:70px;text-align:center}
+.rm-row.hl .rm-mes{background:var(--purple);color:#fff;border-color:var(--purple)}
+.rm-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.rm-row.hl .rm-title{color:var(--purple-deep)}
+.rm-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.rm-row.hl .rm-desc{color:var(--purple)}
+
+/* NIVELES CTA */
+.niveles-cta{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:22px 0}
+.nivel-cta{border:1.5px solid var(--rule);border-radius:14px;padding:18px 16px;text-align:center}
+.nivel-cta.activo{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.nivel-cta.siguiente{border-color:var(--ink);background:var(--ink)}
+.nivel-num{font-size:24px;font-weight:800;margin-bottom:6px}
+.nivel-cta .nivel-num{color:var(--muted)}
+.nivel-cta.activo .nivel-num{color:var(--purple-deep)}
+.nivel-cta.siguiente .nivel-num{color:#fff}
+.nivel-nombre{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.nivel-cta.activo .nivel-nombre{color:var(--purple-deep)}
+.nivel-cta.siguiente .nivel-nombre{color:#fff}
+.nivel-estado{font-size:11px;color:var(--muted)}
+.nivel-cta.activo .nivel-estado{color:var(--purple)}
+.nivel-cta.siguiente .nivel-estado{color:rgba(255,255,255,0.6)}
+.nivel-check{font-size:20px;margin-bottom:8px}
+
+.lesson-nav{display:flex;align-items:center;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1.5px solid var(--rule)}
+.btn-lesson{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:100px;border:1.5px solid var(--rule);background:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--fg);cursor:pointer;transition:all 0.15s}
+.btn-lesson:hover{border-color:var(--purple);color:var(--purple)}
+.btn-lesson.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-lesson.primary:hover{background:var(--purple);border-color:var(--purple)}
+.btn-lesson:disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
+.lesson-pos{font-size:12px;color:var(--quiet);font-weight:500}
+@media(max-width:640px){.header,.tabs-wrap,.sec-header,.content-wrap{padding-left:20px;padding-right:20px}.lesson-title{font-size:26px}.stats,.sectores,.niveles-cta{grid-template-columns:1fr}.barrera-pair{grid-template-columns:1fr}}
+</style>
+<style>.sec-between-nav{background:#f9fafb;border-top:1.5px solid #e5e7eb;padding:24px 32px;margin-top:0}.sec-between-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1.5px solid #e5e7eb;background:#fff;font-family:Inter,sans-serif;font-size:13px;font-weight:500;color:#374151;text-decoration:none;transition:all 0.15s}.nav-btn:hover{border-color:#563C77;color:#563C77}.nav-btn-primary{background:#0A0A0A;color:#fff;border-color:#0A0A0A}.nav-btn-primary:hover{background:#563C77;border-color:#563C77}</style></head>
+<body>
+<header class="header">
+  <div class="brand"><div class="brand-dot"></div>Unicorn Academy</div>
+  <span class="sec-badge">SECCION 5 · TU CARRERA EN DATOS</span>
+</header>
+<div class="sec-header">
+  <div class="sec-tag">Seccion 5</div>
+  <div class="sec-title">Tu carrera en datos</div>
+  <div class="sec-desc">Oportunidades reales, salarios concretos, sectores que contratan y las barreras que frenan a la mayoria.</div>
+</div>
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="goLesson(0)"><span class="tab-num">5.1</span>Por que estudiar datos hoy</button>
+    <button class="tab"        onclick="goLesson(1)"><span class="tab-num">5.2</span>Sectores que contratan</button>
+    <button class="tab"        onclick="goLesson(2)"><span class="tab-num">5.3</span>Habilidades blandas</button>
+    <button class="tab"        onclick="goLesson(3)"><span class="tab-num">5.4</span>Las barreras reales</button>
+    <button class="tab"        onclick="goLesson(4)"><span class="tab-num">5.5</span>Tu roadmap de 8 meses</button>
+    <button class="tab"        onclick="goLesson(5)"><span class="tab-num">5.6</span>Como conseguir trabajo en datos</button>
+  </div>
+</div>
+<div class="content-wrap">
+
+  <!-- 5.1 -->
+  <div class="lesson show" id="l0">
+    <div class="lesson-eyebrow">Leccion 5.1 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">El mercado no espera.<br><em>Y la oportunidad es ahora.</em></h2>
+    <p class="body-text">Estos no son numeros para impresionarte. Son datos verificados de los reportes mas autoritativos del mercado laboral global publicados en 2025.</p>
+    
+    <div class="stats">
+      <div class="stat-card feat">
+        <div class="stat-num">170M</div>
+        <div class="stat-label">nuevos empleos creados globalmente para 2030 por IA, datos y transformacion digital</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">92M</div>
+        <div class="stat-label">empleos tradicionales seran desplazados por automatizacion en el mismo periodo</div>
+      </div>
+      <div class="stat-card feat">
+        <div class="stat-num">+78M</div>
+        <div class="stat-label">empleos netos nuevos. La transformacion ya esta ocurriendo</div>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--quiet);text-align:center;margin-top:8px">Fuente: World Economic Forum, Future of Jobs Report 2025 (enero 2025)</p>
+
+    <p class="body-text" style="margin-top:32px"><b>El dato mas importante de todos:</b> la adopcion de IA en empresas se duplico en solo 12 meses.</p>
+
+    <div style="background:linear-gradient(135deg,#F5F1FA 0%,#E8DFF5 100%);border:1.5px solid var(--purple-light);border-radius:14px;padding:24px;margin:20px 0">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center">
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">2023</div>
+          <div style="font-size:38px;font-weight:800;color:var(--purple-deep);line-height:1">33%</div>
+          <div style="font-size:13px;color:var(--purple);margin-top:4px">de las empresas usan IA generativa regularmente</div>
+        </div>
+        <div style="border-left:2px solid var(--purple-light);padding-left:20px">
+          <div style="font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:6px">2024</div>
+          <div style="font-size:38px;font-weight:800;color:var(--purple-deep);line-height:1">65%</div>
+          <div style="font-size:13px;color:var(--purple);margin-top:4px">de las empresas usan IA generativa regularmente</div>
+        </div>
+      </div>
+      <p style="font-size:13px;color:var(--purple);margin-top:16px;padding-top:16px;border-top:1px solid var(--purple-light);line-height:1.55"><b>72% de las organizaciones</b> usan IA en al menos una funcion en 2024 (vs 55% en 2023). El comprador de tu trabajo como analista duplico su uso de IA en 12 meses.</p>
+      <p style="font-size:11px;color:var(--purple);margin-top:8px;opacity:0.8">Fuente: McKinsey State of AI 2024 (mayo 2024)</p>
+    </div>
+
+    <p class="body-text" style="margin-top:28px">Las empresas necesitan estas habilidades, pero los empleados no las tienen:</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0">
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:20px;background:var(--paper);text-align:center">
+        <div style="font-size:36px;font-weight:800;color:var(--purple-deep);line-height:1;margin-bottom:8px">82%</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">De los lideres empresariales esperan <b>habilidades de datos en todos los empleados</b>, de todos los departamentos</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:14px;padding:20px;background:var(--paper);text-align:center">
+        <div style="font-size:36px;font-weight:800;color:#dc2626;line-height:1;margin-bottom:8px">11%</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">De los empleados se sienten <b>realmente confiados</b> en sus habilidades de datos</p>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--quiet);text-align:center">Fuente: Forrester (via Maven Analytics Foundations of Data Literacy)</p>
+
+    <div class="callout" style="background:var(--purple-soft);border-color:var(--purple-light)">
+      <span class="callout-icon">🎯</span>
+      <p style="color:var(--purple-deep)"><b>Esa brecha de 71 puntos porcentuales es tu oportunidad.</b> El mercado tiene una demanda insatisfecha masiva de profesionales que combinen criterio de negocio, ejecucion con datos y comunicacion ejecutiva.</p>
+    </div>
+
+    <p class="body-text" style="margin-top:28px"><b>Y la marea de datos sigue creciendo:</b></p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:20px 0">
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:800;color:var(--purple-deep);margin-bottom:4px">181 ZB</div>
+        <p style="font-size:11px;color:var(--muted);line-height:1.4">Datos creados globalmente para 2025</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:800;color:var(--purple-deep);margin-bottom:4px">90%</div>
+        <p style="font-size:11px;color:var(--muted);line-height:1.4">De toda la data del mundo se creo en los ultimos 2 anos</p>
+      </div>
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:14px;text-align:center">
+        <div style="font-size:24px;font-weight:800;color:#dc2626;margin-bottom:4px">&lt;1%</div>
+        <p style="font-size:11px;color:var(--muted);line-height:1.4">De los datos del mundo se analizan realmente</p>
+      </div>
+    </div>
+    <p style="font-size:11px;color:var(--quiet);text-align:center">Fuente: IDC Global DataSphere (via Maven Analytics)</p>
+
+    <p class="body-text" style="margin-top:28px"><b>Las habilidades que el mercado paga en 2026:</b></p>
+
+    <div class="bullets">
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>Problem framing.</b> Saber que pregunta hacerle al dato antes de abrir cualquier herramienta.</span></div>
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>Pensamiento de decision.</b> Conectar el analisis con una accion concreta de negocio.</span></div>
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>Dirigir la IA, no ejecutar para ella.</b> Saber pedirle a la IA, validar su respuesta y cuando no confiar.</span></div>
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>Comunicacion ejecutiva.</b> Traducir el resultado en tres frases que un CFO puede usar para decidir.</span></div>
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>Conocimiento del negocio.</b> Entender la empresa, no solo los datos.</span></div>
+    </div>
+
+    <div class="quote-block">
+      <p>"Tareas que en 2021 requerian 200 horas de SQL hoy se resuelven en minutos con un copiloto de IA. El valor del analista ya no esta en memorizar sintaxis, sino en el criterio profesional para formular la pregunta correcta, validar la respuesta del modelo y comunicar el insight."</p>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p><b>No hace falta cambiar de carrera para beneficiarse.</b> Un profesional de marketing, finanzas, recursos humanos u operaciones que entiende de datos vale significativamente mas que uno que no — en el mismo rol y en la misma empresa.</p>
+    </div>
+  </div>
+
+  <!-- 5.2 -->
+  <div class="lesson" id="l1">
+    <div class="lesson-eyebrow">Leccion 5.2 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Todos los sectores usan datos.<br><em>Pero no todos los mueven igual.</em></h2>
+    <p class="body-text">La regla es simple: <b>cuanto mas digitalizado es un sector, mas datos genera y mas analistas necesita</b>. Estos son los tres niveles de demanda en 2026.</p>
+
+    <!-- TIER 1 -->
+    <div style="margin-top:28px;padding:18px;border:1.5px solid var(--purple-light);border-radius:14px;background:var(--purple-soft)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;background:var(--purple);color:#fff;letter-spacing:0.05em">TIER 1</span>
+        <span style="font-size:13px;font-weight:700;color:var(--purple-deep)">Los sectores que viven de datos</span>
+      </div>
+      <p style="font-size:13px;color:var(--purple);line-height:1.55;margin-bottom:14px">Cada operacion del negocio genera un dato. No analizar es ilegal o suicida. Salarios mas altos y demanda constante.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:#fff;border:1px solid var(--purple-light);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">🏦</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Finanzas y banca</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Cada transaccion es un dato. Deteccion de fraude, scoring crediticio, analisis de riesgo, trading algoritmico. Regulacion obliga a tener data y analistas.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--purple-light);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">💻</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Tecnologia y SaaS</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Producto digital = data nativa. Cada click, sesion, feature usado y churn genera datos. Producto y growth dependen 100% del analista.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--purple-light);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">🛒</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">E-commerce y retail digital</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Cada visita, carrito abandonado, compra y devolucion es data. Personalizacion, prediccion de demanda y gestion de inventario en tiempo real.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--purple-light);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">🎮</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Gaming y entretenimiento digital</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Cada accion en juego es telemetria. Plataformas de streaming, apps, redes sociales: monetizacion, retencion y engagement medidos por minuto.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER 2 -->
+    <div style="margin-top:18px;padding:18px;border:1.5px solid var(--rule);border-radius:14px;background:var(--paper)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;background:var(--ink);color:#fff;letter-spacing:0.05em">TIER 2</span>
+        <span style="font-size:13px;font-weight:700;color:var(--ink)">Los sectores que se transformaron rapido</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">Digitalizacion masiva en los ultimos 5-10 anos. Demanda creciente y oportunidades para profesionales con criterio de negocio.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:#fff;border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">📣</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Marketing y publicidad</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Attribution multicanal, segmentacion, optimizacion de conversion. Cada campana genera miles de datos por dia. La IA acelero todo.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">🏥</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Salud y biotecnologia</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Historiales clinicos digitalizados, telemedicina, wearables, ensayos clinicos. Prediccion de reingresos y optimizacion de recursos hospitalarios.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">📡</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Telecomunicaciones</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Cada llamada, mensaje y paquete de datos es informacion. Optimizacion de red, prediccion de churn y deteccion de patrones de uso.</p>
+        </div>
+        <div style="background:#fff;border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">📚</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Educacion online</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">LMS, plataformas online y cohort-based: performance de alumnos, prediccion de abandono y optimizacion de conversion en funnels educativos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TIER 3 -->
+    <div style="margin-top:18px;padding:18px;border:1.5px solid var(--rule);border-radius:14px;background:#fff">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <span style="font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;background:var(--muted);color:#fff;letter-spacing:0.05em">TIER 3</span>
+        <span style="font-size:13px;font-weight:700;color:var(--ink)">Los sectores en plena digitalizacion</span>
+      </div>
+      <p style="font-size:13px;color:var(--muted);line-height:1.55;margin-bottom:14px">Sectores tradicionales adoptando datos por presion competitiva. Menos saturados de analistas — alta oportunidad si tienes experiencia previa en ellos.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <div style="background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">🏭</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Industria y manufactura</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">IoT en plantas, mantenimiento predictivo, control de calidad. Cada maquina conectada genera datos cada segundo.</p>
+        </div>
+        <div style="background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">🚚</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Logistica y supply chain</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Optimizacion de rutas, tracking en tiempo real, prediccion de demanda. El sector que mas crecio en data analytics post-pandemia.</p>
+        </div>
+        <div style="background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">👥</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Recursos humanos</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">People analytics, prediccion de rotacion, optimizacion de procesos de seleccion. Una de las areas de mayor crecimiento en empresas medianas.</p>
+        </div>
+        <div style="background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+            <span style="font-size:20px">🏢</span>
+            <span style="font-size:14px;font-weight:700;color:var(--ink)">Inmobiliario y construccion</span>
+          </div>
+          <p style="font-size:12px;color:var(--muted);line-height:1.5">Pricing dinamico, prediccion de demanda por zona, analisis de cartera. PropTech esta acelerando la digitalizacion del sector.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top:28px">
+      <p>"Los sectores mas digitalizados pagan mas y demandan mas. Pero los menos digitalizados son la mejor oportunidad para quien combina experiencia sectorial con datos."</p>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">🎯</span>
+      <p>Tu ventaja competitiva esta en <b>combinar tu experiencia de negocio actual con habilidades de datos.</b> Un analista con 10 anos en finanzas que aprende datos vale mas que uno sin contexto sectorial. Y en sectores menos saturados (Tier 3) tu experiencia previa es un diferencial real.</p>
+    </div>
+  </div>
+
+  <!-- 5.3 -->
+  <div class="lesson" id="l2">
+    <div class="lesson-eyebrow">Leccion 5.3 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Las herramientas se aprenden.<br>Las habilidades blandas<br><em>se entrenan.</em></h2>
+    <p class="body-text">Un analista que sabe SQL pero no sabe comunicar genera informes que nadie lee. Uno que comunica bien pero no valida sus datos genera decisiones basadas en errores. Las habilidades blandas no son un extra — son la mitad del trabajo.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0">
+      <div style="border:1.5px solid rgba(86,60,119,0.22);background:var(--purple-soft);border-radius:14px;padding:18px">
+        <div style="font-size:22px;margin-bottom:8px">🧠</div>
+        <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:5px">Pensamiento analitico</div>
+        <div style="font-size:13px;color:var(--purple);line-height:1.5">Descomponer un problema de negocio en preguntas que podes responder con datos. No es "analiza las ventas" — es "por que bajaron las ventas un 15% en marzo solo en la region norte".</div>
+        <div style="font-size:12px;color:var(--purple);margin-top:6px;font-style:italic">Ejemplo: Un cliente dice "las ventas estan mal". Tu preguntas: mal comparado con que, en que canal, desde cuando, en que productos.</div>
+      </div>
+      <div style="border:1.5px solid rgba(86,60,119,0.22);background:var(--purple-soft);border-radius:14px;padding:18px">
+        <div style="font-size:22px;margin-bottom:8px">📖</div>
+        <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:5px">Storytelling con datos</div>
+        <div style="font-size:13px;color:var(--purple);line-height:1.5">Convertir un analisis en una narrativa clara con inicio, nudo y desenlace. No es "aqui hay 15 graficos" — es "esto es lo que encontre, por que importa y que hacer al respecto".</div>
+        <div style="font-size:12px;color:var(--purple);margin-top:6px;font-style:italic">Ejemplo: En lugar de mostrar 10 tablas, armas una historia: "Las ventas cayeron. El problema esta en X. Recomiendo hacer Y porque Z".</div>
+      </div>
+      <div style="border:1.5px solid var(--rule);background:#fff;border-radius:14px;padding:18px">
+        <div style="font-size:22px;margin-bottom:8px">💬</div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Comunicacion ejecutiva</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.5">Hablar el lenguaje del negocio, no del dato. Traducir "la tasa de conversion bajo 3 puntos porcentuales" a "estamos perdiendo 50.000 euros al mes por cada punto que no recuperemos".</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">Ejemplo: Un CFO no quiere saber la formula. Quiere saber si tiene que contratar mas gente o si puede esperar un trimestre.</div>
+      </div>
+      <div style="border:1.5px solid var(--rule);background:#fff;border-radius:14px;padding:18px">
+        <div style="font-size:22px;margin-bottom:8px">🤝</div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Venta de proyectos</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.5">Convencer a un directivo de que invierta tiempo o dinero en un analisis. No es "podemos hacer un dashboard" — es "con este dashboard vas a detectar problemas de stock 2 semanas antes y ahorrar X".</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">Ejemplo: Propones automatizar un reporte. En lugar de decir "te ahorro 2 horas", dices "libero 8 horas al mes para que tu equipo haga analisis estrategico".</div>
+      </div>
+      <div style="border:1.5px solid rgba(86,60,119,0.22);background:var(--purple-soft);border-radius:14px;padding:18px">
+        <div style="font-size:22px;margin-bottom:8px">🔍</div>
+        <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:5px">Pensamiento critico</div>
+        <div style="font-size:13px;color:var(--purple);line-height:1.5">Cuestionar los datos antes de confiar en ellos. De donde vienen, que tan actualizados estan, que sesgos tienen, que falta. Un analista sin esto es peligroso.</div>
+        <div style="font-size:12px;color:var(--purple);margin-top:6px;font-style:italic">Ejemplo: Te llega un reporte que dice "la satisfaccion subio 20%". Tu preguntas: cuantas respuestas, de que segmento, con que pregunta exacta.</div>
+      </div>
+      <div style="border:1.5px solid var(--rule);background:#fff;border-radius:14px;padding:18px">
+        <div style="font-size:22px;margin-bottom:8px">🎯</div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Contexto de negocio</div>
+        <div style="font-size:13px;color:var(--muted);line-height:1.5">Entender como funciona la empresa donde trabajas, que mueve sus numeros y que decisiones toman los directivos. Sin contexto, el analisis es tecnicamente correcto pero estrategicamente irrelevante.</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:6px;font-style:italic">Ejemplo: Si sabes que la empresa prioriza margen sobre volumen, no propones campanas de descuento — propones optimizar el ticket promedio.</div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <span class="callout-icon">💡</span>
+      <p><b>Estas habilidades no se aprenden leyendo — se entrenan haciendo.</b> Cada proyecto real te obliga a preguntar mejor, comunicar mas claro y pensar mas criticamente.</p>
+    </div>
+  </div>
+
+  <!-- 5.4 -->
+  <div class="lesson" id="l3">
+    <div class="lesson-eyebrow">Leccion 5.4 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Las barreras<br>son reales.<br><em>Pero menores de lo que crees.</em></h2>
+    <p class="body-text">Estas son las cuatro objeciones mas comunes que escuchamos de profesionales que estan pensando en estudiar datos. Cada una tiene una respuesta concreta.</p>
+
+    <!-- BARRERA 1 -->
+    <div style="margin-top:28px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:#FEE2E2;padding:16px 20px;border-bottom:1px solid #FCA5A5">
+        <div style="font-size:11px;font-weight:700;color:#991B1B;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Barrera 1</div>
+        <div style="font-size:17px;font-weight:700;color:#991B1B;font-style:italic">"No soy bueno en matematicas"</div>
+      </div>
+      <div style="padding:18px 20px">
+        <p style="font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:10px"><b>La realidad:</b> el analisis de datos moderno no es matematica avanzada. Es pensamiento logico aplicado al negocio.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px">El 90% del trabajo de un analista es: hacer la pregunta correcta, limpiar datos, agrupar, comparar y comunicar. Las matematicas necesarias son aritmetica basica, porcentajes y promedios — lo que ya usas en Excel todos los dias.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6">La estadistica avanzada y el machine learning son areas especificas que llegan despues, si quieres especializarte. Pero el 95% de los analistas viven perfectamente sin ellas.</p>
+      </div>
+    </div>
+
+    <!-- BARRERA 2 -->
+    <div style="margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:#FEF3C7;padding:16px 20px;border-bottom:1px solid #FCD34D">
+        <div style="font-size:11px;font-weight:700;color:#92400E;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Barrera 2</div>
+        <div style="font-size:17px;font-weight:700;color:#92400E;font-style:italic">"No tengo tiempo"</div>
+      </div>
+      <div style="padding:18px 20px">
+        <p style="font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:10px"><b>La realidad:</b> no necesitas dejar tu trabajo ni estudiar 8 horas al dia.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px">Un profesional con trabajo a tiempo completo puede llegar a ser Analista 360 con <b>5-7 horas a la semana durante 8 meses</b>. Eso es una hora al dia o un par de tardes los fines de semana.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6">La IA acelera todo. Tareas que antes requerian 200 horas de aprendizaje ahora se resuelven en minutos con un copiloto. El tiempo total de inversion bajo significativamente en los ultimos 3 anos.</p>
+      </div>
+    </div>
+
+    <!-- BARRERA 3 -->
+    <div style="margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:#DBEAFE;padding:16px 20px;border-bottom:1px solid #93C5FD">
+        <div style="font-size:11px;font-weight:700;color:#1E40AF;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Barrera 3</div>
+        <div style="font-size:17px;font-weight:700;color:#1E40AF;font-style:italic">"Hay demasiadas herramientas, no se por donde empezar"</div>
+      </div>
+      <div style="padding:18px 20px">
+        <p style="font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:10px"><b>La realidad:</b> el ruido es enorme, pero el camino real es mas corto de lo que parece.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px">No necesitas aprender todas las herramientas. Solo necesitas <b>4 piezas para empezar a generar valor</b>: Excel o Sheets, SQL basico, Power BI o Tableau y un LLM como copiloto.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6">Con eso resolves el 80% de los problemas reales de cualquier empresa. El resto se aprende sobre la marcha segun el proyecto lo requiera. La trampa es querer aprender todo antes de empezar — y nunca empezar.</p>
+      </div>
+    </div>
+
+    <!-- BARRERA 4 -->
+    <div style="margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:#E0E7FF;padding:16px 20px;border-bottom:1px solid #A5B4FC">
+        <div style="font-size:11px;font-weight:700;color:#3730A3;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Barrera 4</div>
+        <div style="font-size:17px;font-weight:700;color:#3730A3;font-style:italic">"No tengo la edad para reinventarme"</div>
+      </div>
+      <div style="padding:18px 20px">
+        <p style="font-size:14px;color:var(--ink);line-height:1.6;margin-bottom:10px"><b>La realidad:</b> tu experiencia profesional previa es tu mayor diferencial, no una desventaja.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:8px">Un analista de 35 anos con 10 anos en finanzas, marketing u operaciones vale mas que un analista de 22 anos sin contexto de negocio. Las empresas no contratan analistas — contratan profesionales que entienden el negocio y saben usar datos.</p>
+        <p style="font-size:13px;color:var(--muted);line-height:1.6">El perfil mas demandado en 2026 es exactamente el tuyo: <b>profesional de 30 a 45 anos que combina experiencia sectorial con habilidades de datos</b>. Es un segmento estructuralmente desatendido — y donde las empresas estan dispuestas a pagar mas.</p>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top:28px">
+      <p>"Las barreras que te frenan son las mismas que frenan al resto del mercado. Por eso quien las supera entra a una industria con demanda insatisfecha real."</p>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p><b>Ninguna de estas barreras es estructural.</b> Son creencias instaladas que el mercado se encarga de desmentir todos los dias. La unica barrera real es no empezar.</p>
+    </div>
+  </div>
+
+  <!-- 5.5 -->
+  <div class="lesson" id="l4">
+    <div class="lesson-eyebrow">Leccion 5.5 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">El roadmap<br>de 8 meses<br><em>para llegar al Analista 360.</em></h2>
+    <p class="body-text">No se aprende todo de golpe. Hay un orden logico que minimiza frustracion y maximiza resultados. Este es el camino que funciona para la mayoria.</p>
+
+    <div style="display:flex;flex-direction:column;gap:0;margin:22px 0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule);background:var(--purple-soft)">
+        <div style="flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;padding-top:2px">Mes 1<br>Fundamentos</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:4px">Datos basicos y pensamiento analitico</div>
+          <div style="font-size:13px;color:var(--purple);line-height:1.5;margin-bottom:6px">Aprende a leer datos, hacer calculos basicos y formular preguntas de negocio. Usa Excel o Sheets. Resuelve problemas reales aunque sean simples.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Excel</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Google Sheets</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Formulas basicas</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Tablas dinamicas</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule)">
+        <div style="flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;padding-top:2px">Mes 2-3<br>Visualizacion</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Dashboards y comunicacion visual</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px">Aprende Power BI o Tableau basico. Practica el storytelling con datos — no solo graficos bonitos. Comunica hallazgos de forma clara y ejecutiva.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Power BI</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Tableau</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Diseno de dashboards</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Storytelling</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule);background:var(--purple-soft)">
+        <div style="flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;padding-top:2px">Mes 4-5<br>SQL</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:4px">Consultas a bases de datos</div>
+          <div style="font-size:13px;color:var(--purple);line-height:1.5;margin-bottom:6px">Aprende SELECT, WHERE, GROUP BY, JOIN. Practica con datasets reales. No necesitas ser experto — necesitas poder extraer los datos que necesitas.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">SQL</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">PostgreSQL</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Queries basicas</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">JOINs</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule)">
+        <div style="flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;padding-top:2px">Mes 5-6<br>Python</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Analisis con codigo y automatizacion</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px">Aprende Python para analisis de datos: pandas, matplotlib, seaborn. Automatiza reportes repetitivos. No necesitas ser developer — necesitas resolver problemas mas rapido.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Python</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">pandas</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Jupyter</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Automatizacion</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule);background:var(--purple-soft)">
+        <div style="flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;padding-top:2px">Mes 6-7<br>IA copiloto</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:4px">IA como copiloto en todo el proceso</div>
+          <div style="font-size:13px;color:var(--purple);line-height:1.5;margin-bottom:6px">Usa ChatGPT y Claude para escribir queries SQL, depurar codigo Python, generar ideas de visualizacion y validar analisis. La IA acelera cada fase pero tu mantienes el criterio.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">ChatGPT</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Claude</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Prompting</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:rgba(255,255,255,0.6);color:var(--purple);border:0.5px solid var(--purple-light)">Validacion</span>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:16px;padding:16px 20px">
+        <div style="flex-shrink:0;width:90px;font-size:11px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;padding-top:2px">Mes 7-8<br>Visibilidad</div>
+        <div style="flex:1">
+          <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px">Proyectos completos y portfolio publico</div>
+          <div style="font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px">Construye 2-3 proyectos reales de principio a fin. Cada uno con problema de negocio, analisis con datos, visualizacion y recomendaciones ejecutivas. Documentalos en GitHub o LinkedIn.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:6px">
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">GitHub</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">LinkedIn</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Documentacion</span>
+            <span style="font-size:11px;padding:3px 9px;border-radius:8px;background:var(--paper);color:var(--muted);border:0.5px solid var(--rule)">Casos reales</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5.6 -->
+  <div class="lesson" id="l5">
+    <div class="lesson-eyebrow">Leccion 5.6 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Sabes datos.<br><em>Ahora aprende a venderte.</em></h2>
+    <p class="body-text">Las habilidades te abren la puerta. Saber venderte es lo que te hace entrar. Estas son las cinco palancas que diferencian al 10% que accede a oportunidades del 90% que envia CVs sin respuesta.</p>
+
+    <!-- PALANCA 1: PROPUESTA DE VALOR -->
+    <div style="margin-top:24px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:var(--purple-soft);padding:14px 18px;border-bottom:1px solid var(--purple-light)">
+        <div style="font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Palanca 1 · Propuesta de valor</div>
+        <div style="font-size:16px;font-weight:700;color:var(--purple-deep)">Vende el problema que resolves, no las herramientas que usas</div>
+      </div>
+      <div style="padding:18px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px">
+          <div style="border:1px solid #FCA5A5;background:#FEF2F2;border-radius:10px;padding:14px">
+            <div style="font-size:10px;font-weight:700;color:#991B1B;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">El 90% hace esto</div>
+            <p style="font-size:13px;color:#7F1D1D;line-height:1.5;font-style:italic">"Manejo Power BI, SQL y Python. Estoy en busqueda activa."</p>
+          </div>
+          <div style="border:1px solid var(--purple-light);background:var(--purple-soft);border-radius:10px;padding:14px">
+            <div style="font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">El 10% que accede a oportunidades</div>
+            <p style="font-size:13px;color:var(--purple-deep);line-height:1.5;font-style:italic">"Ayudo a empresas de retail a entender por que venden mas y ganan menos."</p>
+          </div>
+        </div>
+        <div style="background:var(--paper);border:1px dashed var(--purple-light);border-radius:10px;padding:14px;text-align:center">
+          <div style="font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:6px">La formula que abre puertas</div>
+          <p style="font-size:13px;color:var(--ink);line-height:1.6"><b>Tu industria anterior + habilidad en datos + problema concreto que resolves</b><br>= propuesta de valor que se diferencia sola</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PALANCA 2: CV -->
+    <div style="margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:var(--paper);padding:14px 18px;border-bottom:1px solid var(--rule)">
+        <div style="font-size:11px;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Palanca 2 · El CV</div>
+        <div style="font-size:16px;font-weight:700;color:var(--ink)">El 75% de los CVs no los lee un humano. Los filtra un robot.</div>
+      </div>
+      <div style="padding:18px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px">Para pasar el filtro automatico (ATS)</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px">→ Usa las palabras <b>exactas</b> del aviso, no sinonimos</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px">→ Adapta el CV a cada tipo de oportunidad</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6">→ El robot filtra antes de que nadie lo vea</div>
+          </div>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px">Para el ojo humano (7 segundos)</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px">→ Quien sos + que resolves + impacto medible arriba</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:6px">→ Seccion "Competencias" <b>antes</b> de la experiencia</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.6">→ Proyectos del bootcamp cuentan como experiencia real</div>
+          </div>
+        </div>
+        <div style="background:var(--paper);border-left:3px solid var(--purple);border-radius:0 10px 10px 0;padding:14px">
+          <div style="font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Formula de logros que convierte</div>
+          <p style="font-size:12px;line-height:1.7;color:var(--ink)"><span style="color:#dc2626">✗ Mal:</span> "Responsable de reportes financieros"<br><span style="color:#16a34a">✓ Bien:</span> "Automatice reportes mensuales reduciendo el cierre de 3 dias a 4 horas"</p>
+          <p style="font-size:11px;color:var(--purple);margin-top:6px;font-style:italic">Verbo de accion + que hiciste + resultado medible</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PALANCA 3: LINKEDIN -->
+    <div style="margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:var(--purple-soft);padding:14px 18px;border-bottom:1px solid var(--purple-light)">
+        <div style="font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Palanca 3 · LinkedIn</div>
+        <div style="font-size:16px;font-weight:700;color:var(--purple-deep)">La vitrina que trabaja mientras dormis</div>
+      </div>
+      <div style="padding:18px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">El 87% de los reclutadores busca activamente en LinkedIn. Tambien clientes, socios y empresas con proyectos freelance.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+          <div style="border:1px solid var(--rule);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px">Titular</div>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5">No pongas "en busqueda activa". Poné lo que queres ser: <em>"Data Analyst | Power BI · SQL | Finanzas"</em></p>
+          </div>
+          <div style="border:1px solid var(--rule);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px">Foto</div>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5">Fondo neutro, mirando a camara, expresion accesible. Sin selfies. Vale diez entrevistas.</p>
+          </div>
+          <div style="border:1px solid var(--rule);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px">Acerca de</div>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5">Las primeras 2 lineas son las unicas que se ven sin clic. Responde: quien sos y que problema resolves.</p>
+          </div>
+          <div style="border:1px solid var(--rule);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px">Actividad</div>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5">Publica proyectos, comenta referentes, comparte aprendizajes. Te hace visible sin aplicar a nada.</p>
+          </div>
+        </div>
+        <div style="background:#FEF3C7;border:1px solid #FCD34D;border-radius:10px;padding:12px;margin-top:14px">
+          <p style="font-size:12px;color:#92400E;line-height:1.55"><b>La diferencia clave:</b> quien publica contenido de datos recibe propuestas. Quien tiene perfil estatico tiene que salir a buscarlas. Mismo conocimiento, distinto resultado.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PALANCA 4: PORTFOLIO -->
+    <div style="margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:var(--paper);padding:14px 18px;border-bottom:1px solid var(--rule)">
+        <div style="font-size:11px;font-weight:700;color:var(--ink);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Palanca 4 · El portafolio</div>
+        <div style="font-size:16px;font-weight:700;color:var(--ink)">Convierte en cualquier tipo de oportunidad</div>
+      </div>
+      <div style="padding:18px">
+        <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:14px;align-items:center">
+          <div>
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:8px">Estructura de cada proyecto</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.7"><b style="color:var(--purple)">El problema</b> — que pregunta de negocio respondias</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.7"><b style="color:var(--purple)">Los datos</b> — origen, limpieza, decisiones tomadas</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.7"><b style="color:var(--purple)">El analisis</b> — que encontraste, que te sorprendio</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.7"><b style="color:var(--purple)">El insight</b> — que significa para el negocio</div>
+            <div style="font-size:12px;color:var(--muted);line-height:1.7"><b style="color:var(--purple)">La accion</b> — que haria una empresa con esto</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center">
+            <div style="background:var(--purple-soft);border:1px solid var(--purple-light);border-radius:10px;padding:14px;width:100%">
+              <div style="font-size:32px;font-weight:800;color:var(--purple-deep);line-height:1">2</div>
+              <div style="font-size:11px;color:var(--purple);margin-top:4px">proyectos reales de negocio</div>
+            </div>
+            <div style="font-size:11px;color:var(--muted);font-style:italic">generan mas que</div>
+            <div style="background:var(--paper);border:1px solid var(--rule);border-radius:10px;padding:14px;width:100%">
+              <div style="font-size:32px;font-weight:800;color:var(--quiet);line-height:1">10</div>
+              <div style="font-size:11px;color:var(--quiet);margin-top:4px">ejercicios de tutorial</div>
+            </div>
+          </div>
+        </div>
+        <div style="background:var(--purple-soft);border:1px solid var(--purple-light);border-radius:10px;padding:12px;margin-top:14px">
+          <div style="font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:4px">Tip de oro</div>
+          <p style="font-size:12px;color:var(--purple-deep);line-height:1.55">Usa datos de tu industria anterior. Un contador que analiza rentabilidad, un profesional de RRHH que modela rotacion — eso atrae exactamente las oportunidades donde tenes ventaja real.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PALANCA 5: ACTIVAR EL MERCADO -->
+    <div style="margin-top:14px;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden">
+      <div style="background:var(--purple-soft);padding:14px 18px;border-bottom:1px solid var(--purple-light)">
+        <div style="font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.05em;text-transform:uppercase;margin-bottom:4px">Palanca 5 · Activa el mercado</div>
+        <div style="font-size:16px;font-weight:700;color:var(--purple-deep)">Los tres canales que generan oportunidades</div>
+      </div>
+      <div style="padding:18px">
+        <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Buscar solo en portales es competir por el 30% del mercado con el 100% de los candidatos. El resto se mueve por visibilidad y red.</p>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px">
+          <div style="border:1px solid var(--rule);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px">Canal 1 — Avisos</div>
+            <p style="font-size:11px;color:var(--muted);line-height:1.5">LinkedIn, InfoJobs, GetOnBoard. Volumen alto, conversion baja.</p>
+          </div>
+          <div style="border:1.5px solid var(--purple);background:var(--purple-soft);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:700;color:var(--purple-deep);margin-bottom:4px">Canal 2 — Outreach</div>
+            <p style="font-size:11px;color:var(--purple);line-height:1.5">Mensaje directo a reclutadores y hiring managers. 4 lineas personalizadas. Mayor tasa de respuesta.</p>
+          </div>
+          <div style="border:1px solid var(--rule);border-radius:10px;padding:12px">
+            <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:4px">Canal 3 — Red activa</div>
+            <p style="font-size:11px;color:var(--muted);line-height:1.5">Eventos, comunidades, bootcamp. Un referido tiene 10x mas chances que una aplicacion ciega.</p>
+          </div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--ink);margin-bottom:10px">El embudo real</div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:14px;font-weight:800;color:var(--purple-deep);width:32px">100</div>
+            <div style="flex:1;background:var(--paper);border-radius:6px;height:24px;position:relative;overflow:hidden"><div style="background:var(--purple-light);width:100%;height:100%;border-radius:6px"></div></div>
+            <div style="font-size:11px;color:var(--muted);width:140px">Contactos activados</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:14px;font-weight:800;color:var(--purple-deep);width:32px">10</div>
+            <div style="flex:1;background:var(--paper);border-radius:6px;height:24px;position:relative;overflow:hidden"><div style="background:var(--purple);width:10%;height:100%;border-radius:6px"></div></div>
+            <div style="font-size:11px;color:var(--muted);width:140px">Conversaciones reales</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:14px;font-weight:800;color:var(--purple-deep);width:32px">5</div>
+            <div style="flex:1;background:var(--paper);border-radius:6px;height:24px;position:relative;overflow:hidden"><div style="background:var(--purple-deep);width:5%;height:100%;border-radius:6px"></div></div>
+            <div style="font-size:11px;color:var(--muted);width:140px">Oportunidades concretas</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="font-size:14px;font-weight:800;color:#16a34a;width:32px">1</div>
+            <div style="flex:1;background:var(--paper);border-radius:6px;height:24px;position:relative;overflow:hidden"><div style="background:#16a34a;width:1%;height:100%;border-radius:6px;min-width:6px"></div></div>
+            <div style="font-size:11px;color:var(--muted);width:140px">Trabajo, proyecto o colaboracion</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <span class="callout-icon">💡</span>
+      <p><b>El mejor analista mal posicionado vende menos que el analista promedio bien posicionado.</b> Estas cinco palancas no requieren mas tecnica. Requieren intencion y constancia.</p>
+    </div>
+  </div>
+
+  <div class="lesson-nav">
+    <button class="btn-lesson" id="btn-prev" onclick="prevLesson()" disabled>← Anterior</button>
+    <span class="lesson-pos" id="lesson-pos">Leccion 1 de 5</span>
+    <button class="btn-lesson primary" id="btn-next" onclick="nextLesson()">Siguiente →</button>
+  </div>
+</div>
+<script>
+let cur=0;const total=6;
+function goLesson(i){document.getElementById('l'+cur).classList.remove('show');document.querySelectorAll('.tab')[cur].classList.remove('active');cur=i;document.getElementById('l'+cur).classList.add('show');document.querySelectorAll('.tab')[cur].classList.add('active');document.getElementById('lesson-pos').textContent='Leccion '+(cur+1)+' de '+total;document.getElementById('btn-prev').disabled=cur===0;document.getElementById('btn-next').disabled=cur===total-1;document.getElementById('btn-next').textContent=cur===total-1?'Curso completado ✓':'Siguiente →';window.scrollTo({top:0,behavior:'smooth'});}
+function nextLesson(){if(cur<total-1)goLesson(cur+1);}
+function prevLesson(){if(cur>0)goLesson(cur-1);}
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight')nextLesson();if(e.key==='ArrowLeft')prevLesson();});
+</script>
+<div class="sec-between-nav"><div class="sec-between-inner"><a href="../seccion-4/" class="nav-btn">← Sección 4</a><a href="../" class="nav-btn nav-btn-primary">✓ Curso completado</a></div></div></body>
+</html>

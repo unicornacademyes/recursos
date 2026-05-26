@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>S1 · El mundo de los datos · Unicorn Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0A0A0A;--fg:#111827;--muted:#6b7280;--quiet:#9ca3af;
+  --rule:#e5e7eb;--paper:#f9fafb;
+  --purple:#563C77;--purple-soft:#F5F1FA;--purple-light:#D4B8F5;--purple-deep:#3D2B54;
+  --easing:cubic-bezier(.22,.61,.36,1);
+}
+html,body{background:#fff;color:var(--fg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
+
+/* HEADER */
+.header{background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1.5px solid var(--rule);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink)}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.header-right{display:flex;align-items:center;gap:16px}
+.sec-badge{font-size:11px;color:var(--quiet);letter-spacing:0.05em;font-weight:500}
+
+/* SECTION HEADER */
+.sec-header{max-width:860px;margin:0 auto;padding:28px 32px 0}
+.sec-tag{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.sec-title{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:6px}
+.sec-desc{font-size:15px;color:var(--muted);max-width:560px;line-height:1.6}
+
+/* TABS */
+.tabs-wrap{max-width:860px;margin:0 auto;padding:20px 32px 0}
+.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--rule)}
+.tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:all 0.15s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif}
+.tab:hover{color:var(--purple)}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple);font-weight:600}
+.tab-num{font-size:10px;font-weight:700;color:var(--purple-light);margin-right:5px;letter-spacing:0.03em}
+.tab.active .tab-num{color:var(--purple)}
+
+/* CONTENT */
+.content-wrap{max-width:860px;margin:0 auto;padding:36px 32px 80px}
+.lesson{display:none}
+.lesson.show{display:block;animation:fadeIn 0.25s var(--easing) both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* LESSON HEADER */
+.lesson-eyebrow{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.lesson-eyebrow::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.lesson-time{font-size:10px;color:var(--quiet);font-weight:400;margin-left:2px}
+.lesson-title{font-size:34px;font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:-0.02em;margin-bottom:20px}
+.lesson-title em{font-style:italic;color:var(--purple)}
+
+/* COMPONENTS */
+.body-text{font-size:17px;line-height:1.75;color:var(--muted);margin:14px 0;max-width:640px}
+.body-text b{color:var(--ink);font-weight:600}
+
+.quote-block{border-left:4px solid var(--purple);background:var(--purple-soft);padding:18px 22px;border-radius:0 10px 10px 0;margin:20px 0}
+.quote-block p{font-size:18px;font-weight:600;color:var(--purple-deep);line-height:1.45}
+
+.callout{display:flex;align-items:flex-start;gap:13px;background:var(--paper);border:1.5px solid var(--rule);border-radius:12px;padding:18px 20px;margin:20px 0}
+.callout-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.callout p{font-size:15px;color:var(--fg);line-height:1.65}
+.callout p b{color:var(--ink);font-weight:700}
+
+.bullets{display:flex;flex-direction:column;gap:12px;margin:22px 0}
+.bullet-row{display:flex;align-items:flex-start;gap:12px;font-size:16px;color:var(--fg);line-height:1.55}
+.bullet-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0;margin-top:8px}
+.bullet-row b{color:var(--ink);font-weight:700}
+
+/* CONTRAST GRID */
+.contrast-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+.cc{border-radius:14px;padding:20px 18px}
+.cc.antes{background:var(--paper);border:1.5px solid var(--rule)}
+.cc.ahora{background:var(--purple-soft);border:1.5px solid rgba(86,60,119,0.22)}
+.cc-label{font-size:11px;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:10px;color:var(--quiet)}
+.cc.ahora .cc-label{color:var(--purple)}
+.cc-item{font-size:14px;color:var(--fg);padding:7px 0;border-bottom:1px solid var(--rule);line-height:1.45}
+.cc-item:last-child{border-bottom:none;padding-bottom:0}
+.cc.ahora .cc-item{color:var(--purple-deep);border-color:rgba(86,60,119,0.15)}
+
+/* STAT ROW */
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:22px 0}
+.stat-card{background:var(--paper);border:1.5px solid var(--rule);border-radius:14px;padding:20px 16px;text-align:center}
+.stat-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.stat-num{font-size:32px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;line-height:1}
+.stat-card.feat .stat-num{color:var(--purple-deep)}
+.stat-label{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.4}
+.stat-card.feat .stat-label{color:var(--purple)}
+
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0;margin:22px 0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden}
+.tl-row{display:flex;align-items:flex-start;gap:16px;padding:14px 20px;border-bottom:1px solid var(--rule);transition:background 0.15s}
+.tl-row:last-child{border-bottom:none}
+.tl-row:hover{background:var(--paper)}
+.tl-row.hl{background:var(--purple-soft)}
+.tl-year{font-size:11px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:1px solid var(--purple-light);padding:3px 10px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-top:2px;min-width:64px;text-align:center}
+.tl-row.hl .tl-year{background:var(--purple);color:#fff;border-color:var(--purple)}
+.tl-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.tl-row.hl .tl-title{color:var(--purple-deep)}
+.tl-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.tl-row.hl .tl-desc{color:var(--purple)}
+
+/* FUENTES GRID */
+.fuentes{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:22px 0}
+.fuente-card{border:1.5px solid var(--rule);border-radius:12px;padding:16px 18px;background:#fff;transition:border-color 0.2s}
+.fuente-card:hover{border-color:var(--purple-light)}
+.fuente-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.fuente-icon{font-size:20px;margin-bottom:8px}
+.fuente-sistema{font-size:10px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:1px solid var(--purple-light);padding:2px 8px;border-radius:100px;display:inline-block;margin-bottom:6px;letter-spacing:0.03em}
+.fuente-card.feat .fuente-sistema{background:rgba(86,60,119,0.12);border-color:var(--purple)}
+.fuente-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.fuente-card.feat .fuente-title{color:var(--purple-deep)}
+.fuente-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.fuente-card.feat .fuente-desc{color:var(--purple)}
+.fuente-ej{font-size:11px;color:var(--quiet);margin-top:6px;font-style:italic}
+
+/* FACTORES */
+.factores{display:flex;flex-direction:column;gap:10px;margin:22px 0}
+.factor-row{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;transition:border-color 0.2s}
+.factor-row:hover{border-color:var(--purple-light)}
+.factor-row.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.factor-num{font-size:11px;font-weight:700;color:var(--purple);background:var(--purple-soft);border:1px solid var(--purple-light);padding:3px 9px;border-radius:100px;flex-shrink:0;margin-top:2px;letter-spacing:0.03em}
+.factor-row.feat .factor-num{background:rgba(86,60,119,0.15);border-color:var(--purple)}
+.factor-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.factor-row.feat .factor-title{color:var(--purple-deep)}
+.factor-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.factor-row.feat .factor-desc{color:var(--purple)}
+
+/* MARKET STATS */
+.market{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:22px 0}
+.mcard{border-radius:14px;padding:20px 18px;border:1.5px solid var(--rule)}
+.mcard.big{background:var(--purple-soft);border-color:rgba(86,60,119,0.22);grid-column:span 2}
+.mcard-num{font-size:36px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;line-height:1}
+.mcard.big .mcard-num{font-size:48px;color:var(--purple-deep)}
+.mcard-label{font-size:13px;color:var(--muted);margin-top:6px;line-height:1.45}
+.mcard.big .mcard-label{font-size:15px;color:var(--purple);font-weight:500}
+
+/* CASOS */
+.casos{display:flex;flex-direction:column;gap:10px;margin:22px 0}
+.caso-row{display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:1.5px solid var(--rule);border-radius:12px;background:#fff;transition:border-color 0.2s}
+.caso-row:hover{border-color:var(--purple-light)}
+.caso-icon{font-size:22px;flex-shrink:0;margin-top:2px}
+.caso-empresa{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px}
+.caso-desc{font-size:13px;color:var(--muted);line-height:1.5}
+.caso-resultado{font-size:12px;font-weight:600;color:var(--purple);margin-top:5px}
+
+/* LESSON NAV */
+.lesson-nav{display:flex;align-items:center;justify-content:space-between;margin-top:40px;padding-top:24px;border-top:1.5px solid var(--rule)}
+.btn-lesson{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:100px;border:1.5px solid var(--rule);background:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;color:var(--fg);cursor:pointer;transition:all 0.15s}
+.btn-lesson:hover{border-color:var(--purple);color:var(--purple)}
+.btn-lesson.primary{background:var(--ink);color:#fff;border-color:var(--ink)}
+.btn-lesson.primary:hover{background:var(--purple);border-color:var(--purple)}
+.btn-lesson:disabled{opacity:0.3;cursor:not-allowed;pointer-events:none}
+.lesson-pos{font-size:12px;color:var(--quiet);font-weight:500}
+
+@media(max-width:640px){
+  .header,.tabs-wrap,.sec-header,.content-wrap{padding-left:20px;padding-right:20px}
+  .lesson-title{font-size:26px}
+  .contrast-grid,.stat-row,.fuentes,.market{grid-template-columns:1fr}
+  .mcard.big{grid-column:span 1}
+  .tabs{overflow-x:auto;padding-bottom:2px}
+  .tab{padding:10px 14px;font-size:12px}
+}
+</style>
+<style>.sec-between-nav{background:#f9fafb;border-top:1.5px solid #e5e7eb;padding:24px 32px;margin-top:0}.sec-between-inner{max-width:860px;margin:0 auto;display:flex;justify-content:space-between;align-items:center}.nav-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:100px;border:1.5px solid #e5e7eb;background:#fff;font-family:Inter,sans-serif;font-size:13px;font-weight:500;color:#374151;text-decoration:none;transition:all 0.15s}.nav-btn:hover{border-color:#563C77;color:#563C77}.nav-btn-primary{background:#0A0A0A;color:#fff;border-color:#0A0A0A}.nav-btn-primary:hover{background:#563C77;border-color:#563C77}</style></head>
+<body>
+
+<header class="header">
+  <div class="brand"><div class="brand-dot"></div>Unicorn Academy</div>
+  <div class="header-right">
+    <span class="sec-badge">SECCION 1 · EL MUNDO DE LOS DATOS</span>
+  </div>
+</header>
+
+<div class="sec-header">
+  <div class="sec-tag">Seccion 1</div>
+  <div class="sec-title">El mundo de los datos</div>
+  <div class="sec-desc">La historia y el negocio detras. Al terminar esta seccion vas a entender por que este sector importa y por que importa ahora para vos.</div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="goLesson(0)"><span class="tab-num">1.1</span>Por que estamos aca</button>
+    <button class="tab"        onclick="goLesson(1)"><span class="tab-num">1.2</span>Como surgieron los datos</button>
+    <button class="tab"        onclick="goLesson(2)"><span class="tab-num">1.3</span>Por que exploto el sector</button>
+    <button class="tab"        onclick="goLesson(3)"><span class="tab-num">1.4</span>El dinero que mueve</button>
+    <button class="tab"        onclick="goLesson(4)"><span class="tab-num">1.5</span>El impacto en las empresas</button>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- LECCION 1.1 -->
+  <div class="lesson show" id="l0">
+    <div class="lesson-eyebrow">Leccion 1.1 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Algo cambio.<br>Y la mayoria<br><em>no se dio cuenta.</em></h2>
+    <p class="body-text">No paso de golpe. Fue gradual. Pero en algun momento de los ultimos diez anos las reglas del juego en los negocios cambiaron para siempre.</p>
+    <div class="quote-block">
+      <p>Las empresas que entienden sus datos toman mejores decisiones, mas rapido y con menos errores. Las que no, siguen apostando a la intuicion.</p>
+    </div>
+    <p class="body-text">La diferencia entre ambas se esta haciendo cada vez mas grande. Y los profesionales que saben trabajar con datos son los que estan del lado correcto de esa brecha.</p>
+    <div class="contrast-grid">
+      <div class="cc antes">
+        <div class="cc-label">Antes</div>
+        <div class="cc-item">Las decisiones las tomaba el que tenia mas experiencia</div>
+        <div class="cc-item">Para conocer al cliente habia que preguntarle</div>
+        <div class="cc-item">Los errores se detectaban cuando ya era tarde</div>
+        <div class="cc-item">La ventaja competitiva duraba anos</div>
+      </div>
+      <div class="cc ahora">
+        <div class="cc-label">Ahora</div>
+        <div class="cc-item">Las decisiones las toma el que tiene mejor informacion</div>
+        <div class="cc-item">El comportamiento del cliente queda registrado solo</div>
+        <div class="cc-item">Los problemas se detectan antes de que exploten</div>
+        <div class="cc-item">La ventaja competitiva dura meses</div>
+      </div>
+    </div>
+    <div class="bullets">
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>No hace falta ser data scientist.</b> Con entender los fundamentos y hacer las preguntas correctas ya estas por encima del 80% de los profesionales.</span></div>
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>Tu experiencia previa es una ventaja.</b> El analista que entiende de negocios vale mas que el que solo sabe herramientas.</span></div>
+      <div class="bullet-row"><div class="bullet-dot"></div><span><b>La IA bajo la barrera de entrada.</b> Lo que antes requeria anos de formacion tecnica, hoy se aprende en meses con las herramientas correctas.</span></div>
+    </div>
+  </div>
+
+  <!-- LECCION 1.2 -->
+  <div class="lesson" id="l1">
+    <div class="lesson-eyebrow">Leccion 1.2 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Los datos no<br>aparecieron solos.<br><em>Alguien los creo.</em></h2>
+    <p class="body-text">Para entender el mundo de los datos hay que entender de donde vienen. La historia es mas reciente de lo que parece.</p>
+    <div class="timeline">
+      <div class="tl-row">
+        <span class="tl-year">1960s</span>
+        <div>
+          <div class="tl-title">Las primeras bases de datos</div>
+          <div class="tl-desc">Las empresas empiezan a guardar informacion en computadoras. Solo grandes corporaciones, costos enormes, datos muy limitados.</div>
+        </div>
+      </div>
+      <div class="tl-row">
+        <span class="tl-year">1990s</span>
+        <div>
+          <div class="tl-title">Internet lo cambia todo</div>
+          <div class="tl-desc">Cada clic, cada visita, cada compra online queda registrada. Los datos empiezan a generarse a escala masiva por primera vez.</div>
+        </div>
+      </div>
+      <div class="tl-row hl">
+        <span class="tl-year">2000s</span>
+        <div>
+          <div class="tl-title">El boom de los datos</div>
+          <div class="tl-desc">Redes sociales, smartphones, sensores. De repente todo genera datos. Google, Amazon y Facebook construyen imperios sobre esta materia prima.</div>
+        </div>
+      </div>
+      <div class="tl-row hl">
+        <span class="tl-year">Hoy</span>
+        <div>
+          <div class="tl-title">Datos en todas partes</div>
+          <div class="tl-desc">2.5 trillones de bytes se generan cada dia. Cada empresa, sin importar su tamano, genera y almacena datos de forma continua.</div>
+        </div>
+      </div>
+    </div>
+    <p class="body-text">En una empresa mediana de hoy, los datos viven en multiples sistemas al mismo tiempo. Estos son los mas comunes:</p>
+    <div class="fuentes">
+      <div class="fuente-card feat">
+        <div class="fuente-icon">🧩</div>
+        <div class="fuente-sistema">ERP</div>
+        <div class="fuente-title">Gestion empresarial</div>
+        <div class="fuente-desc">Ventas, stock, finanzas, produccion y logistica. El cerebro operativo de la empresa.</div>
+        <div class="fuente-ej">SAP, Oracle, Odoo</div>
+      </div>
+      <div class="fuente-card">
+        <div class="fuente-icon">🤝</div>
+        <div class="fuente-sistema">CRM</div>
+        <div class="fuente-title">Gestion de clientes</div>
+        <div class="fuente-desc">Contactos, oportunidades, ventas, reclamos y comunicaciones con clientes.</div>
+        <div class="fuente-ej">Salesforce, HubSpot, Zoho</div>
+      </div>
+      <div class="fuente-card">
+        <div class="fuente-icon">🗄️</div>
+        <div class="fuente-sistema">Base de datos</div>
+        <div class="fuente-title">El almacen central</div>
+        <div class="fuente-desc">Donde vive la informacion estructurada. Usuarios, transacciones, productos.</div>
+        <div class="fuente-ej">PostgreSQL, MySQL, BigQuery</div>
+      </div>
+      <div class="fuente-card">
+        <div class="fuente-icon">🌐</div>
+        <div class="fuente-sistema">Web y apps</div>
+        <div class="fuente-title">Comportamiento digital</div>
+        <div class="fuente-desc">Clics, paginas vistas, tiempo en el sitio, conversiones y abandono.</div>
+        <div class="fuente-ej">Google Analytics, Mixpanel</div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p>El dato no tiene valor solo. Necesita alguien que sepa que preguntarle. <b>Ahi es exactamente donde entra el analista de datos.</b></p>
+    </div>
+  </div>
+
+  <!-- LECCION 1.3 -->
+  <div class="lesson" id="l2">
+    <div class="lesson-eyebrow">Leccion 1.3 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">No fue magia.<br>Fueron tres cosas<br><em>que se juntaron.</em></h2>
+    <p class="body-text">El sector de datos no exploto por casualidad. Hubo una combinacion especifica de factores que en un momento determinado hizo que todo se acelerara.</p>
+    <div class="factores">
+      <div class="factor-row feat">
+        <span class="factor-num">01</span>
+        <div>
+          <div class="factor-title">El costo del almacenamiento se derrumbo</div>
+          <div class="factor-desc">En 1980 guardar 1 GB de datos costaba 500.000 dolares. Hoy cuesta menos de 0.02 dolares. Eso hizo posible guardarlo todo, sin filtrar.</div>
+        </div>
+      </div>
+      <div class="factor-row">
+        <span class="factor-num">02</span>
+        <div>
+          <div class="factor-title">El poder de computo se multiplico</div>
+          <div class="factor-desc">Los procesadores se volvieron exponencialmente mas rapidos y baratos. Lo que antes requeria una supercomputadora hoy lo hace un telefono.</div>
+        </div>
+      </div>
+      <div class="factor-row feat">
+        <span class="factor-num">03</span>
+        <div>
+          <div class="factor-title">Internet genero datos masivos</div>
+          <div class="factor-desc">Cada interaccion digital deja una huella. Redes sociales, ecommerce, apps y sensores crearon un volumen de datos sin precedentes historicos.</div>
+        </div>
+      </div>
+      <div class="factor-row">
+        <span class="factor-num">04</span>
+        <div>
+          <div class="factor-title">Las herramientas se democratizaron</div>
+          <div class="factor-desc">SQL, Python, Power BI y ahora la IA pusieron el analisis de datos al alcance de cualquier profesional con ganas de aprender.</div>
+        </div>
+      </div>
+      <div class="factor-row feat">
+        <span class="factor-num">05</span>
+        <div>
+          <div class="factor-title">La IA acelero todo aun mas</div>
+          <div class="factor-desc">Machine learning, modelos de lenguaje y automatizacion inteligente hicieron que los datos pasaran de ser descriptivos a predictivos y prescriptivos.</div>
+        </div>
+      </div>
+    </div>
+    <div class="callout">
+      <span class="callout-icon">🚀</span>
+      <p>Estos cinco factores se combinaron en menos de veinte anos. <b>No hay precedente historico de una industria que haya crecido tan rapido.</b></p>
+    </div>
+  </div>
+
+  <!-- LECCION 1.4 -->
+  <div class="lesson" id="l3">
+    <div class="lesson-eyebrow">Leccion 1.4 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">Siempre que entres<br>a una industria,<br><em>fijate que dinero mueve.</em></h2>
+    <p class="body-text">Datos, analytics e IA no son una tendencia. Son tres mercados que juntos superan el trillon de dolares y crecen mas rapido que cualquier otra industria en la historia.</p>
+
+    <!-- NUMERO GRANDE -->
+    <div class="market">
+      <div class="mcard big">
+        <div class="mcard-num">~920.000M</div>
+        <div class="mcard-label">dolares suman los mercados de Datos, Analytics e IA en 2026. Casi un trillon. Mas que el PBI de paises como Suiza o Arabia Saudita.</div>
+      </div>
+    </div>
+
+
+
+    <!-- DONDE ESTA EL DINERO -->
+    <p class="body-text" style="margin-bottom:12px">Donde esta ese dinero:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px">
+
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px 18px;background:#fff;border-top:3px solid var(--purple)">
+        <div style="font-size:18px;margin-bottom:8px">☁️</div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Infraestructura y cloud</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55">Amazon, Google y Microsoft invierten decenas de miles de millones cada ano en los servidores y sistemas que almacenan y procesan los datos del mundo. Sin esta capa, nada de lo demas existe.</p>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px 18px;background:var(--purple-soft);border-top:3px solid var(--purple)">
+        <div style="font-size:18px;margin-bottom:8px">🤖</div>
+        <div style="font-size:14px;font-weight:700;color:var(--purple-deep);margin-bottom:5px">IA generativa y LLMs</div>
+        <p style="font-size:13px;color:var(--purple);line-height:1.55">OpenAI, Anthropic, Google DeepMind y Meta compiten por construir los modelos de lenguaje mas potentes. Microsoft invirtio 13.000M en OpenAI. Nvidia paso de 300.000M a 3 trillones de valoracion en dos anos por ser la infraestructura de la IA.</p>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px 18px;background:#fff;border-top:3px solid var(--purple)">
+        <div style="font-size:18px;margin-bottom:8px">📊</div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Analytics empresarial</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55">Cada empresa mediana o grande necesita entender sus datos para competir. Herramientas como Tableau, Power BI, Snowflake o Databricks valen miles de millones porque resuelven un problema que todas las empresas tienen.</p>
+      </div>
+
+      <div style="border:1.5px solid var(--rule);border-radius:12px;padding:16px 18px;background:#fff;border-top:3px solid var(--purple)">
+        <div style="font-size:18px;margin-bottom:8px">⚙️</div>
+        <div style="font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px">Automatizacion inteligente</div>
+        <p style="font-size:13px;color:var(--muted);line-height:1.55">Empresas de todos los sectores automatizan procesos con IA para reducir costes y liberar a sus equipos. Lo que antes requeria decenas de personas ahora lo hacen sistemas que aprenden solos de los datos.</p>
+      </div>
+
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p>Numeros reales basados en inversiones publicas, valoraciones de mercado y reportes de Goldman Sachs, IDC y Gartner 2024-2025. <b>No es una tendencia. Es la industria mas grande que esta construyendo el siglo XXI.</b></p>
+    </div>
+  </div>
+
+  <!-- LECCION 1.5 -->
+  <div class="lesson" id="l4">
+    <div class="lesson-eyebrow">Leccion 1.5 <span class="lesson-time">· 5 min</span></div>
+    <h2 class="lesson-title">No son casos de<br>Silicon Valley.<br><em>Son casos de todos lados.</em></h2>
+    <p class="body-text">El impacto de los datos no es solo en grandes tecnologicas. Empresas de todos los sectores y tamanos estan usando datos para tomar mejores decisiones hoy.</p>
+    <div class="casos">
+      <div class="caso-row">
+        <span class="caso-icon">🛒</span>
+        <div>
+          <div class="caso-empresa">Mercadona</div>
+          <div class="caso-desc">Usa datos de ventas por hora y por tienda para optimizar el stock en tiempo real. Si algo se vende mas en un barrio especifico, el sistema lo detecta y ajusta el reabastecimiento automaticamente.</div>
+          <div class="caso-resultado">Resultado: reduccion del 30% en mermas de producto fresco.</div>
+        </div>
+      </div>
+      <div class="caso-row">
+        <span class="caso-icon">🏦</span>
+        <div>
+          <div class="caso-empresa">BBVA</div>
+          <div class="caso-desc">Analiza el comportamiento de gasto de sus clientes para detectar patrones de fraude en tiempo real y para ofrecer productos financieros personalizados en el momento exacto en que el cliente los necesita.</div>
+          <div class="caso-resultado">Resultado: deteccion de fraude con 94% de precision antes de que el cliente lo note.</div>
+        </div>
+      </div>
+      <div class="caso-row">
+        <span class="caso-icon">✈️</span>
+        <div>
+          <div class="caso-empresa">Vueling</div>
+          <div class="caso-desc">Usa modelos predictivos para ajustar precios de vuelos en tiempo real segun demanda, clima, eventos y comportamiento historico. Cada asiento tiene un precio calculado por un algoritmo.</div>
+          <div class="caso-resultado">Resultado: aumento del 18% en ingresos por asiento respecto a precios fijos.</div>
+        </div>
+      </div>
+      <div class="caso-row">
+        <span class="caso-icon">🏥</span>
+        <div>
+          <div class="caso-empresa">Hospital Vall d Hebron</div>
+          <div class="caso-desc">Implemento modelos de IA para predecir que pacientes tienen mayor riesgo de reingreso hospitalario en los 30 dias siguientes al alta. Eso permite intervenciones preventivas antes de que ocurra la crisis.</div>
+          <div class="caso-resultado">Resultado: reduccion del 22% en reingresos de emergencia.</div>
+        </div>
+      </div>
+    </div>
+    <div class="quote-block">
+      <p>Estas empresas no son mas inteligentes. Tienen mejores preguntas, mejores datos y personas que saben conectar ambas cosas.</p>
+    </div>
+    <div class="callout">
+      <span class="callout-icon">▶</span>
+      <p><b>Siguiente seccion:</b> El ecosistema completo. IA, big data, analytics y los roles que hacen que todo esto funcione.</p>
+    </div>
+  </div>
+
+  <!-- LESSON NAV -->
+  <div class="lesson-nav">
+    <button class="btn-lesson" id="btn-prev" onclick="prevLesson()" disabled>← Anterior</button>
+    <span class="lesson-pos" id="lesson-pos">Leccion 1 de 5</span>
+    <button class="btn-lesson primary" id="btn-next" onclick="nextLesson()">Siguiente →</button>
+  </div>
+
+</div>
+
+<script>
+let cur = 0;
+const total = 5;
+
+function goLesson(i) {
+  document.getElementById('l' + cur).classList.remove('show');
+  document.querySelectorAll('.tab')[cur].classList.remove('active');
+  cur = i;
+  document.getElementById('l' + cur).classList.add('show');
+  document.querySelectorAll('.tab')[cur].classList.add('active');
+  document.getElementById('lesson-pos').textContent = 'Leccion ' + (cur + 1) + ' de ' + total;
+  document.getElementById('btn-prev').disabled = cur === 0;
+  document.getElementById('btn-next').disabled = cur === total - 1;
+  document.getElementById('btn-next').textContent = cur === total - 1 ? 'Seccion completada ✓' : 'Siguiente →';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextLesson() { if (cur < total - 1) goLesson(cur + 1); }
+function prevLesson() { if (cur > 0) goLesson(cur - 1); }
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight') nextLesson();
+  if (e.key === 'ArrowLeft') prevLesson();
+});
+</script>
+<div class="sec-between-nav"><div class="sec-between-inner"><a href="../" class="nav-btn">← Volver al temario</a><a href="../seccion-2/" class="nav-btn nav-btn-primary">Sección 2 →</a></div></div></body>
+</html>
