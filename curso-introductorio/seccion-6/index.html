@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Proyecto Final · Finanzas Personales · Unicorn Academy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--ink:#0A0A0A;--fg:#111827;--muted:#6b7280;--quiet:#9ca3af;--rule:#e5e7eb;--paper:#f9fafb;--purple:#563C77;--purple-soft:#F5F1FA;--purple-light:#D4B8F5;--purple-deep:#3D2B54;--easing:cubic-bezier(.22,.61,.36,1)}
+html,body{background:#fff;color:var(--fg);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.6;min-height:100vh}
+.header{background:rgba(255,255,255,0.94);backdrop-filter:blur(16px);border-bottom:1.5px solid var(--rule);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.brand{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;color:var(--ink)}
+.brand-dot{width:8px;height:8px;border-radius:50%;background:var(--purple);flex-shrink:0}
+.sec-badge{font-size:11px;color:var(--quiet);letter-spacing:0.05em;font-weight:500}
+.sec-header{max-width:860px;margin:0 auto;padding:28px 32px 0}
+.sec-tag{font-size:11px;font-weight:700;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.sec-tag::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.sec-title{font-size:26px;font-weight:800;color:var(--ink);letter-spacing:-0.02em;margin-bottom:6px}
+.sec-desc{font-size:15px;color:var(--muted);max-width:600px;line-height:1.6}
+.tabs-wrap{max-width:860px;margin:0 auto;padding:20px 32px 0}
+.tabs{display:flex;gap:0;border-bottom:1.5px solid var(--rule);overflow-x:auto}
+.tab{padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2.5px solid transparent;margin-bottom:-1.5px;transition:all 0.15s;white-space:nowrap;background:none;border-top:none;border-left:none;border-right:none;font-family:'Inter',sans-serif;flex-shrink:0}
+.tab:hover{color:var(--purple)}
+.tab.active{color:var(--purple);border-bottom-color:var(--purple);font-weight:600}
+.tab-num{font-size:10px;font-weight:700;color:var(--purple-light);margin-right:5px;letter-spacing:0.03em}
+.tab.active .tab-num{color:var(--purple)}
+.content-wrap{max-width:860px;margin:0 auto;padding:36px 32px 80px}
+.lesson{display:none}
+.lesson.show{display:block;animation:fadeIn 0.25s var(--easing) both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.lesson-eyebrow{font-size:11px;font-weight:600;color:var(--purple);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.lesson-eyebrow::before{content:'';width:16px;height:1.5px;background:var(--purple)}
+.lesson-title{font-size:34px;font-weight:800;color:var(--ink);line-height:1.08;letter-spacing:-0.02em;margin-bottom:20px}
+.lesson-title em{font-style:italic;color:var(--purple)}
+.body-text{font-size:17px;line-height:1.75;color:var(--muted);margin:14px 0;max-width:660px}
+.body-text b{color:var(--ink);font-weight:600}
+.quote-block{border-left:4px solid var(--purple);background:var(--purple-soft);padding:18px 22px;border-radius:0 10px 10px 0;margin:20px 0}
+.quote-block p{font-size:18px;font-weight:600;color:var(--purple-deep);line-height:1.45}
+.callout{display:flex;align-items:flex-start;gap:13px;background:var(--paper);border:1.5px solid var(--rule);border-radius:12px;padding:18px 20px;margin:20px 0}
+.callout-icon{font-size:20px;flex-shrink:0;margin-top:1px}
+.callout p{font-size:15px;color:var(--fg);line-height:1.65}
+.callout p b{color:var(--ink);font-weight:700}
+.lesson-nav{display:flex;align-items:center;justify-content:space-between;margin-top:48px;padding-top:24px;border-top:1.5px solid var(--rule)}
+.btn-lesson{padding:10px 18px;border:1.5px solid var(--rule);border-radius:10px;font-size:14px;font-weight:600;background:#fff;color:var(--fg);cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.btn-lesson:hover:not(:disabled){background:var(--paper);border-color:var(--purple-light)}
+.btn-lesson:disabled{opacity:0.4;cursor:not-allowed}
+.btn-lesson.primary{background:var(--purple);color:#fff;border-color:var(--purple)}
+.btn-lesson.primary:hover{background:var(--purple-deep)}
+.lesson-pos{font-size:13px;color:var(--quiet)}
+
+/* OBJETIVOS - Hojas del proyecto */
+.hojas-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:22px 0}
+.hoja-card{border:1.5px solid var(--rule);border-radius:14px;padding:20px;background:#fff;transition:all 0.2s var(--easing)}
+.hoja-card:hover{border-color:var(--purple-light);transform:translateY(-2px)}
+.hoja-card.feat{background:var(--purple-soft);border-color:rgba(86,60,119,0.22)}
+.hoja-icon-wrap{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.hoja-check{width:24px;height:24px;border-radius:6px;background:#22C55E;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:700;flex-shrink:0}
+.hoja-title{font-size:15px;font-weight:700;color:var(--ink)}
+.hoja-card.feat .hoja-title{color:var(--purple-deep)}
+.hoja-desc{font-size:13px;color:var(--muted);line-height:1.55}
+.hoja-card.feat .hoja-desc{color:var(--purple)}
+
+/* CONJUNTO DE DATOS - Timeline */
+.timeline{position:relative;margin:24px 0;padding-left:20px}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:2px;background:var(--purple-light)}
+.timeline-item{position:relative;display:flex;align-items:flex-start;gap:14px;margin-bottom:18px;padding-left:4px}
+.timeline-item::before{content:'';position:absolute;left:-24px;top:8px;width:10px;height:10px;border-radius:50%;background:#fff;border:2px solid var(--purple);box-shadow:0 0 0 3px var(--purple-soft)}
+.timeline-num{flex-shrink:0;width:38px;height:38px;background:#22C55E;color:#fff;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;letter-spacing:0.02em}
+.timeline-body{flex:1;padding-top:2px}
+.timeline-title{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px;text-decoration:underline;text-decoration-color:var(--purple-light);text-underline-offset:3px}
+.timeline-text{font-size:13px;color:var(--muted);line-height:1.55}
+
+/* PROCESO */
+.proceso-steps{display:flex;flex-direction:column;gap:0;margin:24px 0;border:1.5px solid var(--rule);border-radius:14px;overflow:hidden}
+.proceso-row{display:flex;align-items:flex-start;gap:16px;padding:16px 20px;border-bottom:1px solid var(--rule)}
+.proceso-row:last-child{border-bottom:none}
+.proceso-row.hl{background:var(--purple-soft)}
+.proceso-num{flex-shrink:0;width:36px;height:36px;border-radius:10px;background:var(--purple);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700}
+.proceso-body{flex:1}
+.proceso-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.proceso-row.hl .proceso-title{color:var(--purple-deep)}
+.proceso-desc{font-size:13px;color:var(--muted);line-height:1.55}
+.proceso-row.hl .proceso-desc{color:var(--purple)}
+
+/* ENTREGABLES */
+.entregables{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+.ent-card{border:1.5px solid var(--rule);border-radius:14px;padding:18px;background:#fff}
+.ent-icon{font-size:22px;margin-bottom:8px}
+.ent-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.ent-desc{font-size:13px;color:var(--muted);line-height:1.5}
+
+@media(max-width:640px){
+  .header,.sec-header,.tabs-wrap,.content-wrap{padding-left:20px;padding-right:20px}
+  .lesson-title{font-size:26px}
+  .hojas-grid,.entregables{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header class="header">
+  <div class="brand"><div class="brand-dot"></div>Unicorn Academy</div>
+  <span class="sec-badge">PROYECTO FINAL</span>
+</header>
+
+<div class="sec-header">
+  <div class="sec-tag">Proyecto Final</div>
+  <h1 class="sec-title">Analisis de Finanzas Personales</h1>
+  <p class="sec-desc">Aplica todo lo aprendido en el curso a un caso real: mejorar la gestion financiera personal con datos.</p>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="goLesson(0)"><span class="tab-num">01</span>Descripcion</button>
+    <button class="tab"        onclick="goLesson(1)"><span class="tab-num">02</span>Objetivos</button>
+    <button class="tab"        onclick="goLesson(2)"><span class="tab-num">03</span>Conjunto de datos</button>
+    <button class="tab"        onclick="goLesson(3)"><span class="tab-num">04</span>Al terminarlo</button>
+  </div>
+</div>
+
+<div class="content-wrap">
+
+  <!-- 01 DESCRIPCION -->
+  <div class="lesson show" id="l0">
+    <div class="lesson-eyebrow">Paso 01 · El que y el por que</div>
+    <h2 class="lesson-title">Mejora tu gestion financiera<br><em>con datos reales.</em></h2>
+    <p class="body-text">El proyecto se enfoca en mejorar la gestion financiera personal mediante un <b>analisis profundo de los habitos de gastos e ingresos</b>. Vas a utilizar datos personales (o ficticios si preferis) para identificar areas de mejora, establecer metas financieras y proporcionar recomendaciones practicas.</p>
+    
+    <div class="quote-block">
+      <p>"El objetivo es capacitarte para tomar decisiones financieras mas informadas y alcanzar una mayor estabilidad economica — usando exactamente las habilidades del Analista 360 que viste en el curso."</p>
+    </div>
+
+    <p class="body-text" style="margin-top:24px"><b>Por que finanzas personales?</b></p>
+    
+    <div class="callout">
+      <span class="callout-icon">🎯</span>
+      <p><b>Es el caso perfecto para empezar.</b> Tenes los datos a mano, conoces el contexto mejor que nadie, y las decisiones que vas a tomar son reales y te impactan directamente. No hay mejor manera de aprender analisis de datos que hacerlo con algo que te importa.</p>
+    </div>
+
+    <p class="body-text"><b>Que vas a practicar:</b></p>
+    
+    <div class="proceso-steps" style="margin-top:14px">
+      <div class="proceso-row hl">
+        <div class="proceso-num">1</div>
+        <div class="proceso-body">
+          <div class="proceso-title">Criterio de negocio</div>
+          <div class="proceso-desc">Formular las preguntas correctas antes de tocar los datos: en que gasto mas, donde puedo ahorrar, que meta financiera tiene sentido.</div>
+        </div>
+      </div>
+      <div class="proceso-row">
+        <div class="proceso-num">2</div>
+        <div class="proceso-body">
+          <div class="proceso-title">Ejecucion con datos</div>
+          <div class="proceso-desc">Organizar registros, categorizar movimientos y construir un dashboard que se actualiza automaticamente con cada nuevo dato.</div>
+        </div>
+      </div>
+      <div class="proceso-row hl">
+        <div class="proceso-num">3</div>
+        <div class="proceso-body">
+          <div class="proceso-title">Comunicacion de resultados</div>
+          <div class="proceso-desc">Generar conclusiones claras y recomendaciones accionables. Que cambia despues de ver los numeros.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">💡</span>
+      <p>Este proyecto se hace en <b>Google Sheets o Excel</b>. No necesitas instalar nada ni saber programar. Solo aplicar lo aprendido en el curso.</p>
+    </div>
+  </div>
+
+  <!-- 02 OBJETIVOS -->
+  <div class="lesson" id="l1">
+    <div class="lesson-eyebrow">Paso 02 · Las 5 hojas</div>
+    <h2 class="lesson-title">Estas son las 5 hojas<br><em>que vas a construir.</em></h2>
+    <p class="body-text">El proyecto se estructura en cinco hojas conectadas. Cada una tiene una funcion especifica y juntas forman un sistema completo de gestion financiera personal.</p>
+
+    <div class="hojas-grid">
+      <div class="hoja-card feat">
+        <div class="hoja-icon-wrap">
+          <div class="hoja-check">✓</div>
+          <div class="hoja-title">Hoja Resumen</div>
+        </div>
+        <p class="hoja-desc">Vista general con las principales metricas: ingresos totales, gastos totales, ganancia neta y tendencias a lo largo del tiempo. Tambien muestra la distribucion de categorias para entender los habitos financieros de un vistazo.</p>
+      </div>
+
+      <div class="hoja-card feat">
+        <div class="hoja-icon-wrap">
+          <div class="hoja-check">✓</div>
+          <div class="hoja-title">Hoja Finanzas Mensuales</div>
+        </div>
+        <p class="hoja-desc">Resumen mensual de ingresos y gastos agrupados por categoria. Facilita la visualizacion rapida de como se distribuyen los movimientos a lo largo del tiempo y permite identificar patrones y areas de oportunidad.</p>
+      </div>
+
+      <div class="hoja-card">
+        <div class="hoja-icon-wrap">
+          <div class="hoja-check">✓</div>
+          <div class="hoja-title">Hoja Registros</div>
+        </div>
+        <p class="hoja-desc">Aqui se registran todos los movimientos financieros en detalle: fecha, categoria, descripcion y monto. Esta hoja funciona como la base de datos que alimenta automaticamente los graficos y resumenes en las demas hojas.</p>
+      </div>
+
+      <div class="hoja-card">
+        <div class="hoja-icon-wrap">
+          <div class="hoja-check">✓</div>
+          <div class="hoja-title">Hoja Categoria</div>
+        </div>
+        <p class="hoja-desc">Aqui se definen las categorias que se utilizaran para clasificar los movimientos: alimentacion, transporte, salud, educacion, etc. Tener una lista clara y completa es clave para una organizacion correcta de los registros.</p>
+      </div>
+
+      <div class="hoja-card" style="grid-column:1/-1">
+        <div class="hoja-icon-wrap">
+          <div class="hoja-check">✓</div>
+          <div class="hoja-title">Hoja Presupuesto</div>
+        </div>
+        <p class="hoja-desc">Aqui se establece el presupuesto mensual, detallando los ingresos esperados y las asignaciones presupuestarias para cada categoria de gasto. Esto te ayuda a controlar los gastos y garantizar que se ajusten a tus objetivos financieros.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:24px">
+      <span class="callout-icon">🔗</span>
+      <p><b>Lo importante:</b> estas hojas estan conectadas entre si. Cuando agregues un movimiento en Registros, automaticamente se actualizan Resumen y Finanzas Mensuales. Vas a usar formulas y tablas dinamicas para hacer este sistema.</p>
+    </div>
+  </div>
+
+  <!-- 03 CONJUNTO DE DATOS -->
+  <div class="lesson" id="l2">
+    <div class="lesson-eyebrow">Paso 03 · Que datos vas a usar</div>
+    <h2 class="lesson-title">Trabajas con tus datos reales.<br><em>O con datos ficticios.</em></h2>
+    <p class="body-text">El proyecto se puede hacer con tus <b>finanzas personales reales</b> — es lo ideal porque le sacas mas provecho. Si preferis no usar tus datos personales, te proporcionamos un dataset ficticio con los siguientes 8 campos:</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-num">01</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Fecha</div>
+          <div class="timeline-text">Indica la fecha en que se registro el movimiento financiero. Proporciona una referencia temporal importante para analizar los habitos de gasto e ingresos a lo largo del tiempo.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">02</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Categoria</div>
+          <div class="timeline-text">Especifica la categoria a la que pertenece el movimiento financiero: alimentacion, transporte, entretenimiento, ingresos adicionales, etc. La categorizacion ayuda a organizar y entender mejor los patrones.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">03</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Descripcion</div>
+          <div class="timeline-text">Una breve descripcion o nota que acompana al movimiento financiero. Puede incluir detalles adicionales como el lugar de compra o el motivo del gasto, facilitando la comprension del contexto de cada registro.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">04</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Importe</div>
+          <div class="timeline-text">El monto monetario del movimiento financiero, ya sea un gasto o un ingreso. Es fundamental para calcular totales, realizar analisis de tendencias y evaluar el impacto financiero en el presupuesto general.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">05</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Tipo</div>
+          <div class="timeline-text">Especifica si el movimiento financiero es un ingreso o un gasto. Permite distinguir claramente entre las diferentes transacciones y realizar analisis especificos segun el tipo de movimiento.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">06</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Mes/Ano</div>
+          <div class="timeline-text">Campo derivado de la fecha que indica el mes y el ano del movimiento. Facilita la agrupacion y el analisis de datos por periodos especificos.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">07</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Ano</div>
+          <div class="timeline-text">Indica el ano en que se registro el movimiento. Proporciona una vista mas amplia de los datos y permite comparar el desempeno financiero a lo largo de diferentes anos.</div>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">08</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Mes</div>
+          <div class="timeline-text">Indica el mes especifico del movimiento. Permite realizar analisis detallados sobre los habitos de gastos e ingresos en periodos especificos dentro de un ano.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-icon">📊</span>
+      <p><b>El dataset ficticio incluye mas de 1.000 registros</b> entre junio 2022 y agosto 2023, con ingresos por salario, negocio e inversiones, y gastos en alimentacion, transporte, salud, educacion, hogar y entretenimiento. Suficiente para hacer un analisis completo.</p>
+    </div>
+  </div>
+
+  <!-- 04 COMO ENTREGARLO -->
+  <div class="lesson" id="l3">
+    <div class="lesson-eyebrow">Paso 04 · Al terminarlo</div>
+    <h2 class="lesson-title">Lo que vas a tener<br><em>al completarlo.</em></h2>
+    <p class="body-text">El proyecto final es <b>tu primera pieza de portfolio</b>. Algo concreto que demuestra que entendes el rol del Analista 360 y que podes pasar de los datos a las decisiones. Esto es lo que vas a producir:</p>
+
+    <div class="entregables">
+      <div class="ent-card">
+        <div class="ent-icon">📊</div>
+        <div class="ent-title">El archivo de Google Sheets o Excel</div>
+        <div class="ent-desc">Con las 5 hojas conectadas: Resumen, Finanzas Mensuales, Registros, Categoria y Presupuesto. Que funcione automaticamente al agregar nuevos datos.</div>
+      </div>
+      <div class="ent-card">
+        <div class="ent-icon">💡</div>
+        <div class="ent-title">3 hallazgos clave</div>
+        <div class="ent-desc">Tres conclusiones concretas que sacaste del analisis. Por ejemplo: en que categoria gastas mas, cuando tenes mayor flujo de ingresos, donde hay oportunidad de ahorro.</div>
+      </div>
+      <div class="ent-card">
+        <div class="ent-icon">🎯</div>
+        <div class="ent-title">2 recomendaciones accionables</div>
+        <div class="ent-desc">Dos cambios concretos que vas a hacer en base al analisis. No genericas — especificas y medibles. Por ejemplo: "reducir un 15% el gasto en entretenimiento durante 3 meses".</div>
+      </div>
+      <div class="ent-card">
+        <div class="ent-icon">📝</div>
+        <div class="ent-title">Resumen ejecutivo</div>
+        <div class="ent-desc">Tres frases que resumen el analisis para alguien que no vio los datos: que encontraste, por que importa y que vas a hacer. Es el formato del Analista 360.</div>
+      </div>
+    </div>
+
+    <div class="quote-block" style="margin-top:24px">
+      <p>"Un dashboard bonito que nadie usa no vale nada. El analista entrega decisiones, no archivos. Tu proyecto final debe llevar a una accion concreta."</p>
+    </div>
+
+    <p class="body-text" style="margin-top:24px"><b>Como publicarlo:</b></p>
+
+    <div class="proceso-steps">
+      <div class="proceso-row hl">
+        <div class="proceso-num">1</div>
+        <div class="proceso-body">
+          <div class="proceso-title">Compartilo en LinkedIn</div>
+          <div class="proceso-desc">Publica un post con una captura de tu dashboard, los 3 hallazgos y el aprendizaje. Es tu primera pieza de portfolio publico.</div>
+        </div>
+      </div>
+      <div class="proceso-row">
+        <div class="proceso-num">2</div>
+        <div class="proceso-body">
+          <div class="proceso-title">Guardalo para tu portfolio</div>
+          <div class="proceso-desc">Tomale capturas a las 5 hojas, documenta las decisiones que tomaste y guardalo como caso de uso. Lo vas a usar en entrevistas.</div>
+        </div>
+      </div>
+      <div class="proceso-row hl">
+        <div class="proceso-num">3</div>
+        <div class="proceso-body">
+          <div class="proceso-title">Compartilo con tu comunidad</div>
+          <div class="proceso-desc">Si te sirvio a vos, le va a servir a otros. Comparti el template (sin tus datos personales) y ayuda a alguien mas a empezar.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="lesson-nav">
+    <button class="btn-lesson" id="btn-prev" onclick="prevLesson()" disabled>← Anterior</button>
+    <span class="lesson-pos" id="lesson-pos">Paso 1 de 4</span>
+    <button class="btn-lesson primary" id="btn-next" onclick="nextLesson()">Siguiente →</button>
+  </div>
+
+</div>
+
+<script>
+let cur = 0;
+const lessons = document.querySelectorAll('.lesson');
+const tabs = document.querySelectorAll('.tab');
+const btnPrev = document.getElementById('btn-prev');
+const btnNext = document.getElementById('btn-next');
+const lessonPos = document.getElementById('lesson-pos');
+
+function goLesson(n) {
+  if (n < 0 || n >= lessons.length) return;
+  lessons[cur].classList.remove('show');
+  tabs[cur].classList.remove('active');
+  cur = n;
+  lessons[cur].classList.add('show');
+  tabs[cur].classList.add('active');
+  btnPrev.disabled = cur === 0;
+  btnNext.disabled = cur === lessons.length - 1;
+  lessonPos.textContent = `Paso ${cur + 1} de ${lessons.length}`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function nextLesson() { if (cur < lessons.length - 1) goLesson(cur + 1); }
+function prevLesson() { if (cur > 0) goLesson(cur - 1); }
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight') nextLesson();
+  if (e.key === 'ArrowLeft') prevLesson();
+});
+</script>
+</body>
+</html>
